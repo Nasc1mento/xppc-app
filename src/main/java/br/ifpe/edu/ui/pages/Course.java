@@ -164,8 +164,7 @@ public class Course extends Page {
 
     @Override
     public void onSubmit() {
-        placeholderList.addPlaceholder("nome_do_curso", Objects.toString(nameBox.getSelectedItem()));
-        placeholderList.addPlaceholder("nome_do_curso_maiusculo", Objects.toString(nameBox.getSelectedItem()).toUpperCase());
+        placeholderList.addPlaceholder("nome_do_curso", Objects.toString(nameBox.getSelectedItem(), ""));
         placeholderList.addPlaceholder("eixo_tecnologico", Objects.toString(axisBox.getSelectedItem()));
         placeholderList.addPlaceholder("nivel", Objects.toString(levelBox.getSelectedItem()));
         placeholderList.addPlaceholder("modalidade", Objects.toString(modalityBox.getSelectedItem()));
@@ -177,7 +176,7 @@ public class Course extends Page {
         placeholderList.addPlaceholder("integralizacao_maxima", maxCompletionField.getText());
         placeholderList.addPlaceholder("formas_de_acesso", entryMethodsField.getText());
         placeholderList.addPlaceholder("pre-requisito_ingresso", prereqField.getText());
-        placeholderList.addPlaceholder("regime", Objects.toString(regimeBox.getSelectedItem()));
+        placeholderList.addPlaceholder("regime", Objects.toString(regimeBox.getSelectedItem(), ""));
         placeholderList.addPlaceholder("turnos", shiftsField.getText());
         placeholderList.addPlaceholder("turmas_por_turno", classesPerShiftField.getText());
         placeholderList.addPlaceholder("vagas_por_turma", seatsPerClassField.getText());

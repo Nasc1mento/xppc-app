@@ -102,7 +102,7 @@ public class Window extends JFrame {
         add(cards, BorderLayout.CENTER);
         this.updateButtons();
 
-        backwardButton.addActionListener(e -> {
+        backwardButton.addActionListener(_ -> {
             if (currentPage > 0) {
                 currentPage--;
                 cardLayout.show(cards, String.valueOf(currentPage));
@@ -111,7 +111,7 @@ public class Window extends JFrame {
             this.updateButtons();
         });
 
-        forwardButton.addActionListener(e -> {
+        forwardButton.addActionListener(_ -> {
             if (currentPage < forms.size() - 1) {
                 currentPage++;
                 cardLayout.show(cards, String.valueOf(currentPage));

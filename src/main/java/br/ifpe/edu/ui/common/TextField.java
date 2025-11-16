@@ -2,9 +2,11 @@ package br.ifpe.edu.ui.common;
 
 import java.awt.*;
 import java.awt.*;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 import javax.swing.*;
-import javax.swing.text.Document;
+import javax.swing.text.*;
 
 
 public class TextField extends JTextField {
@@ -56,6 +58,32 @@ public class TextField extends JTextField {
 
     public String getPlaceholder() {
         return this.placeholder;
+    }
+
+    public TextField setNumeric() {
+        PlainDocument pd = (PlainDocument) this.getDocument();
+        pd.setDocumentFilter(new DocumentFilter() {
+            @Override
+            public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
+                if (string.matches("\\d*")) super.insertString(fb, offset, string, attr);
+            }
+
+            @Override
+            public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+                if (text.matches("\\d*")) super.replace(fb, offset, length, text, attrs);
+            }
+        });
+
+        this.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (getText().isBlank()) setText("0");
+            }
+        });
+
+        this.setText("0");
+
+        return this;
     }
 
 }

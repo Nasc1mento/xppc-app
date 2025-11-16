@@ -4,6 +4,9 @@ import br.ifpe.edu.PlaceholderList;
 import br.ifpe.edu.readers.CNCTReader;
 import br.ifpe.edu.ui.common.Page;
 import br.ifpe.edu.ui.common.TextField;
+import com.ezylang.evalex.EvaluationException;
+import com.ezylang.evalex.Expression;
+import com.ezylang.evalex.parser.ParseException;
 
 import javax.swing.*;
 import java.awt.*;
@@ -68,20 +71,20 @@ public class Course extends Page {
     private final JComboBox<String> nameBox = new JComboBox<>();
     private final JComboBox<CourseModality> modalityBox = new JComboBox<>();
     private final TextField certificationField = new TextField(30);
-    private final TextField internshipHoursField = new TextField(30);
-    private final TextField weeksField = new TextField(10);
-    private final TextField extraActivitiesHoursField = new TextField(30);
-    private final TextField minCompletionField = new TextField(10);
-    private final TextField maxCompletionField = new TextField(10);
-    private final TextField entryMethods = new TextField(30);
+    private final TextField internshipHoursField = new TextField(30).setNumeric();
+    private final TextField weeksField = new TextField(10).setNumeric();
+    private final TextField extraActivitiesHoursField = new TextField(30).setNumeric();
+    private final TextField minCompletionField = new TextField(10).setNumeric();
+    private final TextField maxCompletionField = new TextField(10).setNumeric();
+    private final TextField entryMethodsField = new TextField(30);
     private final TextField prereqField = new TextField(30);
     private final JComboBox<CourseRegime> regimeBox = new JComboBox<>();
-    private final TextField shiftsField = new TextField(10);
-    private final TextField classesPerShift = new TextField(10);
-    private final TextField seatsPerClass = new TextField(10);
-    private final TextField seatsPerShift = new TextField(10);
-    private final TextField seatsPerSemester = new TextField(10);
-    private final JFormattedTextField startField = new JFormattedTextField(new SimpleDateFormat("dd/MM/yyyy"));
+    private final TextField shiftsField = new TextField(10).setNumeric();
+    private final TextField classesPerShiftField = new TextField(10).setNumeric();
+    private final TextField seatsPerClassField = new TextField(10).setNumeric();
+    private final TextField seatsPerShiftField = new TextField(10).setNumeric();
+    private final TextField seatsPerSemesterField = new TextField(10).setNumeric();
+    private final TextField startField = new TextField(15);
 
     private final CNCTReader cnctReader = new CNCTReader();
     private final PlaceholderList placeholderList = PlaceholderList.INSTANCE;
@@ -104,14 +107,14 @@ public class Course extends Page {
         addRow(new JLabel("Atividades Complementares (H/R): "),  extraActivitiesHoursField);
         addRow(new JLabel("Período de integralização mínima(semestres e anos)"), minCompletionField);
         addRow(new JLabel("Período de integralização máxima (semestre e anos)"), maxCompletionField);
-        addRow(new JLabel("Formas de acesso"), entryMethods);
+        addRow(new JLabel("Formas de acesso"), entryMethodsField);
         addRow(new JLabel("Pré-requisito para ingresso"), prereqField);
         addRow(new JLabel("Regime: "), regimeBox);
         addRow(new JLabel("Turnos: "), shiftsField);
-        addRow(new JLabel("Número de turmas por turno de oferta: "), classesPerShift);
-        addRow(new JLabel("Vagas por turma: "), seatsPerClass);
-        addRow(new JLabel("Número de vagas por turno de oferta: "), seatsPerShift);
-        addRow(new JLabel("Vagas por semestre: "), seatsPerSemester);
+        addRow(new JLabel("Número de turmas por turno de oferta: "), classesPerShiftField);
+        addRow(new JLabel("Vagas por turma: "), seatsPerClassField);
+        addRow(new JLabel("Número de vagas por turno de oferta: "), seatsPerShiftField);
+        addRow(new JLabel("Vagas por semestre: "), seatsPerSemesterField);
         addRow(new JLabel("Início do Curso/ Matriz Curricular"),  startField);
     }
 
@@ -172,14 +175,24 @@ public class Course extends Page {
         placeholderList.addPlaceholder("carga_horaria_atividades_complementares_hr", extraActivitiesHoursField.getText());
         placeholderList.addPlaceholder("integralizacao_minima", minCompletionField.getText());
         placeholderList.addPlaceholder("integralizacao_maxima", maxCompletionField.getText());
-        placeholderList.addPlaceholder("formas_de_acesso", entryMethods.getText());
+        placeholderList.addPlaceholder("formas_de_acesso", entryMethodsField.getText());
         placeholderList.addPlaceholder("pre-requisito_ingresso", prereqField.getText());
         placeholderList.addPlaceholder("regime", Objects.toString(regimeBox.getSelectedItem()));
         placeholderList.addPlaceholder("turnos", shiftsField.getText());
-        placeholderList.addPlaceholder("turmas_por_turno", classesPerShift.getText());
-        placeholderList.addPlaceholder("vagas_por_turma", seatsPerClass.getText());
-        placeholderList.addPlaceholder("vagas_por_turno", seatsPerShift.getText());
-        placeholderList.addPlaceholder("vagas_por_semestre", seatsPerSemester.getText());
-        placeholderList.addPlaceholder("inicio_do_curso", Objects.toString(startField.getValue()));
+        placeholderList.addPlaceholder("turmas_por_turno", classesPerShiftField.getText());
+        placeholderList.addPlaceholder("vagas_por_turma", seatsPerClassField.getText());
+        placeholderList.addPlaceholder("vagas_por_turno", seatsPerShiftField.getText());
+        placeholderList.addPlaceholder("vagas_por_semestre", seatsPerSemesterField.getText());
+        placeholderList.addPlaceholder("inicio_do_curso", startField.getText());
+
+        try {
+            placeholderList.addPlaceholder(
+                    "vagas_anuais", new Expression(
+                            String.format("%s * 2", seatsPerSemesterField.getText())
+                    ).evaluate().getStringValue()
+            );
+        } catch (EvaluationException | ParseException e) {
+            throw new RuntimeException("Failed to eval math expression", e);
+        }
     }
 }

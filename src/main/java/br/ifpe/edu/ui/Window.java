@@ -67,10 +67,10 @@ public class Window extends JFrame {
         titleLabel.setBorder(new EmptyBorder(0, 10, 0, 0));
         titleBar.add(titleLabel, BorderLayout.CENTER);
 
-        this.themeComboBox.setPreferredSize(new Dimension(140, 30));
+        themeComboBox.setPreferredSize(new Dimension(140, 30));
 
 
-        titleBar.add(this.themeComboBox, BorderLayout.WEST);
+        titleBar.add(themeComboBox, BorderLayout.WEST);
 
         closeButton.setForeground(Color.WHITE);
         closeButton.setBackground(Color.RED);
@@ -79,7 +79,7 @@ public class Window extends JFrame {
         closeButton.setPreferredSize(new Dimension(45, 30));
         titleBar.add(closeButton, BorderLayout.EAST);
 
-        this.add(titleBar, BorderLayout.NORTH);
+        add(titleBar, BorderLayout.NORTH);
 
         for (int i = 0; i < forms.size(); i++) {
             var p = forms.get(i);
@@ -91,12 +91,12 @@ public class Window extends JFrame {
             cards.add(wrapper, String.valueOf(i));
         }
         add(cards, BorderLayout.CENTER);
-        this.updateButtons();
+        updateButtons();
 
         buttonsPanel.add(backwardButton);
         buttonsPanel.add(forwardButton);
 
-        this.add(buttonsPanel, BorderLayout.SOUTH);
+        add(buttonsPanel, BorderLayout.SOUTH);
 
         titleLabel.setText(titles.get(currentPage));
 
@@ -115,7 +115,7 @@ public class Window extends JFrame {
                 var constructor = themes.get(selected).getDeclaredConstructor();
                 UIManager.setLookAndFeel((LookAndFeel) constructor.newInstance());
                 SwingUtilities.updateComponentTreeUI(this);
-            } catch (Exception ignore) { }
+            } catch (Exception _) { }
         });
 
 

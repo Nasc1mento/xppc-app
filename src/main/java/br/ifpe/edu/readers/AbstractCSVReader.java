@@ -23,28 +23,35 @@ public abstract class AbstractCSVReader {
         this.separator = separator;
     }
 
+    private List<String[]> list;
+
     protected List<String[]> read() {
-        try (var reader = new CSVReaderBuilder(
-                new InputStreamReader(
-                        Objects.requireNonNull(
-                                Thread.currentThread().getContextClassLoader().getResourceAsStream(fileName)
-                        ),
-                        charset
-                ))
-                .withCSVParser(new CSVParserBuilder().withSeparator(separator).build())
-                .build()) {
+        if (list == null) {
+            try (var reader = new CSVReaderBuilder(
+                    new InputStreamReader(
+                            Objects.requireNonNull(
+                                    Thread.currentThread().getContextClassLoader().getResourceAsStream(fileName)
+                            ),
+                            charset
+                    ))
+                    .withCSVParser(new CSVParserBuilder().withSeparator(separator).build())
+                    .build())
+            {
 
-            var records = reader.readAll();
+                var records = reader.readAll();
 
-            return records.stream()
-                    .skip(1)
-                    .filter(line -> line != null && line.length > 1)
-                    .filter(line -> !isEmptyLine(line))
-                    .toList();
+                list = records.stream()
+                        .skip(1)
+                        .filter(line -> line != null && line.length > 1)
+                        .filter(line -> !isEmptyLine(line))
+                        .toList();
 
-        } catch (IOException | CsvException e) {
-            throw new RuntimeException(e);
+            } catch (IOException | CsvException e) {
+                throw new RuntimeException(e);
+            }
         }
+
+        return list;
     }
 
     protected String getAFromB(int c1, String b, int c2) {

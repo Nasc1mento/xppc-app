@@ -5,6 +5,8 @@ import br.ifpe.edu.ui.PagesList;
 import br.ifpe.edu.ui.common.Page;
 
 import javax.swing.*;
+import java.io.File;
+import java.nio.file.Path;
 
 public class Generation extends Page {
 
@@ -30,9 +32,22 @@ public class Generation extends Page {
 
     @Override
     public void onSubmit() {
-        if (ReplacerList.callAll())
-            JOptionPane.showMessageDialog(this, "Documento gerado com sucesso!");
-        else
-            JOptionPane.showMessageDialog(this, "Erro ao gerar Documento!");
+        JFileChooser chooser = new JFileChooser();
+        chooser.setDialogTitle("Escolha onde quer salvar o documento");
+        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+
+        int result = chooser.showSaveDialog(null);
+
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File selectedDir = chooser.getSelectedFile();
+            Path outputPath = selectedDir.toPath().resolve("ppc.docx");
+
+            var rl = new ReplacerList(outputPath);
+
+            if (rl.callAll())
+                JOptionPane.showMessageDialog(this, "Documento gerado com sucesso!");
+            else
+                JOptionPane.showMessageDialog(this, "Erro ao gerar Documento!");
+        }
     }
 }

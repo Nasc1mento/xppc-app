@@ -1,6 +1,5 @@
 package br.ifpe.edu.replacers;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Path;
@@ -9,24 +8,28 @@ import java.util.List;
 
 public class ReplacerList {
 
-    private static final Path teplatePath;
+    private final Path outputPath;
 
-    static {
+    private final List<IReplacer> list;
+
+    public ReplacerList(Path outputPath) {
+        this.outputPath = outputPath;
+
         URL resource = Thread.currentThread().getContextClassLoader().getResource("ppc.docx");
         if (resource == null) {
-            throw new RuntimeException(new FileNotFoundException("Template ppc.docx não encontrado no classpath"));
+            throw new RuntimeException("Template ppc.docx não encontrado no classpath");
         }
 
-        teplatePath = Paths.get(resource.getPath());
+        Path templatePath = Paths.get(resource.getPath());
+
+        this.list = List.of(
+                new PlaceholderReplacer(templatePath, outputPath),
+                new MatrixReplacer(outputPath),
+                new HistoryReplacer(outputPath)
+        );
     }
 
-    private static final List<IReplacer> list = List.of(
-            new PlaceholderReplacer(teplatePath, Paths.get(System.getProperty("user.dir"), "ppc.docx")),
-            new MatrixReplacer(Paths.get(System.getProperty("user.dir"), "ppc.docx")),
-            new HistoryReplacer(Paths.get(System.getProperty("user.dir"), "ppc.docx"))
-    );
-
-    public static boolean callAll() {
+    public boolean callAll() {
         try {
             for (IReplacer replacer : list) {
                 replacer.replace();

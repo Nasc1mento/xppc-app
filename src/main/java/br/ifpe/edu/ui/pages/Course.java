@@ -2,6 +2,7 @@ package br.ifpe.edu.ui.pages;
 
 import br.ifpe.edu.PlaceholderList;
 import br.ifpe.edu.readers.CNCTReader;
+import br.ifpe.edu.ui.common.ComboBox;
 import br.ifpe.edu.ui.common.Page;
 import br.ifpe.edu.ui.common.TextField;
 import com.ezylang.evalex.EvaluationException;
@@ -10,8 +11,6 @@ import com.ezylang.evalex.parser.ParseException;
 
 import javax.swing.*;
 import java.awt.*;
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Objects;
 
 public class Course extends Page {
@@ -31,7 +30,6 @@ public class Course extends Page {
             return s;
         }
     }
-
 
     private enum CourseModality {
         ON_SITE("Presencial"),
@@ -54,6 +52,7 @@ public class Course extends Page {
         BACHELOR("Bacharelado"),
         TECHNOLOGIST("Superior de Tecnologia");
 
+
         private final String s;
 
         CourseLevel(String s) {
@@ -66,10 +65,10 @@ public class Course extends Page {
         }
     }
 
-    private final JComboBox<CourseLevel> levelBox = new JComboBox<>();
-    private final JComboBox<String> axisBox = new JComboBox<>();
-    private final JComboBox<String> nameBox = new JComboBox<>();
-    private final JComboBox<CourseModality> modalityBox = new JComboBox<>();
+    private final ComboBox<CourseLevel> levelBox = new ComboBox<>(CourseLevel.values());
+    private final TextField axisBox = new TextField(30);
+    private final ComboBox<String> nameBox = new ComboBox<>();
+    private final ComboBox<CourseModality> modalityBox = new ComboBox<>(CourseModality.values());
     private final TextField certificationField = new TextField(30);
     private final TextField internshipHoursField = new TextField(30).setNumeric();
     private final TextField weeksField = new TextField(10).setNumeric();
@@ -78,13 +77,14 @@ public class Course extends Page {
     private final TextField maxCompletionField = new TextField(10).setNumeric();
     private final TextField entryMethodsField = new TextField(30);
     private final TextField prereqField = new TextField(30);
-    private final JComboBox<CourseRegime> regimeBox = new JComboBox<>();
+    private final ComboBox<CourseRegime> regimeBox = new ComboBox<>(CourseRegime.values());
     private final TextField shiftsField = new TextField(10).setNumeric();
     private final TextField classesPerShiftField = new TextField(10).setNumeric();
     private final TextField seatsPerClassField = new TextField(10).setNumeric();
     private final TextField seatsPerShiftField = new TextField(10).setNumeric();
     private final TextField seatsPerSemesterField = new TextField(10).setNumeric();
     private final TextField startField = new TextField(15);
+    private final TextField durationField = new TextField(10).setNumeric();
 
     private final CNCTReader cnctReader = new CNCTReader();
     private final PlaceholderList placeholderList = PlaceholderList.INSTANCE;
@@ -115,6 +115,7 @@ public class Course extends Page {
         addRow(new JLabel("Vagas por turma: "), seatsPerClassField);
         addRow(new JLabel("Número de vagas por turno de oferta: "), seatsPerShiftField);
         addRow(new JLabel("Vagas por semestre: "), seatsPerSemesterField);
+        addRow(new JLabel("Duração do Curso: "), durationField);
         addRow(new JLabel("Início do Curso/ Matriz Curricular"),  startField);
     }
 
@@ -125,7 +126,7 @@ public class Course extends Page {
             nameBox.removeAllItems();
 
             if (CourseLevel.TECHNOLOGIST.equals(selectedLevel)) {
-                cnctReader.getAllNames().forEach(nameBox::addItem);
+                nameBox.addAll(cnctReader.getAllNames());
             }
         });
 
@@ -133,10 +134,9 @@ public class Course extends Page {
             CourseLevel selectedLevel = (CourseLevel) levelBox.getSelectedItem();
             String selectedName = (String) nameBox.getSelectedItem();
 
-            axisBox.removeAllItems();
 
             if (CourseLevel.TECHNOLOGIST.equals(selectedLevel) && Objects.nonNull(selectedName)) {
-                axisBox.setSelectedItem(cnctReader.getAxisByName(selectedName));
+                axisBox.setText(cnctReader.getAxisByName(selectedName));
            }
         });
     }
@@ -151,10 +151,6 @@ public class Course extends Page {
 
         nameBox.setPreferredSize(new Dimension(300, 25));
         axisBox.setPreferredSize(new Dimension(300, 25));
-
-        Arrays.stream(CourseLevel.values()).forEach(levelBox::addItem);
-        Arrays.stream(CourseModality.values()).forEach(modalityBox::addItem);
-        Arrays.stream(CourseRegime.values()).forEach(regimeBox::addItem);
     }
 
     @Override
@@ -165,7 +161,7 @@ public class Course extends Page {
     @Override
     public void onSubmit() {
         placeholderList.addPlaceholder("nome_do_curso", Objects.toString(nameBox.getSelectedItem(), ""));
-        placeholderList.addPlaceholder("eixo_tecnologico", Objects.toString(axisBox.getSelectedItem()));
+        placeholderList.addPlaceholder("eixo_tecnologico", Objects.toString(axisBox.getText()));
         placeholderList.addPlaceholder("nivel", Objects.toString(levelBox.getSelectedItem()));
         placeholderList.addPlaceholder("modalidade", Objects.toString(modalityBox.getSelectedItem()));
         placeholderList.addPlaceholder("titulacao", certificationField.getText());
@@ -174,7 +170,7 @@ public class Course extends Page {
         placeholderList.addPlaceholder("carga_horaria_atividades_complementares_hr", extraActivitiesHoursField.getText());
         placeholderList.addPlaceholder("integralizacao_minima", minCompletionField.getText());
         placeholderList.addPlaceholder("integralizacao_maxima", maxCompletionField.getText());
-        placeholderList.addPlaceholder("formas_de_acesso", entryMethodsField.getText());
+        placeholderList.addPlaceholder("forma_de_oferta", entryMethodsField.getText());
         placeholderList.addPlaceholder("pre-requisito_ingresso", prereqField.getText());
         placeholderList.addPlaceholder("regime", Objects.toString(regimeBox.getSelectedItem(), ""));
         placeholderList.addPlaceholder("turnos", shiftsField.getText());
@@ -182,12 +178,13 @@ public class Course extends Page {
         placeholderList.addPlaceholder("vagas_por_turma", seatsPerClassField.getText());
         placeholderList.addPlaceholder("vagas_por_turno", seatsPerShiftField.getText());
         placeholderList.addPlaceholder("vagas_por_semestre", seatsPerSemesterField.getText());
+        placeholderList.addPlaceholder("duracao",durationField.getText());
         placeholderList.addPlaceholder("inicio_do_curso", startField.getText());
 
         try {
             placeholderList.addPlaceholder(
                     "vagas_anuais", new Expression(
-                            String.format("%s * 2", seatsPerSemesterField.getText())
+                            seatsPerSemesterField.getText() + "*2"
                     ).evaluate().getStringValue()
             );
         } catch (EvaluationException | ParseException e) {

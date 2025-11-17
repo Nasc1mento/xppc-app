@@ -1,6 +1,7 @@
 package br.ifpe.edu.ui;
 
 
+import br.ifpe.edu.ui.common.ComboBox;
 import br.ifpe.edu.ui.common.Page;
 import com.formdev.flatlaf.FlatDarculaLaf;
 import com.formdev.flatlaf.FlatDarkLaf;
@@ -11,7 +12,6 @@ import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.util.Arrays;
 import java.util.List;
 
 public class Window extends JFrame {
@@ -33,19 +33,19 @@ public class Window extends JFrame {
             .map(Page::getTitle)
             .toList();
 
-    private final Class<?>[] themes = new Class[] {
+    private final List<Class<?>> themes = List.of(
             FlatDarkLaf.class,
             FlatLightLaf.class,
             FlatDarculaLaf.class,
             FlatMacDarkLaf.class,
             FlatMacLightLaf.class
-    };
+    );
 
-    private final JComboBox<String> themeComboBox = new JComboBox<>(
-            Arrays.stream(themes)
+    private final ComboBox<String> themeComboBox = new ComboBox<>(
+            themes.stream()
                     .map(Class::getSimpleName)
                     .map(s -> s.replace("Flat", "").replace("Laf"," "))
-                    .toArray(String[]::new)
+                    .toList()
     );
 
 
@@ -68,14 +68,7 @@ public class Window extends JFrame {
         titleBar.add(titleLabel, BorderLayout.CENTER);
 
         this.themeComboBox.setPreferredSize(new Dimension(140, 30));
-        themeComboBox.addActionListener(_ -> {
-            int selected = themeComboBox.getSelectedIndex();
-            try {
-                var constructor = themes[selected].getDeclaredConstructor();
-                UIManager.setLookAndFeel((LookAndFeel) constructor.newInstance());
-                SwingUtilities.updateComponentTreeUI(this);
-            } catch (Exception ignore) { }
-        });
+
 
         titleBar.add(this.themeComboBox, BorderLayout.WEST);
 
@@ -83,9 +76,7 @@ public class Window extends JFrame {
         closeButton.setBackground(Color.RED);
         closeButton.setFocusPainted(false);
         closeButton.setBorderPainted(false);
-        closeButton.setFont(new Font("Arial", Font.BOLD, 16));
         closeButton.setPreferredSize(new Dimension(45, 30));
-        closeButton.addActionListener(e -> System.exit(0));
         titleBar.add(closeButton, BorderLayout.EAST);
 
         this.add(titleBar, BorderLayout.NORTH);
@@ -102,14 +93,31 @@ public class Window extends JFrame {
         add(cards, BorderLayout.CENTER);
         this.updateButtons();
 
-        backwardButton.addActionListener(_ -> {
-            if (currentPage > 0) {
-                currentPage--;
-                cardLayout.show(cards, String.valueOf(currentPage));
-                titleLabel.setText(titles.get(currentPage));
-            }
-            this.updateButtons();
+        buttonsPanel.add(backwardButton);
+        buttonsPanel.add(forwardButton);
+
+        this.add(buttonsPanel, BorderLayout.SOUTH);
+
+        titleLabel.setText(titles.get(currentPage));
+
+        setupListeners();
+
+        setVisible(true);
+    }
+
+    private void setupListeners() {
+
+        closeButton.addActionListener(_ -> System.exit(0));
+
+        themeComboBox.addActionListener(_ -> {
+            int selected = themeComboBox.getSelectedIndex();
+            try {
+                var constructor = themes.get(selected).getDeclaredConstructor();
+                UIManager.setLookAndFeel((LookAndFeel) constructor.newInstance());
+                SwingUtilities.updateComponentTreeUI(this);
+            } catch (Exception ignore) { }
         });
+
 
         forwardButton.addActionListener(_ -> {
             if (currentPage < forms.size() - 1) {
@@ -121,14 +129,14 @@ public class Window extends JFrame {
             this.updateButtons();
         });
 
-        buttonsPanel.add(backwardButton);
-        buttonsPanel.add(forwardButton);
-
-        this.add(buttonsPanel, BorderLayout.SOUTH);
-
-        titleLabel.setText(titles.get(currentPage));
-
-        setVisible(true);
+        backwardButton.addActionListener(_ -> {
+            if (currentPage > 0) {
+                currentPage--;
+                cardLayout.show(cards, String.valueOf(currentPage));
+                titleLabel.setText(titles.get(currentPage));
+            }
+            this.updateButtons();
+        });
     }
 
     private void updateButtons() {

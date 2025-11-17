@@ -3,6 +3,7 @@ package br.ifpe.edu.ui.pages;
 
 import br.ifpe.edu.PlaceholderList;
 import br.ifpe.edu.readers.CampusReader;
+import br.ifpe.edu.ui.common.ComboBox;
 import br.ifpe.edu.ui.common.Page;
 import br.ifpe.edu.ui.common.TextField;
 
@@ -23,7 +24,7 @@ public class Proponent extends Page {
     private final TextField emailField = new TextField(20);
     private final TextField aldcField = new TextField(25);
     private final TextField websiteField = new TextField(30);
-    private final JComboBox<String> campusComboBox = new JComboBox<>();
+    private final ComboBox<String> campusBox = new ComboBox<>();
 
     private final CampusReader campusReader = new CampusReader();
     private final PlaceholderList placeholderList = PlaceholderList.INSTANCE;
@@ -36,10 +37,10 @@ public class Proponent extends Page {
 
     private void setupComboBoxes() {
         cnpjField.setEnabled(false);
-        campusComboBox.setPreferredSize(new Dimension(220, 25));
+        campusBox.setPreferredSize(new Dimension(220, 25));
 
-        campusReader.getAllNames().forEach(campusComboBox::addItem);
-        campusComboBox.setSelectedItem(null);
+        campusBox.addAll(campusReader.getAllNames());
+        campusBox.setSelectedItem(null);
     }
 
     private void setupListeners() {
@@ -55,8 +56,8 @@ public class Proponent extends Page {
                 aldcField, CampusReader.Columns.ALDC_COLUMN,
                 websiteField, CampusReader.Columns.WEBSITE_COLUMN
         );
-        campusComboBox.addActionListener(_ -> {
-            String selectedCampus = (String) campusComboBox.getSelectedItem();
+        campusBox.addActionListener(_ -> {
+            String selectedCampus = (String) campusBox.getSelectedItem();
             if (selectedCampus != null) {
                 fieldMapping.forEach((field, column) -> field.setText(campusReader.getByNameAndColumn(selectedCampus, column)));
             }
@@ -64,7 +65,7 @@ public class Proponent extends Page {
     }
 
     private void setupForm() {
-        addRow(new JLabel("Nome do Campus: "), campusComboBox);
+        addRow(new JLabel("Nome do Campus: "), campusBox);
         addRow(new JLabel("CNPJ: "), cnpjField);
         addRow(new JLabel("Cidade: "), cityField);
         addRow(new JLabel("CEP: "), cepField);
@@ -84,7 +85,7 @@ public class Proponent extends Page {
 
     @Override
     public void onSubmit() {
-        placeholderList.addPlaceholder("campus", Objects.toString(campusComboBox.getSelectedItem()));
+        placeholderList.addPlaceholder("campus", Objects.toString(campusBox.getSelectedItem()));
         placeholderList.addPlaceholder("cnpj", cnpjField.getText());
         placeholderList.addPlaceholder("cidade_uf_cep", String.format("%s, PE, %s, %s", cityField.getText(), neighbourhoodField.getText(), cepField.getText()));
         placeholderList.addPlaceholder("rua_numero", String.format("%s, %s", streetField.getText(), numberField.getText()));

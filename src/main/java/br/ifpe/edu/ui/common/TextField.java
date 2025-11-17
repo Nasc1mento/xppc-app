@@ -56,21 +56,20 @@ public class TextField extends JTextField {
         this.placeholder = s;
     }
 
-    public String getPlaceholder() {
-        return this.placeholder;
-    }
-
     public TextField setNumeric() {
         PlainDocument pd = (PlainDocument) this.getDocument();
         pd.setDocumentFilter(new DocumentFilter() {
+
+            final String regexp = "^[0-9]+(\\\\.[0-9]+)?$";
+
             @Override
             public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
-                if (string.matches("\\d*")) super.insertString(fb, offset, string, attr);
+                if (string.matches(regexp)) super.insertString(fb, offset, string, attr);
             }
 
             @Override
             public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
-                if (text.matches("\\d*")) super.replace(fb, offset, length, text, attrs);
+                if (text.matches(regexp)) super.replace(fb, offset, length, text, attrs);
             }
         });
 

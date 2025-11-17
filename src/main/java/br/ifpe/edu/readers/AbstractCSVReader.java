@@ -57,7 +57,7 @@ public abstract class AbstractCSVReader {
     protected String getAFromB(int c1, String b, int c2) {
         return read().stream()
                 .filter(line -> line.length > Math.max(c1, c2))
-                .filter(line -> line[c1].equals(b))
+                .filter(line -> b.equals(line[c1]))
                 .map(line -> line[c2].trim())
                 .findFirst()
                 .orElse(null);

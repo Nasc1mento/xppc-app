@@ -45,6 +45,5 @@ public record MatrixReplacer(Path docPath) implements IReplacer {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
 }

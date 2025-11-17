@@ -69,6 +69,7 @@ public class Course extends Page {
     private final TextField axisBox = new TextField(30);
     private final ComboBox<String> nameBox = new ComboBox<>();
     private final ComboBox<CourseModality> modalityBox = new ComboBox<>(CourseModality.values());
+    private final TextField offersField = new TextField(30);
     private final TextField certificationField = new TextField(30);
     private final TextField internshipHoursField = new TextField(30).setNumeric();
     private final TextField weeksField = new TextField(10).setNumeric();
@@ -101,6 +102,7 @@ public class Course extends Page {
         addRow(new JLabel("Nome do curso: "), nameBox);
         addRow(new JLabel("Eixo tecnológico"), axisBox);
         addRow(new JLabel("Modalidade: "), modalityBox);
+        addRow(new JLabel("Formas de oferta"), offersField);
         addRow(new JLabel("Titulação: "), certificationField);
         addRow(new JLabel("CH estágio supervisionado (H/R): "), internshipHoursField);
         addRow(new JLabel("Número de semanas letivas: "), weeksField);
@@ -164,13 +166,14 @@ public class Course extends Page {
         placeholderList.addPlaceholder("eixo_tecnologico", Objects.toString(axisBox.getText()));
         placeholderList.addPlaceholder("nivel", Objects.toString(levelBox.getSelectedItem()));
         placeholderList.addPlaceholder("modalidade", Objects.toString(modalityBox.getSelectedItem()));
+        placeholderList.addPlaceholder("formas_de_oferta", offersField.getText());
         placeholderList.addPlaceholder("titulacao", certificationField.getText());
         placeholderList.addPlaceholder("carga_horaria_estagio_supervisionado_hr", internshipHoursField.getText());
         placeholderList.addPlaceholder("semanas_letivas", weeksField.getText());
         placeholderList.addPlaceholder("carga_horaria_atividades_complementares_hr", extraActivitiesHoursField.getText());
         placeholderList.addPlaceholder("integralizacao_minima", minCompletionField.getText());
         placeholderList.addPlaceholder("integralizacao_maxima", maxCompletionField.getText());
-        placeholderList.addPlaceholder("forma_de_oferta", entryMethodsField.getText());
+        placeholderList.addPlaceholder("forma_de_acesso", entryMethodsField.getText());
         placeholderList.addPlaceholder("pre-requisito_ingresso", prereqField.getText());
         placeholderList.addPlaceholder("regime", Objects.toString(regimeBox.getSelectedItem(), ""));
         placeholderList.addPlaceholder("turnos", shiftsField.getText());

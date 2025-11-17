@@ -1,15 +1,10 @@
 package br.ifpe.edu.ui.pages;
 
-import br.ifpe.edu.replacers.MatrixReplacer;
-import br.ifpe.edu.replacers.PlaceholderReplacer;
+import br.ifpe.edu.replacers.ReplacerList;
 import br.ifpe.edu.ui.PagesList;
 import br.ifpe.edu.ui.common.Page;
 
 import javax.swing.*;
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Objects;
 
 public class Generation extends Page {
 
@@ -35,31 +30,9 @@ public class Generation extends Page {
 
     @Override
     public void onSubmit() {
-
-
-
-
-
-
-
-
-
-
-        Path filePath = Paths.get(
-                Objects.requireNonNull(
-                        Thread.currentThread().getContextClassLoader().getResource("ppc.docx")
-                ).getPath()
-        );
-
-        try {
-            var replacer = new PlaceholderReplacer(filePath, Paths.get(System.getProperty("user.dir"), "ppc.docx"));
-            var matrixReplacer = new MatrixReplacer(Paths.get(System.getProperty("user.dir"), "ppc.docx"));
-
-            replacer.replace();
-            matrixReplacer.replace();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        JOptionPane.showMessageDialog(this, "Documento gerado com sucesso!");
+        if (ReplacerList.callAll())
+            JOptionPane.showMessageDialog(this, "Documento gerado com sucesso!");
+        else
+            JOptionPane.showMessageDialog(this, "Erro ao gerar Documento!");
     }
 }

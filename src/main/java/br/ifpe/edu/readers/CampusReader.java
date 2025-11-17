@@ -16,12 +16,13 @@ public class CampusReader extends AbstractCSVReader {
         PHONE_COLUMN,
         EMAIL_COLUMN,
         ALDC_COLUMN,
-        WEBSITE_COLUMN
+        WEBSITE_COLUMN,
+        HISTORY_COLUMN,
     }
 
     public CampusReader() {
         super(
-                "campus.csv",
+                "campi.csv",
                 StandardCharsets.UTF_8,
                 ','
         );

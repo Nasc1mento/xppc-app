@@ -19,7 +19,7 @@ public record MatrixReplacer(Path docPath) implements IReplacer {
         Path temp = Path.of("ppc_temp.docx");
 
         try (XWPFDocument doc = new XWPFDocument(new FileInputStream(docPath.toFile()))) {
-            XWPFParagraph paragraph = Utils.getParagraph(doc, "@@matriz@@");
+            XWPFParagraph paragraph = Utils.getParagraph(doc, "@@matriz_curricular@@");
 
             if (paragraph != null) {
                 try (XmlCursor cursor = paragraph.getCTP().newCursor()) {

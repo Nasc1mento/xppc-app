@@ -16,18 +16,37 @@ public abstract class Page extends JPanel {
         gbc.anchor = GridBagConstraints.WEST;
     }
 
-    protected void addRow(final Component c1, final Component c2) {
+    protected void addTable(JTable table) {
+        var sp = new JScrollPane(table);
         gbc.gridx = 0;
         gbc.gridy = this.row;
-        gbc.anchor = GridBagConstraints.EAST;
-        this.add(c1, gbc);
-
-        gbc.gridx = 1;
-        gbc.anchor = GridBagConstraints.WEST;
-        this.add(c2, gbc);
-
+        gbc.gridwidth = 2;
+        gbc.weightx = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        this.add(sp, gbc);
+        gbc.gridwidth = 1;
+        gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
         this.row++;
     }
+
+
+    protected void addRow(final Component ...cs) {
+        for (int i = 0; i < cs.length; i++) {
+            if (i == 0) {
+                gbc.gridx = 0;
+                gbc.gridy = this.row;
+                gbc.anchor = GridBagConstraints.EAST;
+                this.add(cs[0], gbc);
+            } else {
+                gbc.gridx = 1;
+                gbc.anchor = GridBagConstraints.WEST;
+                this.add(cs[i], gbc);
+                this.row++;
+            }
+        }
+    }
+
 
     public abstract String getTitle();
 

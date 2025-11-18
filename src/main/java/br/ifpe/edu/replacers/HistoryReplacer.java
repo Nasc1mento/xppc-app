@@ -41,8 +41,7 @@ public class HistoryReplacer implements IReplacer {
                 URL historyPath = Thread.currentThread().getContextClassLoader().getResource(historyFileName);
 
                 if (historyPath != null) {
-                    Path historyFullPath = Paths.get(historyPath.getPath());
-                    try (XWPFDocument historyDoc = new XWPFDocument(new FileInputStream(historyFullPath.toFile()))) {
+                    try (XWPFDocument historyDoc = new XWPFDocument(new FileInputStream(Paths.get(historyPath.getPath()).toFile()))) {
                         StringBuilder sb = new StringBuilder();
                         for (XWPFParagraph p : historyDoc.getParagraphs()) {
                             sb.append(p.getText()).append("\n");
@@ -70,5 +69,4 @@ public class HistoryReplacer implements IReplacer {
             throw new RuntimeException(e);
         }
     }
-
 }

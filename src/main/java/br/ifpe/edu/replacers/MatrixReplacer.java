@@ -24,7 +24,7 @@ public record MatrixReplacer(Path docPath) implements IReplacer {
 
         try (XWPFDocument doc = new XWPFDocument(new FileInputStream(docPath.toFile()))) {
 
-            XWPFParagraph paragraph = Utils.getParagraph(doc, "@@matriz_curricular@@");
+            XWPFParagraph paragraph = ParagraphFinder.get(doc, "@@matriz_curricular@@");
 
             if (paragraph != null) {
                 URL matrixPath = Thread.currentThread().getContextClassLoader().getResource("tabela_matriz_curricular.docx");

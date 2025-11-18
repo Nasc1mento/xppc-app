@@ -17,7 +17,7 @@ public class CourseSituation extends Page {
 
         private final String s;
 
-        Situation(String s) {
+        Situation(final String s) {
             this.s = s;
         }
 

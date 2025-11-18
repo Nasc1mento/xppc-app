@@ -8,6 +8,8 @@ import br.ifpe.edu.ui.common.TextField;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.util.Objects;
 
 public class CurricularComponents extends Page {
@@ -41,7 +43,6 @@ public class CurricularComponents extends Page {
     private final ComboBox<String> coreqBox = new ComboBox<>();
     private final JButton addButton = new JButton("Adicionar");
 
-
     private final DefaultTableModel tableModel = new DefaultTableModel(new String[]{
             "Código",
             "Componentes Curriculares",
@@ -53,9 +54,16 @@ public class CurricularComponents extends Page {
             "Total de Horas (H/R EXT)",
             "Pré-requisitos",
             "Correquisitos"
-    }, 0);
+    }, 0) {
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return false;
+        }
+    };
 
     private final JTable table = new JTable(tableModel);
+
+    private final CurricularComponentList curricularComponentList = CurricularComponentList.INSTANCE;
 
     public  CurricularComponents() {
         setupLayout();
@@ -84,6 +92,18 @@ public class CurricularComponents extends Page {
 
     private void setupListeners() {
         addButton.addActionListener(_ -> addComponent());
+
+        var deleteAction = new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                deleteSelectedRow();
+            }
+        };
+
+        InputMap inputMap = table.getInputMap(JTable.WHEN_FOCUSED);
+        KeyStroke deleteKey = KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0);
+        inputMap.put(deleteKey, "deleteRow");
+        table.getActionMap().put("deleteRow", deleteAction);
     }
 
     private void addComponent() {
@@ -122,7 +142,7 @@ public class CurricularComponents extends Page {
                 prereq,
                 coreq
         );
-        CurricularComponentList.INSTANCE.add(novoComponente);
+        curricularComponentList.add(novoComponente);
 
         codeField.setText("");
         ccField.setText("");
@@ -152,6 +172,17 @@ public class CurricularComponents extends Page {
         coreqBox.setSelectedIndex(-1);
     }
 
+    private void deleteSelectedRow() {
+        int selectedRow = table.getSelectedRow();
+
+        if (selectedRow >= 0) {
+            String nameToDelete = (String) tableModel.getValueAt(selectedRow, 1);
+            tableModel.removeRow(selectedRow);
+            curricularComponentList.remove(nameToDelete);
+            updatePrereqCoreqBoxes();
+        }
+    }
+
     @Override
     public String getTitle() {
         return "Informações dos Componentes Curriculares";
@@ -159,6 +190,8 @@ public class CurricularComponents extends Page {
 
     @Override
     public void onSubmit() {
-
+        for (var c : curricularComponentList.getList()) {
+            IO.println(c.name());
+        }
     }
 }

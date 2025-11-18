@@ -31,7 +31,7 @@ public class HistoryReplacer implements IReplacer {
         Path temp = Path.of("ppc_temp.docx");
 
         try (XWPFDocument doc = new XWPFDocument(new FileInputStream(docPath.toFile()))) {
-            XWPFParagraph paragraph = Utils.getParagraph(doc, "$$historico_do_campus$$");
+            XWPFParagraph paragraph = ParagraphFinder.get(doc, "$$historico_do_campus$$");
 
             if (paragraph != null) {
                 String historyFileName = campusReader.getByNameAndColumn(

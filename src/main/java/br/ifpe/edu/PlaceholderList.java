@@ -36,8 +36,8 @@ public enum PlaceholderList  {
         this.placeholders.add(new Placeholder<>(key, value.toString()));
     }
 
-    public <K> void addPrefersPlaceholder(List<? extends K> keys, int ...indexes) {
-        Set<Integer> selectedIndices = Arrays.stream(indexes).boxed().collect(Collectors.toSet());
+    public <K> void addPrefersPlaceholder(final List<? extends K> keys, final int ...indexes) {
+        final Set<Integer> selectedIndices = Arrays.stream(indexes).boxed().collect(Collectors.toSet());
         for (int i = 0; i < keys.size(); i++) {
             K key = keys.get(i);
             if (selectedIndices.contains(i)) {

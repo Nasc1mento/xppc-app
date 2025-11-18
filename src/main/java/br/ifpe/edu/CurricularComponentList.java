@@ -27,10 +27,13 @@ public enum CurricularComponentList {
         this.list = new ArrayList<>();
     }
 
-    public void add(CC cc) {
+    public void add(final CC cc) {
         list.add(cc);
     }
 
+    public void remove(final String name) {
+        list.removeIf(cc -> cc.name().equals(name));
+    }
 
     public List<CC> getList() {
         return List.copyOf(this.list);

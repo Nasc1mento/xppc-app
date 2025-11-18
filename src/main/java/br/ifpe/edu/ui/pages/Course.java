@@ -21,7 +21,7 @@ public class Course extends Page {
 
         private final String s;
 
-        CourseRegime(String s) {
+        CourseRegime(final String s) {
             this.s = s;
         }
 

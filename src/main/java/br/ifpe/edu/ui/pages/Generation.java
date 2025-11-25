@@ -32,7 +32,7 @@ public class Generation extends Page {
 
     @Override
     public void onSubmit() {
-        JFileChooser chooser = new JFileChooser();
+        var chooser = new JFileChooser();
         chooser.setDialogTitle("Escolha onde quer salvar o documento");
         chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 

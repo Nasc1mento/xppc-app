@@ -27,10 +27,10 @@ public class HistoryReplacer implements IReplacer {
     private final CampusReader campusReader = new CampusReader();
 
     @Override
-    public void replace() throws IOException {
+    public void replace() {
         Path temp = Path.of("ppc_temp.docx");
 
-        try (XWPFDocument doc = new XWPFDocument(new FileInputStream(docPath.toFile()))) {
+        try (var doc = new XWPFDocument(new FileInputStream(docPath.toFile()))) {
             XWPFParagraph paragraph = ParagraphFinder.get(doc, "$$historico_do_campus$$");
 
             if (paragraph != null) {
@@ -41,7 +41,7 @@ public class HistoryReplacer implements IReplacer {
                 URL historyPath = Thread.currentThread().getContextClassLoader().getResource(historyFileName);
 
                 if (historyPath != null) {
-                    try (XWPFDocument historyDoc = new XWPFDocument(new FileInputStream(Paths.get(historyPath.getPath()).toFile()))) {
+                    try (var historyDoc = new XWPFDocument(new FileInputStream(Paths.get(historyPath.getPath()).toFile()))) {
                         StringBuilder sb = new StringBuilder();
                         for (XWPFParagraph p : historyDoc.getParagraphs()) {
                             sb.append(p.getText()).append("\n");

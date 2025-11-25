@@ -133,6 +133,7 @@ public class CurricularComponents extends Page {
 
         CurricularComponentList.CC novoComponente = new CurricularComponentList.CC(
                 name,
+                code,
                 type,
                 period,
                 credits,

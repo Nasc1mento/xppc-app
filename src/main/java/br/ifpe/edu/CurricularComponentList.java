@@ -9,6 +9,7 @@ public enum CurricularComponentList {
     INSTANCE;
 
     public record CC (
+        String code,
         String name,
         String type,
         String period,

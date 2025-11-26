@@ -2,14 +2,14 @@ package br.ifpe.edu.replacers;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-public enum TableCounter {
+public enum CurrentTable {
 
     INSTANCE;
 
-    private final AtomicInteger counter = new AtomicInteger(10);
+    private final AtomicInteger counter = new AtomicInteger(8);
 
-    public void newTable() {
-        counter.incrementAndGet();
+    public int newTable() {
+        return counter.incrementAndGet();
     }
 
     public int getCounter() {

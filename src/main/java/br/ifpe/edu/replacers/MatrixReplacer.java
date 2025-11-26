@@ -1,12 +1,11 @@
 package br.ifpe.edu.replacers;
 
 import br.ifpe.edu.CurricularComponentList;
+import br.ifpe.edu.ui.pages.CurricularComponents;
 import org.apache.poi.xwpf.usermodel.*;
 import org.apache.xmlbeans.XmlCursor;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTHMerge;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTRow;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTbl;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTVMerge;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.STMerge;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -24,7 +23,8 @@ import java.util.stream.Collectors;
 
 public class MatrixReplacer implements IReplacer {
 
-    private Path docPath;
+    private final Path docPath;
+    private final CurrentTable currentTable = CurrentTable.INSTANCE;
 
     public MatrixReplacer(final Path docPath) {
         this.docPath = docPath;
@@ -34,17 +34,17 @@ public class MatrixReplacer implements IReplacer {
     public void replace() {
         Path temp = Path.of("ppc_temp.docx");
 
+        Map<String, List<CurricularComponentList.CC>> ccPerPeriod = CurricularComponentList.INSTANCE.getList()
+                .stream()
+                .collect(Collectors.groupingBy(
+                        CurricularComponentList.CC::period,
+                        TreeMap::new,
+                        Collectors.toList()
+                ));
+
         try (XWPFDocument doc = new XWPFDocument(new FileInputStream(docPath.toFile()))) {
 
             XWPFParagraph paragraph = ParagraphFinder.get(doc, "@@matriz_curricular@@");
-
-            Map<String, List<CurricularComponentList.CC>> ccPerPeriod = CurricularComponentList.INSTANCE.getList()
-                    .stream()
-                    .collect(Collectors.groupingBy(
-                            CurricularComponentList.CC::period,
-                            () -> new TreeMap<>(Comparator.reverseOrder()),
-                            Collectors.toList()
-                    ));
 
             if (paragraph != null) {
                 URL matrixPath = Thread.currentThread().getContextClassLoader().getResource("tabela_matriz_curricular.docx");
@@ -54,7 +54,6 @@ public class MatrixReplacer implements IReplacer {
                         List<XWPFTable> tables = matrixDoc.getTables();
 
                         CTTbl xmlTblToCopy = tables.getFirst().getCTTbl();
-                        int N = 3;
 
                         try (XmlCursor insertCursor = paragraph.getCTP().newCursor()) {
                             for (var _ : ccPerPeriod.entrySet()) {
@@ -79,43 +78,51 @@ public class MatrixReplacer implements IReplacer {
             throw new RuntimeException(e);
         }
 
+        try (XWPFDocument doc = new XWPFDocument(new FileInputStream(temp.toFile()))) {
+            var table = doc.getTableArray(currentTable.getCounter());
+
+            for (var entry : ccPerPeriod.entrySet()) {
+                List<CurricularComponentList.CC> ccs = entry.getValue();
+                XWPFParagraph p1 = table.getRow(0).getCell(0).getParagraphs().getFirst();
+                p1.setAlignment(ParagraphAlignment.CENTER);
+                XWPFRun pRun1 = p1.createRun();
+                pRun1.setBold(true);
+                pRun1.setItalic(false);
+                pRun1.setText(entry.getValue().getFirst().period() + "°Período");
+                XWPFTableRow currentRow =  table.getRows().getLast();
+                for (CurricularComponentList.CC cc : ccs) {
+                    currentRow.getCell(0).setText(cc.code());
+                    currentRow.getCell(1).setText(cc.name());
+                    currentRow.getCell(2).setText(cc.credits());
+                    currentRow.getCell(3).setText(cc.ha());
+                    currentRow.getCell(4).setText(cc.hr());
+                    currentRow.getCell(5).setText(cc.ext());
+                    currentRow.getCell(6).setText(cc.prereq());
+                    currentRow.getCell(7).setText(cc.coreq());
+
+                    if (cc != ccs.getLast()) {
+                        table.addRow(currentRow);
+                        currentRow = table.getRows().getLast();
+                        for (var cell : currentRow.getTableCells()) {
+                            cell.setText("");
+                        }
+                    }
+                }
+                table = doc.getTableArray(currentTable.newTable());
+            }
+
+            try (var out = new FileOutputStream(temp.toFile())) {
+                doc.write(out);
+            }
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
         try {
             Files.move(temp, docPath, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    private void createHeaderCell(XWPFTableRow row) {
-        XWPFTableCell cell = row.addNewTableCell();
-        XWPFParagraph p = cell.getParagraphArray(0);
-        p.setAlignment(ParagraphAlignment.CENTER);
-        XWPFRun run = p.createRun();
-        run.setBold(true);
-    }
-
-    private void hMerge(XWPFTableCell cell, boolean firstCell) {
-        if (cell.getCTTc().getTcPr() == null) cell.getCTTc().addNewTcPr();
-        final CTHMerge hMerge = CTHMerge.Factory.newInstance();
-        if  (firstCell) {
-            hMerge.setVal(STMerge.RESTART);
-        } else {
-            hMerge.setVal(STMerge.CONTINUE);
-        }
-        cell.getCTTc().getTcPr().setHMerge(hMerge);
-
-    }
-
-    private void vMerge(XWPFTableCell cell, boolean firstCell) {
-        if (cell.getCTTc().getTcPr() == null) cell.getCTTc().addNewTcPr();
-        final CTVMerge vMerge = CTVMerge.Factory.newInstance();
-        if  (firstCell) {
-            vMerge.setVal(STMerge.RESTART);
-        } else {
-            vMerge.setVal(STMerge.CONTINUE);
-        }
-
-        cell.getCTTc().getTcPr().setVMerge(vMerge);
     }
 }

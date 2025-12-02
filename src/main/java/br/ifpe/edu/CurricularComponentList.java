@@ -1,5 +1,7 @@
 package br.ifpe.edu;
 
+import br.ifpe.edu.ui.pages.CurricularComponents;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -8,10 +10,16 @@ public enum CurricularComponentList {
 
     INSTANCE;
 
+    public static class Sum {
+        public String totalHa = "0.00";
+        public String totalHr =  "0.00";
+        public String totalExt =  "0.00";
+    }
+
     public record CC (
         String code,
         String name,
-        String type,
+        CurricularComponents.CCType type,
         String period,
         String credits,
         String ha,
@@ -40,9 +48,22 @@ public enum CurricularComponentList {
         return List.copyOf(this.list);
     }
 
-    public List<CC> filterByType(final String type) {
+    public List<CC> filterByType(final CurricularComponents.CCType type) {
         return list.stream()
                 .filter(cc -> cc.type().equals(type))
                 .collect(Collectors.toList());
+    }
+
+    public Sum getSum(List<CC> list, CurricularComponents.CCType ccType) {
+        var total = new Sum();
+        for (CC cc : list) {
+            if (cc.type().equals(ccType)) {
+                total.totalHa = Eval.eval(String.format("%s+%s", total.totalHa, cc.ha));
+                total.totalHr = Eval.eval(String.format("%s+%s", total.totalHr, cc.hr));
+                total.totalExt = Eval.eval(String.format("%s+%s", total.totalExt, cc.ext));
+            }
+        }
+
+        return total;
     }
 }

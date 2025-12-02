@@ -1,6 +1,7 @@
 package br.ifpe.edu.ui.pages;
 
 import br.ifpe.edu.CurricularComponentList;
+import br.ifpe.edu.Eval;
 import br.ifpe.edu.ui.common.ComboBox;
 import br.ifpe.edu.ui.common.Page;
 import br.ifpe.edu.ui.common.TextField;
@@ -13,7 +14,7 @@ import java.awt.event.KeyEvent;
 import java.util.Objects;
 
 public class CurricularComponents extends Page {
-    private enum CCType {
+    public enum CCType {
         MANDATORY("Obrigatória"),
         OPTIONAL("Optativa"),
         ELECTIVE("Eletiva");
@@ -28,16 +29,25 @@ public class CurricularComponents extends Page {
         public String toString() {
             return s;
         }
+
+        public static CCType findByString(String value) {
+            for (var cc : CCType.values()) {
+                if (Objects.equals(cc.toString(), value)) {
+                    return cc;
+                }
+            }
+
+            return null;
+        }
     }
 
 
     private final TextField codeField = new TextField(15);
     private final TextField ccField = new TextField(30);
-    private final TextField periodField = new TextField(10).setNumeric();
-    private final TextField creditsField = new TextField(10).setNumeric();
-    private final TextField haField = new TextField(10).setNumeric();
-    private final TextField hrField = new TextField(10).setNumeric();
-    private final TextField extField = new TextField(10).setNumeric();
+    private final TextField periodField = new TextField(10).setInteger();
+    private final TextField creditsField = new TextField(10).setInteger();
+    private final TextField hrField = new TextField(10).setDouble();
+    private final TextField extField = new TextField(10).setDouble();
     private final ComboBox<CCType> typeBox = new ComboBox<>(CCType.values());
     private final ComboBox<String> prereqBox = new ComboBox<>();
     private final ComboBox<String> coreqBox = new ComboBox<>();
@@ -79,7 +89,6 @@ public class CurricularComponents extends Page {
         addRow(new JLabel("Código: "), codeField);
         addRow(new JLabel("Nome do Componente Curricular"), ccField);
         addRow(new JLabel("Créditos: "), creditsField);
-        addRow(new JLabel("Total de Horas (H/A): "), haField);
         addRow(new JLabel("Total de Horas (H/R): "), hrField);
         addRow(new JLabel("Total de Horas (H/R EXT): "), extField);
         addRow(new JLabel("Tipo: "),  typeBox);
@@ -112,11 +121,13 @@ public class CurricularComponents extends Page {
         String type = Objects.toString(typeBox.getSelectedItem());
         String period = periodField.getText();
         String credits = creditsField.getText();
-        String ha = haField.getText();
+        String ha;
         String hr = hrField.getText();
         String ext = extField.getText();
         String prereq = (String) prereqBox.getSelectedItem();
         String coreq = (String) coreqBox.getSelectedItem();
+
+        ha = Eval.eval(String.format("((%s+%s)*60)/45", hr, ext));
 
         tableModel.addRow(new Object[]{
                 code,
@@ -134,7 +145,7 @@ public class CurricularComponents extends Page {
         CurricularComponentList.CC novoComponente = new CurricularComponentList.CC(
                 code,
                 name,
-                type,
+                CCType.findByString(type),
                 period,
                 credits,
                 ha,
@@ -148,7 +159,6 @@ public class CurricularComponents extends Page {
         codeField.setText("");
         ccField.setText("");
         creditsField.setText("");
-        haField.setText("");
         hrField.setText("");
         extField.setText("");
         updatePrereqCoreqBoxes();

@@ -1,5 +1,6 @@
 package br.ifpe.edu.ui.pages;
 
+import br.ifpe.edu.Eval;
 import br.ifpe.edu.PlaceholderList;
 import br.ifpe.edu.readers.CNCTReader;
 import br.ifpe.edu.ui.common.ComboBox;
@@ -71,21 +72,21 @@ public class Course extends Page {
     private final ComboBox<CourseModality> modalityBox = new ComboBox<>(CourseModality.values());
     private final TextField offersField = new TextField(30);
     private final TextField certificationField = new TextField(30);
-    private final TextField internshipHoursField = new TextField(30).setNumeric();
-    private final TextField weeksField = new TextField(10).setNumeric();
-    private final TextField extraActivitiesHoursField = new TextField(30).setNumeric();
-    private final TextField minCompletionField = new TextField(10).setNumeric();
-    private final TextField maxCompletionField = new TextField(10).setNumeric();
+    private final TextField internshipHoursField = new TextField(30).setDouble();
+    private final TextField weeksField = new TextField(10).setInteger();
+    private final TextField extraActivitiesHoursField = new TextField(30).setDouble();
+    private final TextField minCompletionField = new TextField(10).setInteger();
+    private final TextField maxCompletionField = new TextField(10).setInteger();
     private final TextField entryMethodsField = new TextField(30);
     private final TextField prereqField = new TextField(30);
     private final ComboBox<CourseRegime> regimeBox = new ComboBox<>(CourseRegime.values());
-    private final TextField shiftsField = new TextField(10).setNumeric();
-    private final TextField classesPerShiftField = new TextField(10).setNumeric();
-    private final TextField seatsPerClassField = new TextField(10).setNumeric();
-    private final TextField seatsPerShiftField = new TextField(10).setNumeric();
-    private final TextField seatsPerSemesterField = new TextField(10).setNumeric();
+    private final TextField shiftsField = new TextField(10).setDouble();
+    private final TextField classesPerShiftField = new TextField(10).setDouble();
+    private final TextField seatsPerClassField = new TextField(10).setDouble();
+    private final TextField seatsPerShiftField = new TextField(10).setDouble();
+    private final TextField seatsPerSemesterField = new TextField(10).setInteger();
     private final TextField startField = new TextField(15);
-    private final TextField durationField = new TextField(10).setNumeric();
+    private final TextField durationField = new TextField(10).setDouble();
 
     private final CNCTReader cnctReader = new CNCTReader();
     private final PlaceholderList placeholderList = PlaceholderList.INSTANCE;
@@ -183,15 +184,6 @@ public class Course extends Page {
         placeholderList.addPlaceholder("vagas_por_semestre", seatsPerSemesterField.getText());
         placeholderList.addPlaceholder("duracao",durationField.getText());
         placeholderList.addPlaceholder("inicio_do_curso", startField.getText());
-
-        try {
-            placeholderList.addPlaceholder(
-                    "vagas_anuais", new Expression(
-                            seatsPerSemesterField.getText() + "*2"
-                    ).evaluate().getStringValue()
-            );
-        } catch (EvaluationException | ParseException e) {
-            throw new RuntimeException("Failed to eval math expression", e);
-        }
+        placeholderList.addPlaceholder("vagas_anuais", Eval.eval(seatsPerSemesterField.getText() + "*2"));
     }
 }

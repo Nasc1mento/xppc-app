@@ -8,11 +8,15 @@ public enum CurrentTable {
 
     private final AtomicInteger counter = new AtomicInteger(8);
 
-    public int newTable() {
+    public int nextTable() {
         return counter.incrementAndGet();
     }
 
-    public int getCounter() {
+    public int getValue() {
         return counter.get();
+    }
+
+    public AtomicInteger getCounter() {
+        return counter;
     }
 }

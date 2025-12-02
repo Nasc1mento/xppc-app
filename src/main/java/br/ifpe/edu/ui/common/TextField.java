@@ -1,38 +1,27 @@
 package br.ifpe.edu.ui.common;
 
-import java.awt.*;
-import java.awt.*;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
-
 import javax.swing.*;
-import javax.swing.text.*;
+import javax.swing.text.DefaultFormatterFactory;
+import javax.swing.text.NumberFormatter;
+import java.awt.*;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 
-public class TextField extends JTextField {
+public class TextField extends JFormattedTextField {
 
     private String placeholder;
 
     public TextField() { }
 
-    public TextField(
-            final Document pDoc,
-            final String pText,
-            final int pColumns)
-    {
-        super(pDoc, pText, pColumns);
-    }
-
     public TextField(final int pColumns) {
-        super(pColumns);
+        setColumns(pColumns);
     }
 
     public TextField(final String pText) {
         super(pText);
-    }
-
-    public TextField(final String pText, final int pColumns) {
-        super(pText, pColumns);
     }
 
     @Override
@@ -56,33 +45,36 @@ public class TextField extends JTextField {
         this.placeholder = s;
     }
 
-    public TextField setNumeric() {
-        PlainDocument pd = (PlainDocument) this.getDocument();
-        pd.setDocumentFilter(new DocumentFilter() {
+    public TextField setDouble() {
 
-            final String regexp = "^[0-9]+(\\\\.[0-9]+)?$";
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.US);
+        symbols.setDecimalSeparator('.');
 
-            @Override
-            public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
-                if (string.matches(regexp)) super.insertString(fb, offset, string, attr);
-            }
+        DecimalFormat dFormat = new DecimalFormat("#0.00", symbols);
+        dFormat.setGroupingUsed(false);
 
-            @Override
-            public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
-                if (text.matches(regexp)) super.replace(fb, offset, length, text, attrs);
-            }
-        });
+        NumberFormatter formatter = new NumberFormatter(dFormat);
+        formatter.setValueClass(Double.class);
+        formatter.setMinimum(0.0);
+        formatter.setAllowsInvalid(false);
+        formatter.setCommitsOnValidEdit(true);
 
-        this.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (getText().isBlank()) setText("0");
-            }
-        });
-
-        this.setText("0");
-
+        this.setFormatterFactory(new DefaultFormatterFactory(formatter));
         return this;
     }
 
+    public TextField setInteger() {
+        NumberFormat format = NumberFormat.getIntegerInstance();
+        format.setGroupingUsed(false);
+
+        NumberFormatter formatter = new NumberFormatter(format);
+        formatter.setValueClass(Integer.class);
+        formatter.setMinimum(0);
+        formatter.setAllowsInvalid(false);
+        formatter.setCommitsOnValidEdit(true);
+
+        this.setFormatterFactory(new DefaultFormatterFactory(formatter));
+        this.setText("0");
+        return this;
+    }
 }

@@ -8,12 +8,9 @@ import java.util.List;
 
 public class ReplacerList {
 
-    private final Path outputPath;
-
     private final List<IReplacer> list;
 
     public ReplacerList(Path outputPath) {
-        this.outputPath = outputPath;
 
         URL resource = Thread.currentThread().getContextClassLoader().getResource("ppc.docx");
         if (resource == null) {
@@ -24,7 +21,9 @@ public class ReplacerList {
 
         this.list = List.of(
                 new PlaceholderReplacer(templatePath, outputPath),
+                new CurricularDrawReplacer(outputPath),
                 new MatrixReplacer(outputPath),
+                new EmentaryReplacer(outputPath),
                 new HistoryReplacer(outputPath)
         );
     }

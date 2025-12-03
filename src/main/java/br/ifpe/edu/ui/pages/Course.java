@@ -30,13 +30,13 @@ public class Course extends Page {
     private final TextField entryMethodsField = new TextField(30);
     private final TextField prereqField = new TextField(30);
     private final ComboBox<CourseRegime> regimeBox = new ComboBox<>(CourseRegime.values());
-    private final TextField shiftsField = new TextField(10).setDouble();
-    private final TextField classesPerShiftField = new TextField(10).setDouble();
-    private final TextField seatsPerClassField = new TextField(10).setDouble();
-    private final TextField seatsPerShiftField = new TextField(10).setDouble();
+    private final TextField shiftsField = new TextField(30);
+    private final TextField classesPerShiftField = new TextField(10).setInteger();
+    private final TextField seatsPerClassField = new TextField(10).setInteger();
+    private final TextField seatsPerShiftField = new TextField(10).setInteger();
     private final TextField seatsPerSemesterField = new TextField(10).setInteger();
     private final TextField startField = new TextField(15);
-    private final TextField durationField = new TextField(10).setDouble();
+    private final TextField durationField = new TextField(10);
 
     private final CNCTReader cnctReader = new CNCTReader();
     private final PlaceholderList placeholderList = PlaceholderList.INSTANCE;

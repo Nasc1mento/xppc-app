@@ -194,6 +194,8 @@ public class CurricularComponents extends Page {
 
         var totalSum = Eval.eval(String.format("%s+%s+%s+%s", ca, sumOptionalTotal, sumMandatoryTotal, internship));
         placeholderList.addPlaceholder("cht",totalSum);
+        placeholderList.addPlaceholder("cht_ha", Eval.eval(String.format("(%s*60)/45", totalSum)));
+        placeholderList.addPlaceholder("cht_e_estagio", Eval.eval(String.format("%s+%s", totalSum, internship)));
 
         var sumMandatoryPer = Eval.eval(String.format("%s * 100 / %s", sumMandatoryTotal, totalSum));
         var sumOptionalPer = Eval.eval(String.format("%s * 100 / %s", sumOptionalTotal, totalSum));

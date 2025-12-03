@@ -1,6 +1,7 @@
 package br.ifpe.edu.replacers;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -38,6 +39,16 @@ public class ReplacerList {
             return true;
         } catch (IOException ex) {
             return false;
+        }
+    }
+
+    private Path loadTemplatePath(String resourceName) {
+        try {
+            var url = Thread.currentThread().getContextClassLoader().getResource(resourceName);
+            if (url == null) throw new IllegalArgumentException("Template not found: " + resourceName);
+            return Paths.get(url.toURI());
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
         }
     }
 }

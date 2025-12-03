@@ -23,6 +23,8 @@ public class ReplacerList {
                 new PlaceholderReplacer(templatePath, outputPath),
                 new CurricularDrawReplacer(outputPath),
                 new MatrixReplacer(outputPath),
+                new OptionalComponentsReplacer(outputPath),
+                new EletivosReplacer(outputPath),
                 new EmentaryReplacer(outputPath),
                 new HistoryReplacer(outputPath)
         );

@@ -1,7 +1,8 @@
 package br.ifpe.edu.replacers;
 
 import br.ifpe.edu.CurricularComponentList;
-import br.ifpe.edu.ui.pages.CurricularComponents;
+import br.ifpe.edu.PlaceholderList;
+import br.ifpe.edu.ui.models.CCType;
 import org.apache.poi.xwpf.usermodel.*;
 import org.apache.xmlbeans.XmlCursor;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTbl;
@@ -24,6 +25,7 @@ public class MatrixReplacer implements IReplacer {
     private final CurricularComponentList list = CurricularComponentList.INSTANCE;
     private final Path docPath;
     private final CurrentTable currentTable = CurrentTable.INSTANCE;
+    private final PlaceholderList placeholderList = PlaceholderList.INSTANCE;
 
     public MatrixReplacer(final Path docPath) {
         this.docPath = docPath;
@@ -35,6 +37,7 @@ public class MatrixReplacer implements IReplacer {
 
         NavigableMap<String, List<CurricularComponentList.CC>> ccPerPeriod = list.getList()
                 .stream()
+                .filter(cc -> CCType.MANDATORY.equals(cc.type()))
                 .collect(Collectors.groupingBy(
                         CurricularComponentList.CC::period,
                         TreeMap::new,
@@ -80,7 +83,7 @@ public class MatrixReplacer implements IReplacer {
             var table = doc.getTableArray(currentTable.nextTable());
             for (var entry : ccPerPeriod.entrySet()) {
                 List<CurricularComponentList.CC> ccs = entry.getValue();
-                var mandatoryCcs = ccs.stream().filter(cc -> CurricularComponents.CCType.MANDATORY.equals(cc.type())).toList();
+                var mandatoryCcs = ccs.stream().filter(cc -> CCType.MANDATORY.equals(cc.type())).toList();
                 XWPFParagraph p1 = table.getRow(0).getCell(0).getParagraphs().getFirst();
                 p1.setAlignment(ParagraphAlignment.CENTER);
                 XWPFRun pRun1 = p1.createRun();
@@ -111,13 +114,11 @@ public class MatrixReplacer implements IReplacer {
 
 
                 XWPFTableRow lastRow = table.getRows().getLast();
-                var sum = list.getSum(entry.getValue(), CurricularComponents.CCType.MANDATORY);
-                IO.println(lastRow.getTableCells().getFirst().getText());
+                var sum = list.getSum(entry.getValue(), CCType.MANDATORY);
                 lastRow.getCell(1).setText(sum.totalHa);
                 lastRow.getCell(2).setText(sum.totalHr);
                 lastRow.getCell(3).setText(sum.totalExt);
                 table = doc.getTableArray(currentTable.nextTable());
-
             }
 
 

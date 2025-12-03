@@ -4,47 +4,13 @@ import br.ifpe.edu.PlaceholderList;
 import br.ifpe.edu.ui.common.ComboBox;
 import br.ifpe.edu.ui.common.Page;
 import br.ifpe.edu.ui.common.TextField;
+import br.ifpe.edu.ui.models.Situation;
+import br.ifpe.edu.ui.models.Status;
 
 import javax.swing.*;
 import java.util.List;
 
 public class CourseSituation extends Page {
-
-    private enum Situation {
-        OPTION1("Apresentação Inicial do PPC"),
-        OPTION2("Reformulação Integral do PPC"),
-        OPTION3("Reformulação Parcial do PPC");
-
-        private final String s;
-
-        Situation(final String s) {
-            this.s = s;
-        }
-
-        @Override
-        public String toString() {
-            return s;
-        }
-    }
-
-    private enum Status {
-        OPTION1("Aguardando autorização do conselho superior"),
-        OPTION2("Autorizado pelo conselho superior"),
-        OPTION3("Aguardando reconhecimento do MEC"),
-        OPTION4("Reconhecido pelo MEC"),
-        OPTION5("Cadastrado no SISTEC");
-
-        private final String s;
-
-        Status(String s) {
-            this.s = s;
-        }
-
-        @Override
-        public String toString() {
-            return s;
-        }
-    }
 
     private final TextField cc = new TextField(10);
     private final TextField cpc = new TextField(10);

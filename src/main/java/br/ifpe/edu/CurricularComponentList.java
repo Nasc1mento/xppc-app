@@ -1,6 +1,6 @@
 package br.ifpe.edu;
 
-import br.ifpe.edu.ui.pages.CurricularComponents;
+import br.ifpe.edu.ui.models.CCType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +19,7 @@ public enum CurricularComponentList {
     public record CC (
         String code,
         String name,
-        CurricularComponents.CCType type,
+        CCType type,
         String period,
         String credits,
         String ha,
@@ -48,13 +48,13 @@ public enum CurricularComponentList {
         return List.copyOf(this.list);
     }
 
-    public List<CC> filterByType(final CurricularComponents.CCType type) {
+    public List<CC> filterByType(final CCType type) {
         return list.stream()
                 .filter(cc -> cc.type().equals(type))
                 .collect(Collectors.toList());
     }
 
-    public Sum getSum(List<CC> list, CurricularComponents.CCType ccType) {
+    public Sum getSum(List<CC> list, CCType ccType) {
         var total = new Sum();
         for (CC cc : list) {
             if (cc.type().equals(ccType)) {

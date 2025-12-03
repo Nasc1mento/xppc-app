@@ -2,9 +2,11 @@ package br.ifpe.edu.ui.pages;
 
 import br.ifpe.edu.CurricularComponentList;
 import br.ifpe.edu.Eval;
+import br.ifpe.edu.PlaceholderList;
 import br.ifpe.edu.ui.common.ComboBox;
 import br.ifpe.edu.ui.common.Page;
 import br.ifpe.edu.ui.common.TextField;
+import br.ifpe.edu.ui.models.CCType;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -14,33 +16,8 @@ import java.awt.event.KeyEvent;
 import java.util.Objects;
 
 public class CurricularComponents extends Page {
-    public enum CCType {
-        MANDATORY("Obrigatória"),
-        OPTIONAL("Optativa"),
-        ELECTIVE("Eletiva");
 
-        private final String s;
-
-        CCType(String s) {
-            this.s = s;
-        }
-
-        @Override
-        public String toString() {
-            return s;
-        }
-
-        public static CCType findByString(String value) {
-            for (var cc : CCType.values()) {
-                if (Objects.equals(cc.toString(), value)) {
-                    return cc;
-                }
-            }
-
-            return null;
-        }
-    }
-
+    private final PlaceholderList placeholderList = PlaceholderList.INSTANCE;
 
     private final TextField codeField = new TextField(15);
     private final TextField ccField = new TextField(30);
@@ -201,8 +178,30 @@ public class CurricularComponents extends Page {
 
     @Override
     public void onSubmit() {
-        for (var c : curricularComponentList.getList()) {
-            IO.println(c.name());
-        }
+
+        var sumMandatory = curricularComponentList.getSum(curricularComponentList.getList(), CCType.MANDATORY);
+        var sumMandatoryTotal = Eval.eval(String.format("%s+%s",  sumMandatory.totalHr, sumMandatory.totalExt));
+
+        var sumOptional = curricularComponentList.getSum(curricularComponentList.getList(), CCType.OPTIONAL);
+        var sumOptionalTotal = Eval.eval(String.format("%s+%s",  sumOptional.totalHr, sumOptional.totalExt));
+
+        var ca = placeholderList.getValue("carga_horaria_atividades_complementares_hr");
+        var internship = placeholderList.getValue("carga_horaria_estagio_supervisionado_hr");
+
+        placeholderList.addPlaceholder("ch_obrigatorios_hr", sumMandatoryTotal);
+        placeholderList.addPlaceholder("ch_optativos_hr", sumOptionalTotal);
+
+        var totalSum = Eval.eval(String.format("%s+%s+%s+%s", ca, sumOptionalTotal, sumMandatoryTotal, internship));
+        placeholderList.addPlaceholder("cht",totalSum);
+
+        var sumMandatoryPer = Eval.eval(String.format("%s * 100 / %s", sumMandatoryTotal, totalSum));
+        var sumOptionalPer = Eval.eval(String.format("%s * 100 / %s", sumOptionalTotal, totalSum));
+        var caPer = Eval.eval(String.format("%s * 100 / %s", ca, totalSum));
+        var internshipPer = Eval.eval(String.format("%s * 100 / %s", internship, totalSum));
+
+        placeholderList.addPlaceholder("ch_obrigatorios_per", sumMandatoryPer);
+        placeholderList.addPlaceholder("ch_optativos_per", sumOptionalPer);
+        placeholderList.addPlaceholder("carga_horaria_estagio_supervisionado_per", internshipPer);
+        placeholderList.addPlaceholder("carga_horaria_atividades_complementares_per", caPer);
     }
 }

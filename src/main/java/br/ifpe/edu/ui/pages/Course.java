@@ -6,65 +6,15 @@ import br.ifpe.edu.readers.CNCTReader;
 import br.ifpe.edu.ui.common.ComboBox;
 import br.ifpe.edu.ui.common.Page;
 import br.ifpe.edu.ui.common.TextField;
-import com.ezylang.evalex.EvaluationException;
-import com.ezylang.evalex.Expression;
-import com.ezylang.evalex.parser.ParseException;
+import br.ifpe.edu.ui.models.CourseLevel;
+import br.ifpe.edu.ui.models.CourseModality;
+import br.ifpe.edu.ui.models.CourseRegime;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
 
 public class Course extends Page {
-
-    public enum CourseRegime {
-        FULL_TIME("Integral"),
-        PART_TIME("Parcial");
-
-        private final String s;
-
-        CourseRegime(final String s) {
-            this.s = s;
-        }
-
-        @Override
-        public String toString() {
-            return s;
-        }
-    }
-
-    private enum CourseModality {
-        ON_SITE("Presencial"),
-        HYBRID("Semipresencial"),
-        ONLINE("Educação à distância");
-
-        private final String s;
-
-        CourseModality(String s) {
-            this.s = s;
-        }
-
-        @Override
-        public String toString() {
-            return s;
-        }
-    }
-
-    private enum CourseLevel {
-        BACHELOR("Bacharelado"),
-        TECHNOLOGIST("Superior de Tecnologia");
-
-
-        private final String s;
-
-        CourseLevel(String s) {
-            this.s = s;
-        }
-
-        @Override
-        public String toString() {
-            return s;
-        }
-    }
 
     private final ComboBox<CourseLevel> levelBox = new ComboBox<>(CourseLevel.values());
     private final TextField axisBox = new TextField(30);

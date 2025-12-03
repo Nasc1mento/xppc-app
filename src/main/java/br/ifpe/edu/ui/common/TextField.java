@@ -41,10 +41,6 @@ public class TextField extends JFormattedTextField {
         g.drawString(placeholder, getInsets().left, pG.getFontMetrics() .getMaxAscent() + getInsets().top);
     }
 
-    public void setPlaceholder(final String s) {
-        this.placeholder = s;
-    }
-
     public TextField setDouble() {
 
         DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.US);
@@ -60,6 +56,7 @@ public class TextField extends JFormattedTextField {
         formatter.setCommitsOnValidEdit(true);
 
         this.setFormatterFactory(new DefaultFormatterFactory(formatter));
+        this.setText("0.00");
         return this;
     }
 

@@ -1,8 +1,10 @@
 package br.ifpe.edu.replacers;
 
 import br.ifpe.edu.CurricularComponentList;
-import br.ifpe.edu.ui.pages.CurricularComponents;
-import org.apache.poi.xwpf.usermodel.*;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.xwpf.usermodel.XWPFParagraph;
+import org.apache.poi.xwpf.usermodel.XWPFTable;
+import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 import org.apache.xmlbeans.XmlCursor;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTbl;
 
@@ -15,9 +17,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
-import java.util.NavigableMap;
-import java.util.TreeMap;
-import java.util.stream.Collectors;
 
 public class EmentaryReplacer implements IReplacer {
 
@@ -35,13 +34,6 @@ public class EmentaryReplacer implements IReplacer {
     public void replace() {
         Path temp = Path.of("ppc_temp.docx");
 
-        NavigableMap<String, List<CurricularComponentList.CC>> ccPerPeriod = list.getList()
-                .stream()
-                .collect(Collectors.groupingBy(
-                        CurricularComponentList.CC::period,
-                        TreeMap::new,
-                        Collectors.toList()
-                ));
         try (XWPFDocument doc = new XWPFDocument(new FileInputStream(docPath.toFile()))) {
 
             XWPFParagraph paragraph = ParagraphFinder.get(doc, "@@ementário@@");

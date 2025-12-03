@@ -7,6 +7,13 @@ plugins {
 group = "br.ifpe.edu"
 version = "1.0-SNAPSHOT"
 
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(25))
+    }
+}
+
+
 application {
     mainClass.set("br.ifpe.edu.AppMain")
 }

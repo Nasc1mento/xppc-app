@@ -27,7 +27,6 @@ public class Window extends JFrame {
 
     private final JButton backwardButton = new JButton("Anterior");
     private final JButton forwardButton = new JButton("Proximo");
-    private final JButton closeButton = new JButton("x");
 
     private final List<String> titles = forms.stream()
             .map(Page::getTitle)
@@ -71,13 +70,6 @@ public class Window extends JFrame {
 
         titleBar.add(themeComboBox, BorderLayout.WEST);
 
-        closeButton.setForeground(Color.WHITE);
-        closeButton.setBackground(Color.RED);
-        closeButton.setFocusPainted(false);
-        closeButton.setBorderPainted(false);
-        closeButton.setPreferredSize(new Dimension(45, 30));
-        titleBar.add(closeButton, BorderLayout.EAST);
-
         add(titleBar, BorderLayout.NORTH);
 
         for (int i = 0; i < forms.size(); i++) {
@@ -105,8 +97,6 @@ public class Window extends JFrame {
     }
 
     private void setupListeners() {
-
-        closeButton.addActionListener(_ -> System.exit(0));
 
         themeComboBox.addActionListener(_ -> {
             int selected = themeComboBox.getSelectedIndex();

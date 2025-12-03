@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "br.ifpe.edu"
-version = "1.1-SNAPSHOT"
+version = "1.0-SNAPSHOT"
 
 application {
     mainClass.set("br.ifpe.edu.AppMain")

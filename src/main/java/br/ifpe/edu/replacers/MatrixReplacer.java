@@ -2,6 +2,7 @@ package br.ifpe.edu.replacers;
 
 import br.ifpe.edu.CurricularComponentList;
 import br.ifpe.edu.PlaceholderList;
+import br.ifpe.edu.ui.models.CC;
 import br.ifpe.edu.ui.models.CCType;
 import org.apache.poi.xwpf.usermodel.*;
 import org.apache.xmlbeans.XmlCursor;
@@ -35,11 +36,11 @@ public class MatrixReplacer implements IReplacer {
     public void replace() {
         Path temp = Path.of("ppc_temp.docx");
 
-        NavigableMap<String, List<CurricularComponentList.CC>> ccPerPeriod = list.getList()
+        NavigableMap<String, List<CC>> ccPerPeriod = list.getList()
                 .stream()
                 .filter(cc -> CCType.MANDATORY.equals(cc.type()))
                 .collect(Collectors.groupingBy(
-                        CurricularComponentList.CC::period,
+                        CC::period,
                         TreeMap::new,
                         Collectors.toList()
                 ));
@@ -82,7 +83,7 @@ public class MatrixReplacer implements IReplacer {
         try (XWPFDocument doc = new XWPFDocument(new FileInputStream(temp.toFile()))) {
             var table = doc.getTableArray(currentTable.nextTable());
             for (var entry : ccPerPeriod.entrySet()) {
-                List<CurricularComponentList.CC> ccs = entry.getValue();
+                List<CC> ccs = entry.getValue();
                 var mandatoryCcs = ccs.stream().filter(cc -> CCType.MANDATORY.equals(cc.type())).toList();
                 XWPFParagraph p1 = table.getRow(0).getCell(0).getParagraphs().getFirst();
                 p1.setAlignment(ParagraphAlignment.CENTER);
@@ -92,7 +93,7 @@ public class MatrixReplacer implements IReplacer {
                 pRun1.setText(entry.getValue().getFirst().period() + "°Período");
                 XWPFTableRow currentRow =  table.getRows().get(table.getRows().size() - 2);
                 IO.println(currentRow.getTableCells().size());
-                for (CurricularComponentList.CC cc : mandatoryCcs) {
+                for (CC cc : mandatoryCcs) {
                     currentRow.getCell(0).setText(cc.code());
                     currentRow.getCell(1).setText(cc.name());
                     currentRow.getCell(2).setText(cc.credits());

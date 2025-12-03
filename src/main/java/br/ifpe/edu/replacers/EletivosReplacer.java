@@ -1,7 +1,7 @@
 package br.ifpe.edu.replacers;
 
 import br.ifpe.edu.CurricularComponentList;
-import br.ifpe.edu.PlaceholderList;
+import br.ifpe.edu.ui.models.CC;
 import br.ifpe.edu.ui.models.CCType;
 import org.apache.poi.xwpf.usermodel.*;
 import org.apache.xmlbeans.XmlCursor;
@@ -67,7 +67,7 @@ public class EletivosReplacer implements  IReplacer{
         try (var doc = new XWPFDocument(new FileInputStream(temp.toFile()))) {
             XWPFTable table = doc.getTableArray(currentTable.getValue());
 
-            for (CurricularComponentList.CC cc : electiveComponents) {
+            for (CC cc : electiveComponents) {
                 XWPFTableRow currentRow = table.getRows().getLast();
                 currentRow.getCell(0).setText(cc.code());
                 currentRow.getCell(1).setText(cc.name());

@@ -53,8 +53,7 @@ public class Window extends JFrame {
 
     public Window() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setMinimumSize(new Dimension(1024, 768));
-        setUndecorated(true);
+        setMinimumSize(new Dimension(1440, 980));
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setLayout(new BorderLayout());
 

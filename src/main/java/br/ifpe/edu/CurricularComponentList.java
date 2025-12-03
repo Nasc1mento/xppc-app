@@ -1,5 +1,6 @@
 package br.ifpe.edu;
 
+import br.ifpe.edu.ui.models.CC;
 import br.ifpe.edu.ui.models.CCType;
 
 import java.util.ArrayList;
@@ -15,19 +16,6 @@ public enum CurricularComponentList {
         public String totalHr =  "0.00";
         public String totalExt =  "0.00";
     }
-
-    public record CC (
-        String code,
-        String name,
-        CCType type,
-        String period,
-        String credits,
-        String ha,
-        String hr,
-        String ext,
-        String prereq,
-        String coreq
-    ) { }
 
 
     private final List<CC> list;
@@ -58,9 +46,9 @@ public enum CurricularComponentList {
         var total = new Sum();
         for (CC cc : list) {
             if (cc.type().equals(ccType)) {
-                total.totalHa = Eval.eval(String.format("%s+%s", total.totalHa, cc.ha));
-                total.totalHr = Eval.eval(String.format("%s+%s", total.totalHr, cc.hr));
-                total.totalExt = Eval.eval(String.format("%s+%s", total.totalExt, cc.ext));
+                total.totalHa = Eval.eval(String.format("%s+%s", total.totalHa, cc.ha()));
+                total.totalHr = Eval.eval(String.format("%s+%s", total.totalHr, cc.hr()));
+                total.totalExt = Eval.eval(String.format("%s+%s", total.totalExt, cc.ext()));
             }
         }
 

@@ -1,6 +1,7 @@
 package br.ifpe.edu.replacers;
 
 import br.ifpe.edu.CurricularComponentList;
+import br.ifpe.edu.ui.models.CC;
 import org.apache.poi.xwpf.usermodel.*;
 import org.apache.xmlbeans.XmlCursor;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTbl;
@@ -31,10 +32,10 @@ public class CurricularDrawReplacer implements IReplacer {
     public void replace() {
         Path temp = Path.of("ppc_temp.docx");
 
-        Map<String, List<CurricularComponentList.CC>> ccPerPeriod = CurricularComponentList.INSTANCE.getList()
+        Map<String, List<CC>> ccPerPeriod = CurricularComponentList.INSTANCE.getList()
                 .stream()
                 .collect(Collectors.groupingBy(
-                        CurricularComponentList.CC::period,
+                        CC::period,
                         TreeMap::new,
                         Collectors.toList()
                 ));
@@ -75,8 +76,8 @@ public class CurricularDrawReplacer implements IReplacer {
             XWPFTable table = doc.getTableArray(currentTable.getValue());
 
             for (var entry : ccPerPeriod.entrySet()) {
-                List<CurricularComponentList.CC> ccs = entry.getValue();
-                for (CurricularComponentList.CC cc : ccs) {
+                List<CC> ccs = entry.getValue();
+                for (CC cc : ccs) {
                     XWPFTableRow currentRow = table.getRows().getLast();
                     currentRow.getCell(0).setText(cc.name());
                     currentRow.getCell(1).setText(cc.ha());

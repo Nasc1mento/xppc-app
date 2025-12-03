@@ -6,6 +6,7 @@ import br.ifpe.edu.PlaceholderList;
 import br.ifpe.edu.ui.common.ComboBox;
 import br.ifpe.edu.ui.common.Page;
 import br.ifpe.edu.ui.common.TextField;
+import br.ifpe.edu.ui.models.CC;
 import br.ifpe.edu.ui.models.CCType;
 
 import javax.swing.*;
@@ -119,7 +120,7 @@ public class CurricularComponents extends Page {
                 coreq
         });
 
-        CurricularComponentList.CC novoComponente = new CurricularComponentList.CC(
+        CC novoComponente = new CC(
                 code,
                 name,
                 CCType.findByString(type),

@@ -120,7 +120,7 @@ public class CurricularComponents extends Page {
                 coreq
         });
 
-        CC novoComponente = new CC(
+        CC newCC = new CC(
                 code,
                 name,
                 CCType.findByString(type),
@@ -132,7 +132,7 @@ public class CurricularComponents extends Page {
                 prereq,
                 coreq
         );
-        curricularComponentList.add(novoComponente);
+        curricularComponentList.add(newCC);
 
         codeField.setText("");
         ccField.setText("");

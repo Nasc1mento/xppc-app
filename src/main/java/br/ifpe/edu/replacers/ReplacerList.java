@@ -3,13 +3,15 @@ package br.ifpe.edu.replacers;
 import java.io.IOException;
 import java.util.List;
 
-public class ReplacerList {
+public class ReplacerList implements AutoCloseable {
 
-    private final List<IReplacer> list;
+    private List<IReplacer> list;
 
     public ReplacerList() {
+        loadList();
+    }
 
-
+    private void loadList() {
         this.list = List.of(
                 new PlaceholderReplacer(),
                 new CurricularDrawReplacer(),
@@ -21,14 +23,21 @@ public class ReplacerList {
         );
     }
 
-    public boolean callAll() {
+    public void callAll() {
+
         try {
             for (IReplacer replacer : list) {
                 replacer.replace();
             }
-            return true;
-        } catch (IOException ex) {
-            return false;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
+
+    }
+
+
+    @Override
+    public void close() {
+        loadList();
     }
 }

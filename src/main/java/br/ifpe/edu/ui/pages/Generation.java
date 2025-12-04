@@ -7,6 +7,7 @@ import br.ifpe.edu.ui.common.Page;
 
 import javax.swing.*;
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Path;
 
 public class Generation extends Page {
@@ -43,12 +44,17 @@ public class Generation extends Page {
             File selectedDir = chooser.getSelectedFile();
             DocumentHelper.INSTANCE.setOutputPath(selectedDir.toPath().resolve("ppc.docx"));
 
-            var rl = new ReplacerList();
-
-            if (rl.callAll())
+            try (var rl = new ReplacerList()) {
+                rl.callAll();
                 JOptionPane.showMessageDialog(this, "Documento gerado com sucesso!");
-            else
-                JOptionPane.showMessageDialog(this, "Erro ao gerar Documento!");
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(
+                        this,
+                        "Erro ao gerar documento:\n" + ex.getMessage(),
+                        "Erro",
+                        JOptionPane.ERROR_MESSAGE
+                );
+            }
         }
     }
 }

@@ -27,7 +27,7 @@ public class EletivosReplacer implements  IReplacer{
     private final CurrentTable currentTable = CurrentTable.INSTANCE;
 
     @Override
-    public void replace() throws IOException {
+    public void replace() {
         Path temp = Path.of("ppc_temp.docx");
 
         var electiveComponents = list.getList().stream().filter(c -> CCType.ELECTIVE.equals(c.type())).toList();

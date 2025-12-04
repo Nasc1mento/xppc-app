@@ -28,7 +28,7 @@ public class OptionalComponentsReplacer implements  IReplacer{
     private final CurrentTable currentTable = CurrentTable.INSTANCE;
 
     @Override
-    public void replace() throws IOException {
+    public void replace() {
         Path temp = Path.of("ppc_temp.docx");
 
        var optionalComponents = list.getList().stream().filter(c -> CCType.OPTIONAL.equals(c.type())).toList();

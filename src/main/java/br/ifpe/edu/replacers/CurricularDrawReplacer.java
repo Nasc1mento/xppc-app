@@ -1,6 +1,9 @@
 package br.ifpe.edu.replacers;
 
 import br.ifpe.edu.CurricularComponentList;
+import br.ifpe.edu.replacers.helpers.CurrentTable;
+import br.ifpe.edu.replacers.helpers.DocumentHelper;
+import br.ifpe.edu.replacers.helpers.ParagraphFinder;
 import br.ifpe.edu.ui.models.CC;
 import org.apache.poi.xwpf.usermodel.*;
 import org.apache.xmlbeans.XmlCursor;
@@ -21,12 +24,9 @@ import java.util.stream.Collectors;
 
 public class CurricularDrawReplacer implements IReplacer {
 
-    private final Path docPath;
+    private final Path docPath = DocumentHelper.INSTANCE.getOutputPath();
     private final CurrentTable currentTable = CurrentTable.INSTANCE;
 
-    public CurricularDrawReplacer(final Path docPath) {
-        this.docPath = docPath;
-    }
 
     @Override
     public void replace() {

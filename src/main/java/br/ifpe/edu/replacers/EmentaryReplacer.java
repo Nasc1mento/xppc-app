@@ -1,6 +1,9 @@
 package br.ifpe.edu.replacers;
 
 import br.ifpe.edu.CurricularComponentList;
+import br.ifpe.edu.replacers.helpers.CurrentTable;
+import br.ifpe.edu.replacers.helpers.DocumentHelper;
+import br.ifpe.edu.replacers.helpers.ParagraphFinder;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
@@ -23,12 +26,9 @@ public class EmentaryReplacer implements IReplacer {
 
 
     private final CurricularComponentList list = CurricularComponentList.INSTANCE;
-    private final Path docPath;
+    private final Path docPath = DocumentHelper.INSTANCE.getOutputPath();
     private final CurrentTable currentTable = CurrentTable.INSTANCE;
 
-    public EmentaryReplacer(final Path docPath) {
-        this.docPath = docPath;
-    }
 
     @Override
     public void replace() {

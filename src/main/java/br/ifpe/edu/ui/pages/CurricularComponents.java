@@ -105,7 +105,7 @@ public class CurricularComponents extends Page {
         String prereq = (String) prereqBox.getSelectedItem();
         String coreq = (String) coreqBox.getSelectedItem();
 
-        ha = Eval.eval(String.format("((%s+%s)*60)/45", hr, ext));
+        ha = Eval.eval("((%s+%s)*60)/45", hr, ext);
 
         tableModel.addRow(new Object[]{
                 code,
@@ -181,10 +181,10 @@ public class CurricularComponents extends Page {
     public void onSubmit() {
 
         var sumMandatory = curricularComponentList.getSum(curricularComponentList.getList(), CCType.MANDATORY);
-        var sumMandatoryTotal = Eval.eval(String.format("%s+%s",  sumMandatory.totalHr, sumMandatory.totalExt));
+        var sumMandatoryTotal = Eval.eval("%s+%s",  sumMandatory.totalHr, sumMandatory.totalExt);
 
         var sumOptional = curricularComponentList.getSum(curricularComponentList.getList(), CCType.OPTIONAL);
-        var sumOptionalTotal = Eval.eval(String.format("%s+%s",  sumOptional.totalHr, sumOptional.totalExt));
+        var sumOptionalTotal = Eval.eval("%s+%s",  sumOptional.totalHr, sumOptional.totalExt);
 
         var ca = placeholderList.getValue("carga_horaria_atividades_complementares_hr");
         var internship = placeholderList.getValue("carga_horaria_estagio_supervisionado_hr");
@@ -192,15 +192,15 @@ public class CurricularComponents extends Page {
         placeholderList.addPlaceholder("ch_obrigatorios_hr", sumMandatoryTotal);
         placeholderList.addPlaceholder("ch_optativos_hr", sumOptionalTotal);
 
-        var totalSum = Eval.eval(String.format("%s+%s+%s+%s", ca, sumOptionalTotal, sumMandatoryTotal, internship));
+        var totalSum = Eval.eval("%s+%s+%s+%s", ca, sumOptionalTotal, sumMandatoryTotal, internship);
         placeholderList.addPlaceholder("cht",totalSum);
-        placeholderList.addPlaceholder("cht_ha", Eval.eval(String.format("(%s*60)/45", totalSum)));
-        placeholderList.addPlaceholder("cht_e_estagio", Eval.eval(String.format("%s+%s", totalSum, internship)));
+        placeholderList.addPlaceholder("cht_ha", Eval.eval("(%s*60)/45", totalSum));
+        placeholderList.addPlaceholder("cht_e_estagio", Eval.eval("%s+%s", totalSum, internship));
 
-        var sumMandatoryPer = Eval.eval(String.format("%s * 100 / %s", sumMandatoryTotal, totalSum));
-        var sumOptionalPer = Eval.eval(String.format("%s * 100 / %s", sumOptionalTotal, totalSum));
-        var caPer = Eval.eval(String.format("%s * 100 / %s", ca, totalSum));
-        var internshipPer = Eval.eval(String.format("%s * 100 / %s", internship, totalSum));
+        var sumMandatoryPer = Eval.eval("%s * 100 / %s", sumMandatoryTotal, totalSum);
+        var sumOptionalPer = Eval.eval("%s * 100 / %s", sumOptionalTotal, totalSum);
+        var caPer = Eval.eval("%s * 100 / %s", ca, totalSum);
+        var internshipPer = Eval.eval("%s * 100 / %s", internship, totalSum);
 
         placeholderList.addPlaceholder("ch_obrigatorios_per", sumMandatoryPer);
         placeholderList.addPlaceholder("ch_optativos_per", sumOptionalPer);

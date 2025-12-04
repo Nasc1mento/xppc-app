@@ -1,4 +1,4 @@
-package br.ifpe.edu.replacers;
+package br.ifpe.edu.replacers.helpers;
 
 import java.util.concurrent.atomic.AtomicInteger;
 

@@ -2,6 +2,8 @@ package br.ifpe.edu.replacers;
 
 import br.ifpe.edu.PlaceholderList;
 import br.ifpe.edu.readers.CampusReader;
+import br.ifpe.edu.replacers.helpers.DocumentHelper;
+import br.ifpe.edu.replacers.helpers.ParagraphFinder;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
@@ -17,11 +19,7 @@ import java.nio.file.StandardCopyOption;
 
 public class HistoryReplacer implements IReplacer {
 
-    private final Path docPath;
-
-    public HistoryReplacer(Path docPath) {
-        this.docPath = docPath;
-    }
+    private final Path docPath = DocumentHelper.INSTANCE.getOutputPath();
 
     private final PlaceholderList placeholderList = PlaceholderList.INSTANCE;
     private final CampusReader campusReader = new CampusReader();

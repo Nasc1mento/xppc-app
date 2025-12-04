@@ -1,6 +1,7 @@
 package br.ifpe.edu.ui.pages;
 
 import br.ifpe.edu.replacers.ReplacerList;
+import br.ifpe.edu.replacers.helpers.DocumentHelper;
 import br.ifpe.edu.ui.PagesList;
 import br.ifpe.edu.ui.common.Page;
 
@@ -40,9 +41,9 @@ public class Generation extends Page {
 
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedDir = chooser.getSelectedFile();
-            Path outputPath = selectedDir.toPath().resolve("ppc.docx");
+            DocumentHelper.INSTANCE.setOutputPath(selectedDir.toPath().resolve("ppc.docx"));
 
-            var rl = new ReplacerList(outputPath);
+            var rl = new ReplacerList();
 
             if (rl.callAll())
                 JOptionPane.showMessageDialog(this, "Documento gerado com sucesso!");

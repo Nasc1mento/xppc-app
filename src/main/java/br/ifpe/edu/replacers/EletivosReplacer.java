@@ -1,6 +1,9 @@
 package br.ifpe.edu.replacers;
 
 import br.ifpe.edu.CurricularComponentList;
+import br.ifpe.edu.replacers.helpers.CurrentTable;
+import br.ifpe.edu.replacers.helpers.DocumentHelper;
+import br.ifpe.edu.replacers.helpers.ParagraphFinder;
 import br.ifpe.edu.ui.models.CC;
 import br.ifpe.edu.ui.models.CCType;
 import org.apache.poi.xwpf.usermodel.*;
@@ -20,12 +23,9 @@ import java.util.List;
 public class EletivosReplacer implements  IReplacer{
 
     private final CurricularComponentList list = CurricularComponentList.INSTANCE;
-    private final Path docPath;
+    private final Path docPath = DocumentHelper.INSTANCE.getOutputPath();
     private final CurrentTable currentTable = CurrentTable.INSTANCE;
 
-    public EletivosReplacer(final Path docPath) {
-        this.docPath = docPath;
-    }
     @Override
     public void replace() throws IOException {
         Path temp = Path.of("ppc_temp.docx");

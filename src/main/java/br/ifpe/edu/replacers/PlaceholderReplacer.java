@@ -1,24 +1,24 @@
 package br.ifpe.edu.replacers;
 
 import br.ifpe.edu.PlaceholderList;
+import br.ifpe.edu.replacers.helpers.DocumentHelper;
 import org.apache.poi.xwpf.usermodel.*;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Path;
 
-public record PlaceholderReplacer(Path source, Path destination) implements IReplacer {
+public class PlaceholderReplacer implements IReplacer {
     @Override
     public void replace() throws IOException {
-        try (var fis = new FileInputStream(source.toFile());
+        try (var fis = new FileInputStream(DocumentHelper.loadTemplatePath().toFile());
              var document = new XWPFDocument(fis)) {
 
             replaceInDocument(document);
             replaceInHeaders(document);
             replaceInFooters(document);
 
-            try (var out = new FileOutputStream(destination.toFile())) {
+            try (var out = new FileOutputStream(DocumentHelper.INSTANCE.getOutputPath().toFile())) {
                 document.write(out);
             }
         }

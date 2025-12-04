@@ -36,19 +36,13 @@ public enum CurricularComponentList {
         return List.copyOf(this.list);
     }
 
-    public List<CC> filterByType(final CCType type) {
-        return list.stream()
-                .filter(cc -> cc.type().equals(type))
-                .collect(Collectors.toList());
-    }
-
     public Sum getSum(List<CC> list, CCType ccType) {
         var total = new Sum();
         for (CC cc : list) {
             if (cc.type().equals(ccType)) {
-                total.totalHa = Eval.eval(String.format("%s+%s", total.totalHa, cc.ha()));
-                total.totalHr = Eval.eval(String.format("%s+%s", total.totalHr, cc.hr()));
-                total.totalExt = Eval.eval(String.format("%s+%s", total.totalExt, cc.ext()));
+                total.totalHa = Eval.eval("%s+%s", total.totalHa, cc.ha());
+                total.totalHr = Eval.eval("%s+%s", total.totalHr, cc.hr());
+                total.totalExt = Eval.eval("%s+%s", total.totalExt, cc.ext());
             }
         }
 

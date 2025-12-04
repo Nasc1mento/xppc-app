@@ -14,4 +14,8 @@ public class Eval {
             return "";
         }
     }
+
+    public static String eval(String format, String ...args) {
+        return eval(String.format(format, (Object[]) args));
+    }
 }

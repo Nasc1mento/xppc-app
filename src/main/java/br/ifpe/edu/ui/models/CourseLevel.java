@@ -4,7 +4,6 @@ public enum CourseLevel {
     BACHELOR("Bacharelado"),
     TECHNOLOGIST("Superior de Tecnologia");
 
-
     private final String s;
 
     CourseLevel(String s) {

@@ -112,7 +112,6 @@ public class MatrixReplacer implements IReplacer {
                 }
 
 
-
                 XWPFTableRow lastRow = table.getRows().getLast();
                 var sum = list.getSum(entry.getValue(), CCType.MANDATORY);
                 lastRow.getCell(1).setText(sum.totalHa);

@@ -48,6 +48,7 @@ public class Generation extends Page {
                 rl.callAll();
                 JOptionPane.showMessageDialog(this, "Documento gerado com sucesso!");
             } catch (Exception ex) {
+                ex.printStackTrace();
                 JOptionPane.showMessageDialog(
                         this,
                         "Erro ao gerar documento:\n" + ex.getMessage(),

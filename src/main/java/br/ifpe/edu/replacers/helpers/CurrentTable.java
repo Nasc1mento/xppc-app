@@ -6,7 +6,11 @@ public enum CurrentTable {
 
     INSTANCE;
 
-    private final AtomicInteger counter = new AtomicInteger(8);
+    private AtomicInteger counter;
+
+    CurrentTable() {
+        setInitialValue();
+    }
 
     public int nextTable() {
         return counter.incrementAndGet();
@@ -18,5 +22,9 @@ public enum CurrentTable {
 
     public AtomicInteger getCounter() {
         return counter;
+    }
+
+    public void setInitialValue() {
+        counter = new AtomicInteger(8);
     }
 }

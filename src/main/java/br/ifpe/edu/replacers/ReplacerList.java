@@ -1,5 +1,7 @@
 package br.ifpe.edu.replacers;
 
+import br.ifpe.edu.replacers.helpers.CurrentTable;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -39,5 +41,6 @@ public class ReplacerList implements AutoCloseable {
     @Override
     public void close() {
         loadList();
+        CurrentTable.INSTANCE.setInitialValue();
     }
 }

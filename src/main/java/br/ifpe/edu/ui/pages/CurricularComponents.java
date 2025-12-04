@@ -24,8 +24,8 @@ public class CurricularComponents extends Page {
     private final TextField ccField = new TextField(30);
     private final TextField periodField = new TextField(10).setInteger();
     private final TextField creditsField = new TextField(10).setInteger();
-    private final TextField hrField = new TextField(10).setDouble();
-    private final TextField hrTeo = new TextField(10).setDouble();
+    private final TextField hrPrField = new TextField(10).setDouble();
+    private final TextField hrTeoField = new TextField(10).setDouble();
     private final TextField extField = new TextField(10).setDouble();
     private final ComboBox<CCType> typeBox = new ComboBox<>(CCType.values());
     private final ComboBox<String> prereqBox = new ComboBox<>();
@@ -68,8 +68,8 @@ public class CurricularComponents extends Page {
         addRow(new JLabel("Código: "), codeField);
         addRow(new JLabel("Nome do Componente Curricular"), ccField);
         addRow(new JLabel("Créditos: "), creditsField);
-        addRow(new JLabel("Total de Horas Práticas (H/R): "), hrField);
-        addRow(new JLabel("Total de Horas Teóricas (H/R): "), hrTeo);
+        addRow(new JLabel("Total de Horas Práticas (H/R): "), hrPrField);
+        addRow(new JLabel("Total de Horas Teóricas (H/R): "), hrTeoField);
         addRow(new JLabel("Total de Horas (H/R EXT): "), extField);
         addRow(new JLabel("Tipo: "),  typeBox);
         addRow(new JLabel("Período: "), periodField);
@@ -101,7 +101,7 @@ public class CurricularComponents extends Page {
         String type = Objects.toString(typeBox.getSelectedItem());
         String period = periodField.getText();
         String credits = creditsField.getText();
-        String hr = Eval.eval("%s+%s", hrField.getText(), hrTeo.getText());
+        String hr = Eval.eval("%s+%s", hrPrField.getText(), hrTeoField.getText());
         String ext = extField.getText();
         String ha = Eval.eval("((%s+%s)*60)/45", hr, ext);
         String prereq = (String) prereqBox.getSelectedItem();
@@ -137,7 +137,7 @@ public class CurricularComponents extends Page {
         codeField.setText("");
         ccField.setText("");
         creditsField.setText("");
-        hrField.setText("");
+        hrPrField.setText("");
         extField.setText("");
         updatePrereqCoreqBoxes();
     }

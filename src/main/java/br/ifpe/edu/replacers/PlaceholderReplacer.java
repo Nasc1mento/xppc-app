@@ -29,11 +29,13 @@ public class PlaceholderReplacer implements IReplacer {
         }
 
         for (XWPFTable table : doc.getTables()) {
-            table.getRows().forEach(row ->
-                    row.getTableCells().forEach(cell ->
-                            cell.getParagraphs().forEach(this::replaceInParagraph)
-                    )
-            );
+            for (XWPFTableRow row : table.getRows()) {
+                for (XWPFTableCell cell : row.getTableCells()) {
+                    for (XWPFParagraph paragraph : cell.getParagraphs()) {
+                        replaceInParagraph(paragraph);
+                    }
+                }
+            }
         }
     }
 

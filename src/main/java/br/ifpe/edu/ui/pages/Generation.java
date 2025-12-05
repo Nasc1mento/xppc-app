@@ -44,7 +44,7 @@ public class Generation extends Page {
             DocumentHelper.INSTANCE.setOutputPath(Paths.get(Paths.get(selectedDir.toURI()).toString(), "ppc.docx"));
 
             try (var rl = new ReplacerList()) {
-                rl.callAll();
+                rl.cAll();
                 JOptionPane.showMessageDialog(this, "Documento gerado com sucesso!");
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(

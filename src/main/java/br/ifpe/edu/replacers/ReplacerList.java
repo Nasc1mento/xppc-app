@@ -25,8 +25,7 @@ public class ReplacerList implements AutoCloseable {
         );
     }
 
-    public void callAll() {
-
+    public void cAll() {
         try {
             for (IReplacer replacer : list) {
                 replacer.replace();
@@ -34,7 +33,6 @@ public class ReplacerList implements AutoCloseable {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
 
 

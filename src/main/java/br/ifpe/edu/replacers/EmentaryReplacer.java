@@ -39,26 +39,23 @@ public class EmentaryReplacer implements IReplacer {
             XWPFParagraph paragraph = ParagraphFinder.get(doc, "@@ementário@@");
 
             if (paragraph != null) {
-                URL ementaryPath = Thread.currentThread().getContextClassLoader().getResource("tabela_ementario.docx");
-                if (ementaryPath != null) {
-                    try (var ementaryDoc = new XWPFDocument(new FileInputStream(Paths.get(ementaryPath.getPath()).toFile()))) {
+                try (var ementaryDoc = new XWPFDocument(DocumentHelper.loadResourceStream("tabela_ementario.docx"))) {
 
-                        List<XWPFTable> tables = ementaryDoc.getTables();
+                    List<XWPFTable> tables = ementaryDoc.getTables();
 
-                        CTTbl xmlTblToCopy = tables.getFirst().getCTTbl();
+                    CTTbl xmlTblToCopy = tables.getFirst().getCTTbl();
 
-                        try (XmlCursor insertCursor = paragraph.getCTP().newCursor()) {
-                            for (var _ : list.getList()) {
-                                XWPFTable newTable = doc.insertNewTbl(insertCursor);
-                                newTable.getCTTbl().set(xmlTblToCopy.copy());
-                                XWPFParagraph tempP = doc.insertNewParagraph(newTable.getCTTbl().newCursor());
-                                insertCursor.toCursor(tempP.getCTP().newCursor());
-                            }
+                    try (XmlCursor insertCursor = paragraph.getCTP().newCursor()) {
+                        for (var _ : list.getList()) {
+                            XWPFTable newTable = doc.insertNewTbl(insertCursor);
+                            newTable.getCTTbl().set(xmlTblToCopy.copy());
+                            XWPFParagraph tempP = doc.insertNewParagraph(newTable.getCTTbl().newCursor());
+                            insertCursor.toCursor(tempP.getCTP().newCursor());
                         }
-
-                        int pos = doc.getPosOfParagraph(paragraph);
-                        doc.removeBodyElement(pos);
                     }
+
+                    int pos = doc.getPosOfParagraph(paragraph);
+                    doc.removeBodyElement(pos);
                 }
             }
 
@@ -83,8 +80,6 @@ public class EmentaryReplacer implements IReplacer {
                 currentRow.getCell(0).setText("Carga horária: " + cc.ha());
                 table = doc.getTableArray(currentTable.nextTable());
             }
-
-
 
             try (var out = new FileOutputStream(temp.toFile())) {
                 doc.write(out);

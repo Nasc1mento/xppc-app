@@ -1,8 +1,9 @@
 package br.ifpe.edu.ui.common;
 
 import javax.swing.*;
+import java.util.Objects;
 
-public class ComboBox<T> extends JComboBox<T> {
+public class ComboBox<T> extends JComboBox<T> implements IComponent {
 
     public ComboBox(Iterable<? extends T> items) {
         addAll(items);
@@ -20,5 +21,12 @@ public class ComboBox<T> extends JComboBox<T> {
         for (T item : items) {
             addItem(item);
         }
+    }
+
+    public String getStringValue() {
+        if (this.getSelectedItem() == null) {
+           return null;
+        }
+        return this.getSelectedItem().toString();
     }
 }

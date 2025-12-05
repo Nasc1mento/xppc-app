@@ -3,6 +3,7 @@ package br.ifpe.edu.ui.pages;
 import br.ifpe.edu.CurricularComponentList;
 import br.ifpe.edu.Eval;
 import br.ifpe.edu.PlaceholderList;
+import br.ifpe.edu.ui.common.BindPropertyFactory;
 import br.ifpe.edu.ui.common.ComboBox;
 import br.ifpe.edu.ui.common.Page;
 import br.ifpe.edu.ui.common.TextField;
@@ -39,8 +40,8 @@ public class CurricularComponents extends Page {
             "Período",
             "Créditos",
             "Total de Horas (H/A)",
-            "Total de Horas (H/R) T/P",
-            "Total de Horas (H/R EXT)",
+            "Total de Horas Prática/Teórica (H/R)",
+            "Total de Horas de Extensão (H/R)",
             "Pré-requisitos",
             "Correquisitos"
     }, 0) {
@@ -64,6 +65,8 @@ public class CurricularComponents extends Page {
         coreqBox.setPreferredSize(d);
         prereqBox.setPreferredSize(d);
 
+        addButton.setEnabled(false);
+
         addTable(table);
         addRow(new JLabel("Código: "), codeField);
         addRow(new JLabel("Nome do Componente Curricular"), ccField);
@@ -78,9 +81,19 @@ public class CurricularComponents extends Page {
         addRow(addButton);
     }
 
-
     private void setupListeners() {
         addButton.addActionListener(_ -> addComponent());
+
+        BindPropertyFactory.create()
+                .bind(codeField)
+                .bind(ccField)
+                .bind(periodField)
+                .bind(hrPrField)
+                .bind(hrTeoField)
+                .bind(extField)
+                .bind(typeBox)
+                .bind(periodField)
+                .onChange(addButton::setEnabled);
 
         var deleteAction = new AbstractAction() {
             @Override

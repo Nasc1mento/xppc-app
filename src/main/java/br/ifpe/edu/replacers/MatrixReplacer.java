@@ -14,10 +14,8 @@ import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTbl;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.NavigableMap;
@@ -48,26 +46,23 @@ public class MatrixReplacer implements IReplacer {
             XWPFParagraph paragraph = ParagraphFinder.get(doc, "@@matriz_curricular@@");
 
             if (paragraph != null) {
-                URL matrixPath = Thread.currentThread().getContextClassLoader().getResource("tabela_matriz_curricular.docx");
-                if (matrixPath != null) {
-                    try (var matrixDoc = new XWPFDocument(new FileInputStream(Paths.get(matrixPath.getPath()).toFile()))) {
+                try (var matrixDoc = new XWPFDocument(DocumentHelper.loadResourceStream("tabela_matriz_curricular.docx"))) {
 
-                        List<XWPFTable> tables = matrixDoc.getTables();
+                    List<XWPFTable> tables = matrixDoc.getTables();
 
-                        CTTbl xmlTblToCopy = tables.getFirst().getCTTbl();
+                    CTTbl xmlTblToCopy = tables.getFirst().getCTTbl();
 
-                        try (XmlCursor insertCursor = paragraph.getCTP().newCursor()) {
-                            for (var _ : ccPerPeriod.entrySet()) {
-                                XWPFTable newTable = doc.insertNewTbl(insertCursor);
-                                newTable.getCTTbl().set(xmlTblToCopy.copy());
-                                XWPFParagraph tempP = doc.insertNewParagraph(newTable.getCTTbl().newCursor());
-                                insertCursor.toCursor(tempP.getCTP().newCursor());
-                            }
+                    try (XmlCursor insertCursor = paragraph.getCTP().newCursor()) {
+                        for (var _ : ccPerPeriod.entrySet()) {
+                            XWPFTable newTable = doc.insertNewTbl(insertCursor);
+                            newTable.getCTTbl().set(xmlTblToCopy.copy());
+                            XWPFParagraph tempP = doc.insertNewParagraph(newTable.getCTTbl().newCursor());
+                            insertCursor.toCursor(tempP.getCTP().newCursor());
                         }
-
-                        int pos = doc.getPosOfParagraph(paragraph);
-                        doc.removeBodyElement(pos);
                     }
+
+                    int pos = doc.getPosOfParagraph(paragraph);
+                    doc.removeBodyElement(pos);
                 }
             }
 
@@ -119,8 +114,6 @@ public class MatrixReplacer implements IReplacer {
                 lastRow.getCell(3).setText(sum.totalExt);
                 table = doc.getTableArray(currentTable.nextTable());
             }
-
-
 
             try (var out = new FileOutputStream(temp.toFile())) {
                 doc.write(out);

@@ -1,8 +1,7 @@
 package br.ifpe.edu.replacers.helpers;
 
-import java.net.URISyntaxException;
+import java.io.InputStream;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 public enum DocumentHelper {
 
@@ -18,13 +17,13 @@ public enum DocumentHelper {
         this.outputPath = outputPath;
     }
 
-    public static Path loadTemplatePath() {
-        try {
-            var url = Thread.currentThread().getContextClassLoader().getResource("ppc.docx");
-            if (url == null) throw new IllegalArgumentException("Template not found: " + "ppc.docx");
-            return Paths.get(url.toURI());
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
+    public static InputStream loadResourceStream(final String name) {
+        InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(name);
+
+        if (is == null) {
+            throw new IllegalArgumentException("Template not found: ppc.docx");
         }
+
+        return is;
     }
 }

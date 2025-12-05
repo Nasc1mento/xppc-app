@@ -44,23 +44,20 @@ public class CurricularDrawReplacer implements IReplacer {
             XWPFParagraph paragraph = ParagraphFinder.get(doc, "@@desenho_curricular@@");
 
             if (paragraph != null) {
-                URL dcPath = Thread.currentThread().getContextClassLoader().getResource("tabela_desenho_curricular.docx");
-                if (dcPath != null) {
-                    try (var dcDoc = new XWPFDocument(new FileInputStream(Paths.get(dcPath.getPath()).toFile()))) {
+                try (var dcDoc = new XWPFDocument(DocumentHelper.loadResourceStream("tabela_desenho_curricular.docx"))) {
 
-                        List<XWPFTable> tables = dcDoc.getTables();
+                    List<XWPFTable> tables = dcDoc.getTables();
 
-                        CTTbl xmlTblToCopy = tables.getFirst().getCTTbl();
-                        try (XmlCursor insertCursor = paragraph.getCTP().newCursor()) {
-                            XWPFTable newTable = doc.insertNewTbl(insertCursor);
-                            newTable.getCTTbl().set(xmlTblToCopy.copy());
-                            XWPFParagraph tempP = doc.insertNewParagraph(newTable.getCTTbl().newCursor());
-                            insertCursor.toCursor(tempP.getCTP().newCursor());
-                        }
-
-                        int pos = doc.getPosOfParagraph(paragraph);
-                        doc.removeBodyElement(pos);
+                    CTTbl xmlTblToCopy = tables.getFirst().getCTTbl();
+                    try (XmlCursor insertCursor = paragraph.getCTP().newCursor()) {
+                        XWPFTable newTable = doc.insertNewTbl(insertCursor);
+                        newTable.getCTTbl().set(xmlTblToCopy.copy());
+                        XWPFParagraph tempP = doc.insertNewParagraph(newTable.getCTTbl().newCursor());
+                        insertCursor.toCursor(tempP.getCTP().newCursor());
                     }
+
+                    int pos = doc.getPosOfParagraph(paragraph);
+                    doc.removeBodyElement(pos);
                 }
             }
 

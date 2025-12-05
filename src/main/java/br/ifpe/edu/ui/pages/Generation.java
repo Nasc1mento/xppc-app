@@ -7,8 +7,6 @@ import br.ifpe.edu.ui.common.Page;
 
 import javax.swing.*;
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class Generation extends Page {
@@ -44,7 +42,6 @@ public class Generation extends Page {
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedDir = chooser.getSelectedFile();
             DocumentHelper.INSTANCE.setOutputPath(Paths.get(Paths.get(selectedDir.toURI()).toString(), "ppc.docx"));
-            // DocumentHelper.INSTANCE.setOutputPath(selectedDir.toPath().resolve("ppc.docx"));
 
             try (var rl = new ReplacerList()) {
                 rl.callAll();

@@ -39,7 +39,7 @@ public class HistoryReplacer implements IReplacer {
                 URL historyPath = Thread.currentThread().getContextClassLoader().getResource(historyFileName);
 
                 if (historyPath != null) {
-                    try (var historyDoc = new XWPFDocument(new FileInputStream(Paths.get(historyPath.getPath()).toFile()))) {
+                    try (var historyDoc = new XWPFDocument(DocumentHelper.loadResourceStream(historyFileName))) {
                         StringBuilder sb = new StringBuilder();
                         for (XWPFParagraph p : historyDoc.getParagraphs()) {
                             sb.append(p.getText()).append("\n");

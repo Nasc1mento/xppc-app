@@ -37,23 +37,19 @@ public class OptionalComponentsReplacer implements  IReplacer{
             XWPFParagraph paragraph = ParagraphFinder.get(doc, "@@componentes_optativos@@");
 
             if (paragraph != null) {
-                URL dcPath = Thread.currentThread().getContextClassLoader().getResource("tabela_componentes_optativos_e_eletivos.docx");
-                if (dcPath != null) {
-                    try (var dcDoc = new XWPFDocument(new FileInputStream(Paths.get(dcPath.getPath()).toFile()))) {
+                try (var dcDoc = new XWPFDocument(DocumentHelper.loadResourceStream("tabela_componentes_optativos_e_eletivos.docx"))) {
+                    List<XWPFTable> tables = dcDoc.getTables();
 
-                        List<XWPFTable> tables = dcDoc.getTables();
-
-                        CTTbl xmlTblToCopy = tables.getFirst().getCTTbl();
-                        try (XmlCursor insertCursor = paragraph.getCTP().newCursor()) {
-                            XWPFTable newTable = doc.insertNewTbl(insertCursor);
-                            newTable.getCTTbl().set(xmlTblToCopy.copy());
-                            XWPFParagraph tempP = doc.insertNewParagraph(newTable.getCTTbl().newCursor());
-                            insertCursor.toCursor(tempP.getCTP().newCursor());
-                        }
-
-                        int pos = doc.getPosOfParagraph(paragraph);
-                        doc.removeBodyElement(pos);
+                    CTTbl xmlTblToCopy = tables.getFirst().getCTTbl();
+                    try (XmlCursor insertCursor = paragraph.getCTP().newCursor()) {
+                        XWPFTable newTable = doc.insertNewTbl(insertCursor);
+                        newTable.getCTTbl().set(xmlTblToCopy.copy());
+                        XWPFParagraph tempP = doc.insertNewParagraph(newTable.getCTTbl().newCursor());
+                        insertCursor.toCursor(tempP.getCTP().newCursor());
                     }
+
+                    int pos = doc.getPosOfParagraph(paragraph);
+                    doc.removeBodyElement(pos);
                 }
             }
 

@@ -1,6 +1,6 @@
 package br.ifpe.edu.replacers;
 
-import br.ifpe.edu.CurricularComponentList;
+import br.ifpe.edu.CCList;
 import br.ifpe.edu.replacers.helpers.CurrentTable;
 import br.ifpe.edu.replacers.helpers.DocumentHelper;
 import br.ifpe.edu.replacers.helpers.ParagraphFinder;
@@ -30,7 +30,7 @@ public class CurricularDrawReplacer implements IReplacer {
     public void replace() {
         Path temp = Path.of("ppc_temp.docx");
 
-        Map<String, List<CC>> ccPerPeriod = CurricularComponentList.INSTANCE.getList()
+        Map<String, List<CC>> ccPerPeriod = CCList.INSTANCE.getList()
                 .stream()
                 .collect(Collectors.groupingBy(
                         CC::period,

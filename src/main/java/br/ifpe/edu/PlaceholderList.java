@@ -33,6 +33,7 @@ public enum PlaceholderList  {
     }
 
     public <V> void addPlaceholder(String key, V value) {
+        this.removeIf(key);
         this.placeholders.add(new Placeholder<>(key, value.toString()));
     }
 
@@ -54,10 +55,18 @@ public enum PlaceholderList  {
 
     public String getValue(String key) {
         for (Placeholder<String, String> ph : placeholders) {
-            if (ph.getKey().equals("{{"+key+"}}")) {
+            if (ph.getKey().equals(formatedKey(key))) {
                 return ph.getValue();
             }
         }
         return null;
+    }
+
+    private void removeIf(String key) {
+        placeholders.removeIf(p -> p.getKey().equals(formatedKey(key)));
+    }
+
+    private String formatedKey(String key) {
+        return "{{" + key + "}}";
     }
 }

@@ -20,12 +20,11 @@ public class CNCTReader extends AbstractCSVReader {
         return getAllFromA(NAME_COLUMN);
     }
 
-    public int getHoursByName(String name) {
-        return Integer.parseInt(
-                getAFromB(
+    public String getHoursByName(String name) {
+        return getAFromB(
                         NAME_COLUMN, name, MINIMUM_SUM_OF_CREDIT_HOURS_COLUMN
-                ).split(" ")[0].replaceAll("\\D+", "")
-        );
+                ).split(" ")[0].replaceAll("\\D+", "");
+
     }
 
     public String getAxisByName(String name) {

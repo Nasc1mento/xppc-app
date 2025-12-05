@@ -1,6 +1,6 @@
 package br.ifpe.edu.replacers;
 
-import br.ifpe.edu.CurricularComponentList;
+import br.ifpe.edu.CCList;
 import br.ifpe.edu.replacers.helpers.CurrentTable;
 import br.ifpe.edu.replacers.helpers.DocumentHelper;
 import br.ifpe.edu.replacers.helpers.ParagraphFinder;
@@ -20,10 +20,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 public class EmentaryReplacer implements IReplacer {
-
-
-
-    private final CurricularComponentList list = CurricularComponentList.INSTANCE;
+    private final CCList list = CCList.INSTANCE;
     private final Path docPath = DocumentHelper.INSTANCE.getOutputPath();
     private final CurrentTable currentTable = CurrentTable.INSTANCE;
 

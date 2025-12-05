@@ -1,14 +1,14 @@
 package br.ifpe.edu.ui.pages;
 
-import br.ifpe.edu.CurricularComponentList;
+import br.ifpe.edu.CCList;
 import br.ifpe.edu.Eval;
 import br.ifpe.edu.PlaceholderList;
-import br.ifpe.edu.ui.common.BindPropertyFactory;
-import br.ifpe.edu.ui.common.ComboBox;
-import br.ifpe.edu.ui.common.Page;
+import br.ifpe.edu.readers.CNCTReader;
+import br.ifpe.edu.ui.common.*;
 import br.ifpe.edu.ui.common.TextField;
 import br.ifpe.edu.ui.models.CC;
 import br.ifpe.edu.ui.models.CCType;
+import br.ifpe.edu.ui.models.CourseLevel;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -17,7 +17,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.util.Objects;
 
-public class CurricularComponents extends Page {
+public class CurricularComponents extends Page implements IValidatable {
 
     private final PlaceholderList placeholderList = PlaceholderList.INSTANCE;
 
@@ -53,7 +53,7 @@ public class CurricularComponents extends Page {
 
     private final JTable table = new JTable(tableModel);
 
-    private final CurricularComponentList curricularComponentList = CurricularComponentList.INSTANCE;
+    private final CCList ccList = CCList.INSTANCE;
 
     public  CurricularComponents() {
         setupLayout();
@@ -145,7 +145,7 @@ public class CurricularComponents extends Page {
                 prereq,
                 coreq
         );
-        curricularComponentList.add(newCC);
+        ccList.add(newCC);
 
         codeField.setText("");
         ccField.setText("");
@@ -180,7 +180,7 @@ public class CurricularComponents extends Page {
         if (selectedRow >= 0) {
             String nameToDelete = (String) tableModel.getValueAt(selectedRow, 1);
             tableModel.removeRow(selectedRow);
-            curricularComponentList.remove(nameToDelete);
+            ccList.remove(nameToDelete);
             updatePrereqCoreqBoxes();
         }
     }
@@ -193,10 +193,10 @@ public class CurricularComponents extends Page {
     @Override
     public void onSubmit() {
 
-        var sumMandatory = curricularComponentList.getSum(curricularComponentList.getList(), CCType.MANDATORY);
+        var sumMandatory = ccList.getSum(ccList.getList(), CCType.MANDATORY);
         var sumMandatoryTotal = Eval.eval("%s+%s",  sumMandatory.totalHr, sumMandatory.totalExt);
 
-        var sumOptional = curricularComponentList.getSum(curricularComponentList.getList(), CCType.OPTIONAL);
+        var sumOptional = ccList.getSum(ccList.getList(), CCType.OPTIONAL);
         var sumOptionalTotal = Eval.eval("%s+%s",  sumOptional.totalHr, sumOptional.totalExt);
 
         var ca = placeholderList.getValue("carga_horaria_atividades_complementares_hr");
@@ -219,5 +219,32 @@ public class CurricularComponents extends Page {
         placeholderList.addPlaceholder("ch_optativos_per", sumOptionalPer);
         placeholderList.addPlaceholder("carga_horaria_estagio_supervisionado_per", internshipPer);
         placeholderList.addPlaceholder("carga_horaria_atividades_complementares_per", caPer);
+    }
+    
+    @Override
+    public int check() {
+        final CNCTReader cnctReader = new CNCTReader();
+        String totalCht = placeholderList.getValue("cht_e_estagio");
+        String typeCourse =  placeholderList.getValue("nivel");
+
+        IO.println(typeCourse);
+
+        if (CourseLevel.TECHNOLOGIST.equals(CourseLevel.findByString(typeCourse))) {
+            String recommendedCht = cnctReader.getHoursByName(placeholderList.getValue("nome_do_curso"));
+            if (Eval.evalBoolean("%s < %s", totalCht, recommendedCht)) {
+                return JOptionPane.showConfirmDialog(
+                        this,
+                        String.format("Carga horária abaixo da recomendada pelo CNCT: %s < %s",  totalCht, recommendedCht),
+                        "Aviso",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.WARNING_MESSAGE
+                );
+            }
+
+            return JOptionPane.YES_OPTION;
+        }
+
+
+        return JOptionPane.YES_OPTION;
     }
 }

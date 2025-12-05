@@ -1,8 +1,11 @@
 package br.ifpe.edu.ui.pages;
 
+import br.ifpe.edu.Eval;
+import br.ifpe.edu.PlaceholderList;
 import br.ifpe.edu.replacers.ReplacerList;
 import br.ifpe.edu.replacers.helpers.DocumentHelper;
 import br.ifpe.edu.ui.PagesList;
+import br.ifpe.edu.ui.common.IValidatable;
 import br.ifpe.edu.ui.common.Page;
 
 import javax.swing.*;
@@ -33,6 +36,16 @@ public class Generation extends Page {
 
     @Override
     public void onSubmit() {
+
+        for (var p : PagesList.getList()) {
+            if (p instanceof IValidatable) {
+                int v = ((IValidatable) p).check();
+                if (v != JOptionPane.YES_OPTION) {
+                    return;
+                }
+            }
+        }
+
         var chooser = new JFileChooser();
         chooser.setDialogTitle("Escolha onde quer salvar o documento");
         chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);

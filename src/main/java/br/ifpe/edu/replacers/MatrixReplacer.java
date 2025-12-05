@@ -1,6 +1,6 @@
 package br.ifpe.edu.replacers;
 
-import br.ifpe.edu.CurricularComponentList;
+import br.ifpe.edu.CCList;
 import br.ifpe.edu.PlaceholderList;
 import br.ifpe.edu.replacers.helpers.CurrentTable;
 import br.ifpe.edu.replacers.helpers.DocumentHelper;
@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 
 public class MatrixReplacer implements IReplacer {
 
-    private final CurricularComponentList list = CurricularComponentList.INSTANCE;
+    private final CCList list = CCList.INSTANCE;
     private final Path docPath = DocumentHelper.INSTANCE.getOutputPath();
     private final CurrentTable currentTable = CurrentTable.INSTANCE;
     private final PlaceholderList placeholderList = PlaceholderList.INSTANCE;
@@ -84,7 +84,7 @@ public class MatrixReplacer implements IReplacer {
                 XWPFRun pRun1 = p1.createRun();
                 pRun1.setBold(true);
                 pRun1.setItalic(false);
-                pRun1.setText(entry.getValue().getFirst().period() + "°Período");
+                pRun1.setText(entry.getValue().getFirst().period() + "° Período");
                 XWPFTableRow currentRow =  table.getRows().get(table.getRows().size() - 2);
                 IO.println(currentRow.getTableCells().size());
                 for (CC cc : mandatoryCcs) {

@@ -1,7 +1,6 @@
 package br.ifpe.edu.ui.common;
 
 import javax.swing.*;
-import java.util.Objects;
 
 public class ComboBox<T> extends JComboBox<T> implements IComponent {
 

@@ -5,9 +5,8 @@ import br.ifpe.edu.ui.models.CCType;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
-public enum CurricularComponentList {
+public enum CCList {
 
     INSTANCE;
 
@@ -20,7 +19,7 @@ public enum CurricularComponentList {
 
     private final List<CC> list;
 
-    CurricularComponentList() {
+    CCList() {
         this.list = new ArrayList<>();
     }
 
@@ -36,7 +35,7 @@ public enum CurricularComponentList {
         return List.copyOf(this.list);
     }
 
-    public Sum getSum(List<CC> list, CCType ccType) {
+    public Sum getSum(final List<CC> list, final CCType ccType) {
         var total = new Sum();
         for (CC cc : list) {
             if (cc.type().equals(ccType)) {

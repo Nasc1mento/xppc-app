@@ -231,7 +231,7 @@ public class CurricularComponents extends Page implements IValidatable, ISubmitt
 
         if (CourseLevel.TECHNOLOGIST.equals(CourseLevel.findByString(typeCourse))) {
             String recommendedCht = cnctReader.getHoursByName(placeholderList.getValue("nome_do_curso"));
-            if (Eval.evalBoolean("%s < %s", totalCht, recommendedCht)) {
+            if (Eval.evalBoolean("%s<%s", totalCht, recommendedCht)) {
                 return JOptionPane.showConfirmDialog(
                         this,
                         String.format("Carga horária abaixo da recomendada pelo CNCT: %s < %s",  totalCht, recommendedCht),

@@ -5,8 +5,8 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 public class Eval {
-    public static String eval(final String expStr) {
-        Expression e = new Expression(expStr);
+    public static String eval(String format, String ...args) {
+        Expression e = new Expression(String.format(format, (Object[]) args));
         try {
             BigDecimal r = e.evaluate().getNumberValue();
             return r.setScale(2, RoundingMode.HALF_UP).toPlainString();
@@ -15,21 +15,13 @@ public class Eval {
         }
     }
 
-    public static String eval(String format, String ...args) {
-        return eval(String.format(format, (Object[]) args));
-    }
-
-    public static boolean evalBoolean(final String expStr) {
-        Expression e = new Expression(expStr);
+    public static boolean evalBoolean(String format, String ...args) {
+        Expression e = new Expression(String.format(format, (Object[]) args));
         try {
             BigDecimal r = e.evaluate().getNumberValue();
             return r.compareTo(BigDecimal.ZERO) != 0;
         } catch (Exception _) {
             return false;
         }
-    }
-
-    public static boolean evalBoolean(String format, String ...args) {
-        return evalBoolean(String.format(format, (Object[]) args));
     }
 }

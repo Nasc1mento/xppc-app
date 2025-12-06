@@ -2,7 +2,7 @@ package br.ifpe.edu.replacers;
 
 import br.ifpe.edu.CCList;
 import br.ifpe.edu.replacers.helpers.CurrentTable;
-import br.ifpe.edu.replacers.helpers.DocumentHelper;
+import br.ifpe.edu.replacers.helpers.DocumentPath;
 import br.ifpe.edu.replacers.helpers.ParagraphFinder;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
@@ -18,20 +18,20 @@ import java.util.List;
 
 public class EmentaryReplacer implements IReplacer {
     private final CCList list = CCList.INSTANCE;
-    private final Path docPath = DocumentHelper.INSTANCE.getOutputPath();
+    private final Path docPath = DocumentPath.INSTANCE.getOutputPath();
     private final CurrentTable currentTable = CurrentTable.INSTANCE;
 
 
     @Override
     public void replace() {
-        Path temp = DocumentHelper.getTempPath();
+        Path temp = DocumentPath.getTempPath();
 
         try (XWPFDocument doc = new XWPFDocument(new FileInputStream(docPath.toFile()))) {
 
             XWPFParagraph paragraph = ParagraphFinder.get(doc, "@@ementário@@");
 
             if (paragraph != null) {
-                try (var ementaryDoc = new XWPFDocument(DocumentHelper.loadResourceStream("tabela_ementario.docx"))) {
+                try (var ementaryDoc = new XWPFDocument(DocumentPath.loadResourceStream("tabela_ementario.docx"))) {
 
                     List<XWPFTable> tables = ementaryDoc.getTables();
 

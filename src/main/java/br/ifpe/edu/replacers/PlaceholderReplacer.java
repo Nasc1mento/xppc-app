@@ -1,7 +1,7 @@
 package br.ifpe.edu.replacers;
 
 import br.ifpe.edu.PlaceholderList;
-import br.ifpe.edu.replacers.helpers.DocumentHelper;
+import br.ifpe.edu.replacers.helpers.DocumentPath;
 import org.apache.poi.xwpf.usermodel.*;
 
 import java.io.IOException;
@@ -9,7 +9,7 @@ import java.io.IOException;
 public class PlaceholderReplacer implements IReplacer {
     @Override
     public void replace() throws IOException {
-        try (var doc = new XWPFDocument(DocumentHelper.loadResourceStream("ppc.docx"))) {
+        try (var doc = new XWPFDocument(DocumentPath.loadResourceStream("ppc.docx"))) {
             replaceInDocument(doc);
             replaceInHeaders(doc);
             replaceInFooters(doc);

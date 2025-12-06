@@ -1,11 +1,10 @@
 package br.ifpe.edu;
 
-import br.ifpe.edu.replacers.helpers.DocumentHelper;
+import br.ifpe.edu.replacers.helpers.DocumentPath;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 
 public class AppConfig {
@@ -13,7 +12,7 @@ public class AppConfig {
     private static final Properties properties = new Properties();
 
     static {
-        try (InputStream input = DocumentHelper.loadResourceStream("application.properties")) {
+        try (InputStream input = DocumentPath.loadResourceStream("application.properties")) {
             properties.load(new InputStreamReader(input));
         } catch (IOException _) {
 

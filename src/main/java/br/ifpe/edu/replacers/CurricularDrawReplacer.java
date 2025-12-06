@@ -2,7 +2,7 @@ package br.ifpe.edu.replacers;
 
 import br.ifpe.edu.CCList;
 import br.ifpe.edu.replacers.helpers.CurrentTable;
-import br.ifpe.edu.replacers.helpers.DocumentHelper;
+import br.ifpe.edu.replacers.helpers.DocumentPath;
 import br.ifpe.edu.replacers.helpers.ParagraphFinder;
 import br.ifpe.edu.ui.models.CC;
 import org.apache.poi.xwpf.usermodel.*;
@@ -19,13 +19,13 @@ import java.util.stream.Collectors;
 
 public class CurricularDrawReplacer implements IReplacer {
 
-    private final Path docPath = DocumentHelper.INSTANCE.getOutputPath();
+    private final Path docPath = DocumentPath.INSTANCE.getOutputPath();
     private final CurrentTable currentTable = CurrentTable.INSTANCE;
 
 
     @Override
     public void replace() {
-        Path temp = DocumentHelper.getTempPath();
+        Path temp = DocumentPath.getTempPath();
 
         Map<String, List<CC>> ccPerPeriod = CCList.INSTANCE.getList()
                 .stream()
@@ -39,7 +39,7 @@ public class CurricularDrawReplacer implements IReplacer {
             XWPFParagraph paragraph = ParagraphFinder.get(doc, "@@desenho_curricular@@");
 
             if (paragraph != null) {
-                try (var dcDoc = new XWPFDocument(DocumentHelper.loadResourceStream("tabela_desenho_curricular.docx"))) {
+                try (var dcDoc = new XWPFDocument(DocumentPath.loadResourceStream("tabela_desenho_curricular.docx"))) {
 
                     List<XWPFTable> tables = dcDoc.getTables();
 

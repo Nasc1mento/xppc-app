@@ -3,7 +3,7 @@ package br.ifpe.edu.replacers.helpers;
 import java.io.InputStream;
 import java.nio.file.Path;
 
-public enum DocumentHelper {
+public enum DocumentPath {
 
     INSTANCE;
 

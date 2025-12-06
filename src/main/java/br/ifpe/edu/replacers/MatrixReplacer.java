@@ -1,9 +1,8 @@
 package br.ifpe.edu.replacers;
 
 import br.ifpe.edu.CCList;
-import br.ifpe.edu.PlaceholderList;
 import br.ifpe.edu.replacers.helpers.CurrentTable;
-import br.ifpe.edu.replacers.helpers.DocumentHelper;
+import br.ifpe.edu.replacers.helpers.DocumentPath;
 import br.ifpe.edu.replacers.helpers.ParagraphFinder;
 import br.ifpe.edu.ui.models.CC;
 import br.ifpe.edu.ui.models.CCType;
@@ -22,12 +21,12 @@ import java.util.stream.Collectors;
 public class MatrixReplacer implements IReplacer {
 
     private final CCList list = CCList.INSTANCE;
-    private final Path docPath = DocumentHelper.INSTANCE.getOutputPath();
+    private final Path docPath = DocumentPath.INSTANCE.getOutputPath();
     private final CurrentTable currentTable = CurrentTable.INSTANCE;
 
     @Override
     public void replace() {
-        Path temp = DocumentHelper.getTempPath();
+        Path temp = DocumentPath.getTempPath();
 
         NavigableMap<String, List<CC>> ccPerPeriod = list.getList()
                 .stream()
@@ -42,7 +41,7 @@ public class MatrixReplacer implements IReplacer {
             XWPFParagraph paragraph = ParagraphFinder.get(doc, "@@matriz_curricular@@");
 
             if (paragraph != null) {
-                try (var matrixDoc = new XWPFDocument(DocumentHelper.loadResourceStream("tabela_matriz_curricular.docx"))) {
+                try (var matrixDoc = new XWPFDocument(DocumentPath.loadResourceStream("tabela_matriz_curricular.docx"))) {
 
                     List<XWPFTable> tables = matrixDoc.getTables();
 

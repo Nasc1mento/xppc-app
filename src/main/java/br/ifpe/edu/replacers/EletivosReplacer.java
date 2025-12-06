@@ -2,7 +2,7 @@ package br.ifpe.edu.replacers;
 
 import br.ifpe.edu.CCList;
 import br.ifpe.edu.replacers.helpers.CurrentTable;
-import br.ifpe.edu.replacers.helpers.DocumentHelper;
+import br.ifpe.edu.replacers.helpers.DocumentPath;
 import br.ifpe.edu.replacers.helpers.ParagraphFinder;
 import br.ifpe.edu.ui.models.CC;
 import br.ifpe.edu.ui.models.CCType;
@@ -18,12 +18,12 @@ import java.util.List;
 public class EletivosReplacer implements  IReplacer{
 
     private final CCList list = CCList.INSTANCE;
-    private final Path docPath = DocumentHelper.INSTANCE.getOutputPath();
+    private final Path docPath = DocumentPath.INSTANCE.getOutputPath();
     private final CurrentTable currentTable = CurrentTable.INSTANCE;
 
     @Override
     public void replace() {
-        Path temp = DocumentHelper.getTempPath();
+        Path temp = DocumentPath.getTempPath();
 
         var electiveComponents = list.getList().stream().filter(c -> CCType.ELECTIVE.equals(c.type())).toList();
         try (var doc = new XWPFDocument(new FileInputStream(docPath.toFile()))) {
@@ -31,7 +31,7 @@ public class EletivosReplacer implements  IReplacer{
             XWPFParagraph paragraph = ParagraphFinder.get(doc, "@@componentes_optativos@@");
 
             if (paragraph != null) {
-                try (var dcDoc = new XWPFDocument(DocumentHelper.loadResourceStream("tabela_componentes_optativos_e_eletivos.docx"))) {
+                try (var dcDoc = new XWPFDocument(DocumentPath.loadResourceStream("tabela_componentes_optativos_e_eletivos.docx"))) {
 
                     List<XWPFTable> tables = dcDoc.getTables();
 

@@ -23,7 +23,7 @@ public class OptionalComponentsReplacer implements  IReplacer{
 
     @Override
     public void replace() {
-        Path temp = Path.of("ppc_temp.docx");
+        Path temp = DocumentHelper.getTempPath();
 
        var optionalComponents = list.getList().stream().filter(c -> CCType.OPTIONAL.equals(c.type())).toList();
         try (XWPFDocument doc = new XWPFDocument(new FileInputStream(docPath.toFile()))) {
@@ -82,6 +82,6 @@ public class OptionalComponentsReplacer implements  IReplacer{
             throw new RuntimeException(e);
         }
 
-        save(temp);
+        save();
     }
 }

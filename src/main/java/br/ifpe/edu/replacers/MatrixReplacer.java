@@ -27,7 +27,7 @@ public class MatrixReplacer implements IReplacer {
 
     @Override
     public void replace() {
-        Path temp = Path.of("ppc_temp.docx");
+        Path temp = DocumentHelper.getTempPath();
 
         NavigableMap<String, List<CC>> ccPerPeriod = list.getList()
                 .stream()
@@ -115,6 +115,6 @@ public class MatrixReplacer implements IReplacer {
             throw new RuntimeException(e);
         }
 
-       save(temp);
+       save();
     }
 }

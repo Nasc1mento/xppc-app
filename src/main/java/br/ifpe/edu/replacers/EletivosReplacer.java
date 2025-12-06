@@ -84,6 +84,6 @@ public class EletivosReplacer implements  IReplacer{
             throw new RuntimeException(e);
         }
 
-       save(temp);
+       save();
     }
 }

@@ -24,7 +24,7 @@ public class EmentaryReplacer implements IReplacer {
 
     @Override
     public void replace() {
-        Path temp = Path.of("ppc_temp.docx");
+        Path temp = DocumentHelper.getTempPath();
 
         try (XWPFDocument doc = new XWPFDocument(new FileInputStream(docPath.toFile()))) {
 
@@ -77,6 +77,6 @@ public class EmentaryReplacer implements IReplacer {
             throw new RuntimeException(e);
         }
 
-        save(temp);
+        save();
     }
 }

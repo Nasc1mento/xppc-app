@@ -6,7 +6,6 @@ import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 
 public interface IReplacer {
@@ -20,9 +19,13 @@ public interface IReplacer {
         }
     }
 
-    default void save(Path p) {
+    default void save() {
         try {
-            Files.move(p, DocumentHelper.INSTANCE.getOutputPath(), StandardCopyOption.REPLACE_EXISTING);
+            Files.move(
+                    DocumentHelper.getTempPath(),
+                    DocumentHelper.INSTANCE.getOutputPath(),
+                    StandardCopyOption.REPLACE_EXISTING
+            );
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

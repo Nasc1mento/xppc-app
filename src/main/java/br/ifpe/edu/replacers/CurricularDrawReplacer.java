@@ -25,7 +25,7 @@ public class CurricularDrawReplacer implements IReplacer {
 
     @Override
     public void replace() {
-        Path temp = Path.of("ppc_temp.docx");
+        Path temp = DocumentHelper.getTempPath();
 
         Map<String, List<CC>> ccPerPeriod = CCList.INSTANCE.getList()
                 .stream()
@@ -88,6 +88,6 @@ public class CurricularDrawReplacer implements IReplacer {
             throw new RuntimeException(e);
         }
 
-        save(temp);
+        save();
     }
 }

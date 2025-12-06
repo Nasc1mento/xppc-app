@@ -22,7 +22,7 @@ public class HistoryReplacer implements IReplacer {
 
     @Override
     public void replace() {
-        Path temp = Path.of("ppc_temp.docx");
+        Path temp = DocumentHelper.getTempPath();
 
         try (var doc = new XWPFDocument(new FileInputStream(docPath.toFile()))) {
             XWPFParagraph paragraph = ParagraphFinder.get(doc, "$$historico_do_campus$$");
@@ -55,6 +55,6 @@ public class HistoryReplacer implements IReplacer {
             throw new RuntimeException(e);
         }
 
-        save(temp);
+        save();
     }
 }

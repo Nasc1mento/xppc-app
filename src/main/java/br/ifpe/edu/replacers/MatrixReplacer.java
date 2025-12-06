@@ -12,11 +12,8 @@ import org.apache.xmlbeans.XmlCursor;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTbl;
 
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.NavigableMap;
 import java.util.TreeMap;
@@ -27,7 +24,6 @@ public class MatrixReplacer implements IReplacer {
     private final CCList list = CCList.INSTANCE;
     private final Path docPath = DocumentHelper.INSTANCE.getOutputPath();
     private final CurrentTable currentTable = CurrentTable.INSTANCE;
-    private final PlaceholderList placeholderList = PlaceholderList.INSTANCE;
 
     @Override
     public void replace() {
@@ -66,9 +62,7 @@ public class MatrixReplacer implements IReplacer {
                 }
             }
 
-            try (var out = new FileOutputStream(temp.toFile())) {
-                doc.write(out);
-            }
+            save(doc);
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -115,18 +109,12 @@ public class MatrixReplacer implements IReplacer {
                 table = doc.getTableArray(currentTable.nextTable());
             }
 
-            try (var out = new FileOutputStream(temp.toFile())) {
-                doc.write(out);
-            }
+            save(doc);
 
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        try {
-            Files.move(temp, docPath, StandardCopyOption.REPLACE_EXISTING);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+       save(temp);
     }
 }

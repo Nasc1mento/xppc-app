@@ -17,7 +17,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.util.Objects;
 
-public class CurricularComponents extends Page implements IValidatable {
+public class CurricularComponents extends Page implements IValidatable, ISubmittable {
 
     private final PlaceholderList placeholderList = PlaceholderList.INSTANCE;
 

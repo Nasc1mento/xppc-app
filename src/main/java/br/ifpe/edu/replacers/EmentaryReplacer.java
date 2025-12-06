@@ -12,11 +12,8 @@ import org.apache.xmlbeans.XmlCursor;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTbl;
 
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 public class EmentaryReplacer implements IReplacer {
@@ -54,9 +51,7 @@ public class EmentaryReplacer implements IReplacer {
                 }
             }
 
-            try (var out = new FileOutputStream(temp.toFile())) {
-                doc.write(out);
-            }
+            save(doc);
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -76,18 +71,12 @@ public class EmentaryReplacer implements IReplacer {
                 table = doc.getTableArray(currentTable.nextTable());
             }
 
-            try (var out = new FileOutputStream(temp.toFile())) {
-                doc.write(out);
-            }
+            save(doc);
 
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        try {
-            Files.move(temp, docPath, StandardCopyOption.REPLACE_EXISTING);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        save(temp);
     }
 }

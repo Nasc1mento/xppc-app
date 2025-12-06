@@ -11,11 +11,8 @@ import org.apache.xmlbeans.XmlCursor;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTbl;
 
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 public class EletivosReplacer implements  IReplacer{
@@ -26,7 +23,7 @@ public class EletivosReplacer implements  IReplacer{
 
     @Override
     public void replace() {
-        Path temp = Path.of("ppc_temp.docx");
+        Path temp = DocumentHelper.getTempPath();
 
         var electiveComponents = list.getList().stream().filter(c -> CCType.ELECTIVE.equals(c.type())).toList();
         try (var doc = new XWPFDocument(new FileInputStream(docPath.toFile()))) {
@@ -51,9 +48,7 @@ public class EletivosReplacer implements  IReplacer{
                 }
             }
 
-            try (var out = new FileOutputStream(temp.toFile())) {
-                doc.write(out);
-            }
+            save(doc);
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -83,18 +78,12 @@ public class EletivosReplacer implements  IReplacer{
             table.removeRow(1);
             currentTable.nextTable();
 
-            try (var out = new FileOutputStream(temp.toFile())) {
-                doc.write(out);
-            }
+           save(doc);
 
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        try {
-            Files.move(temp, docPath, StandardCopyOption.REPLACE_EXISTING);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+       save(temp);
     }
 }

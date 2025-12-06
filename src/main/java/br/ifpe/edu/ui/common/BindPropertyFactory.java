@@ -42,11 +42,6 @@ public class BindPropertyFactory {
             return c.getStringValue() != null && !c.getStringValue().trim().isEmpty();
         }
 
-        public BindProperty addRule(BooleanSupplier rule) {
-            validators.add(rule);
-            return this;
-        }
-
         public void onChange(Consumer<Boolean> action) {
             this.onStatusChange = action;
             check();
@@ -59,8 +54,6 @@ public class BindPropertyFactory {
 
             onStatusChange.accept(isValid);
         }
-
-
     }
 
     private record SimpleDocumentListener(Runnable action) implements DocumentListener {

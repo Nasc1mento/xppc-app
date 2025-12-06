@@ -3,6 +3,7 @@ package br.ifpe.edu.ui.pages;
 import br.ifpe.edu.PlaceholderList;
 import br.ifpe.edu.ui.common.ComboBox;
 import br.ifpe.edu.ui.common.Page;
+import br.ifpe.edu.ui.common.ISubmittable;
 import br.ifpe.edu.ui.common.TextField;
 import br.ifpe.edu.ui.models.Situation;
 import br.ifpe.edu.ui.models.Status;
@@ -10,7 +11,7 @@ import br.ifpe.edu.ui.models.Status;
 import javax.swing.*;
 import java.util.List;
 
-public class CourseSituation extends Page {
+public class CourseSituation extends Page implements ISubmittable {
 
     private final TextField cc = new TextField(10);
     private final TextField cpc = new TextField(10);

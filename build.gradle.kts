@@ -5,7 +5,14 @@ plugins {
 }
 
 group = "br.ifpe.edu"
-version = "1.0-SNAPSHOT"
+version = "1.0"
+
+
+tasks.withType<ProcessResources> {
+    filesMatching("**/application.properties") {
+        expand(mapOf("projectVersion" to project.version))
+    }
+}
 
 java {
     toolchain {

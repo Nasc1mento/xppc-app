@@ -5,6 +5,7 @@ import br.ifpe.edu.PlaceholderList;
 import br.ifpe.edu.replacers.ReplacerList;
 import br.ifpe.edu.replacers.helpers.DocumentHelper;
 import br.ifpe.edu.ui.PagesList;
+import br.ifpe.edu.ui.common.ISubmittable;
 import br.ifpe.edu.ui.common.IValidatable;
 import br.ifpe.edu.ui.common.Page;
 
@@ -12,7 +13,7 @@ import javax.swing.*;
 import java.io.File;
 import java.nio.file.Paths;
 
-public class Generation extends Page {
+public class Generation extends Page implements ISubmittable {
 
     private final JButton generateButton = new JButton("Gerar Documento");
 
@@ -22,7 +23,13 @@ public class Generation extends Page {
     }
 
     private void setupListeners() {
-        generateButton.addActionListener(_ -> PagesList.getList().forEach(Page::onSubmit));
+        generateButton.addActionListener(_ -> {
+            for (var p : PagesList.getList()) {
+                if (p instanceof ISubmittable) {
+                    ((ISubmittable) p).onSubmit();
+                }
+            }
+        });
     }
 
     private void setupForm() {

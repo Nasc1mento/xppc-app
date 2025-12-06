@@ -10,24 +10,24 @@ public abstract class Page extends JPanel {
     private int row = 0;
 
     public Page() {
-        this.setLayout(new GridBagLayout());
-        this.gbc = new GridBagConstraints();
+        setLayout(new GridBagLayout());
+        gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 10, 5, 10);
         gbc.anchor = GridBagConstraints.WEST;
     }
 
-    protected void addTable(JTable table) {
+    protected void addTable(final JTable table) {
         var sp = new JScrollPane(table);
         gbc.gridx = 0;
         gbc.gridy = this.row;
         gbc.gridwidth = 2;
         gbc.weightx = 1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        this.add(sp, gbc);
+        add(sp, gbc);
         gbc.gridwidth = 1;
         gbc.weightx = 0;
         gbc.fill = GridBagConstraints.NONE;
-        this.row++;
+        row++;
     }
 
 
@@ -37,18 +37,26 @@ public abstract class Page extends JPanel {
                 gbc.gridx = 0;
                 gbc.gridy = this.row;
                 gbc.anchor = GridBagConstraints.EAST;
-                this.add(cs[0], gbc);
+                add(cs[0], gbc);
             } else {
                 gbc.gridx = 1;
                 gbc.anchor = GridBagConstraints.WEST;
-                this.add(cs[i], gbc);
-                this.row++;
+                add(cs[i], gbc);
+                row++;
             }
         }
+
+        row++;
+    }
+
+    protected void addRow(final Component cs, final int alignment) {
+        gbc.gridx = 1;
+        gbc.gridy = this.row;
+        gbc.anchor = alignment;
+        add(cs, gbc);
+        row++;
     }
 
 
     public abstract String getTitle();
-
-    public abstract void onSubmit();
 }

@@ -9,12 +9,9 @@ import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
 
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
 
 public class HistoryReplacer implements IReplacer {
 
@@ -52,18 +49,12 @@ public class HistoryReplacer implements IReplacer {
                 }
             }
 
-            try (var out = new FileOutputStream(temp.toFile())) {
-                doc.write(out);
-            }
+            save(doc);
 
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        try {
-            Files.move(temp, docPath, StandardCopyOption.REPLACE_EXISTING);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        save(temp);
     }
 }

@@ -4,6 +4,7 @@ package br.ifpe.edu.ui.pages;
 import br.ifpe.edu.PlaceholderList;
 import br.ifpe.edu.readers.CampusReader;
 import br.ifpe.edu.ui.common.ComboBox;
+import br.ifpe.edu.ui.common.ISubmittable;
 import br.ifpe.edu.ui.common.Page;
 import br.ifpe.edu.ui.common.TextField;
 
@@ -12,7 +13,7 @@ import java.awt.*;
 import java.util.Map;
 import java.util.Objects;
 
-public class Proponent extends Page {
+public class Proponent extends Page implements ISubmittable {
 
     private final TextField cnpjField = new TextField(12);
     private final TextField cityField = new TextField(20);

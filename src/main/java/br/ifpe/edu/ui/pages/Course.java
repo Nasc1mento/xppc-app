@@ -5,6 +5,7 @@ import br.ifpe.edu.PlaceholderList;
 import br.ifpe.edu.readers.CNCTReader;
 import br.ifpe.edu.ui.common.ComboBox;
 import br.ifpe.edu.ui.common.Page;
+import br.ifpe.edu.ui.common.ISubmittable;
 import br.ifpe.edu.ui.common.TextField;
 import br.ifpe.edu.ui.models.CourseLevel;
 import br.ifpe.edu.ui.models.CourseModality;
@@ -14,7 +15,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
 
-public class Course extends Page {
+public class Course extends Page implements ISubmittable {
 
     private final ComboBox<CourseLevel> levelBox = new ComboBox<>(CourseLevel.values());
     private final TextField axisBox = new TextField(30);

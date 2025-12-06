@@ -26,4 +26,8 @@ public enum DocumentHelper {
 
         return is;
     }
+
+    public static Path getTempPath() {
+        return Path.of("ppc_temp.docx");
+    }
 }

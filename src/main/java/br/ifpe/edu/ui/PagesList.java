@@ -8,6 +8,7 @@ import java.util.List;
 public class PagesList {
 
     private static final List<Page> PAGES = List.of(
+            new Cover(),
             new Proponent(),
             new Course(),
             new CourseSituation(),

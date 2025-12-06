@@ -22,7 +22,7 @@ public interface IReplacer {
 
     default void save(Path p) {
         try {
-            Files.move(p, DocumentHelper.INSTANCE.getOutputPath(),  StandardCopyOption.REPLACE_EXISTING);
+            Files.move(p, DocumentHelper.INSTANCE.getOutputPath(), StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

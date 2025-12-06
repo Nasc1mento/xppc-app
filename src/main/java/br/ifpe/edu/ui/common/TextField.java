@@ -53,7 +53,7 @@ public class TextField extends JFormattedTextField implements IComponent {
         NumberFormatter formatter = new NumberFormatter(dFormat);
         formatter.setValueClass(Double.class);
         formatter.setMinimum(0.0);
-        formatter.setAllowsInvalid(false);
+        formatter.setAllowsInvalid(true);
         formatter.setCommitsOnValidEdit(true);
 
         this.setFormatterFactory(new DefaultFormatterFactory(formatter));

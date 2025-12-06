@@ -47,7 +47,7 @@ public class Cover extends Page {
             JOptionPane.showMessageDialog(
                     this,
                     sb.toString(),
-                    "Sobre a Equipe",
+                    "Sobre",
                     JOptionPane.INFORMATION_MESSAGE
             );
         });

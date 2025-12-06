@@ -66,8 +66,6 @@ public class Window extends JFrame {
         titleBar.add(titleLabel, BorderLayout.CENTER);
 
         themeComboBox.setPreferredSize(new Dimension(140, 30));
-
-
         titleBar.add(themeComboBox, BorderLayout.WEST);
 
         add(titleBar, BorderLayout.NORTH);

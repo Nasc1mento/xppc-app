@@ -24,10 +24,10 @@ public class BindPropertyFactory {
 
         public BindProperty bind(IComponent c) {
             if (c instanceof TextField) {
-                validators.add(() -> isEmptyAndNull(c));
+                validators.add(() -> isNotNullAndNotEmpty(c));
                 ((TextField)c).getDocument().addDocumentListener(new SimpleDocumentListener(this::check));
             } else if (c instanceof ComboBox<?>) {
-                validators.add(() -> isEmptyAndNull(c));
+                validators.add(() -> isNotNullAndNotEmpty(c));
                 ((ComboBox<?>)c).addItemListener(e -> {
                     if (e.getStateChange() == ItemEvent.SELECTED || e.getStateChange() == ItemEvent.DESELECTED) {
                         check();
@@ -38,7 +38,7 @@ public class BindPropertyFactory {
             return this;
         }
 
-        private boolean isEmptyAndNull(IComponent c) {
+        private boolean isNotNullAndNotEmpty(IComponent c) {
             return c.getStringValue() != null && !c.getStringValue().trim().isEmpty();
         }
 

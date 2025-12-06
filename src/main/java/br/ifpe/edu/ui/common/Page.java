@@ -51,7 +51,7 @@ public abstract class Page extends JPanel {
 
     protected void addRow(final Component cs, final int alignment) {
         gbc.gridx = 1;
-        gbc.gridy = this.row;
+        gbc.gridy = row;
         gbc.anchor = alignment;
         add(cs, gbc);
         row++;

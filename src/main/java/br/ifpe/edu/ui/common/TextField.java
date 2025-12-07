@@ -57,7 +57,6 @@ public class TextField extends JFormattedTextField implements IComponent {
         formatter.setCommitsOnValidEdit(true);
 
         this.setFormatterFactory(new DefaultFormatterFactory(formatter));
-        this.setText("0.00");
         return this;
     }
 
@@ -68,15 +67,18 @@ public class TextField extends JFormattedTextField implements IComponent {
         NumberFormatter formatter = new NumberFormatter(format);
         formatter.setValueClass(Integer.class);
         formatter.setMinimum(0);
-        formatter.setAllowsInvalid(false);
+        formatter.setAllowsInvalid(true);
         formatter.setCommitsOnValidEdit(true);
 
         this.setFormatterFactory(new DefaultFormatterFactory(formatter));
-        this.setText("0");
         return this;
     }
 
     public String getStringValue() {
         return Objects.toString(this.getText());
+    }
+
+    public void clear() {
+        setText("");
     }
 }

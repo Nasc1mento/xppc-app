@@ -147,11 +147,13 @@ public class CurricularComponents extends Page implements IValidatable, ISubmitt
         );
         ccList.add(newCC);
 
-        codeField.setText("");
-        ccField.setText("");
-        creditsField.setText("");
-        hrPrField.setText("");
-        extField.setText("");
+        codeField.clear();
+        creditsField.clear();
+        ccField.clear();
+        hrPrField.clear();
+        hrTeoField.clear();
+        extField.clear();
+        periodField.clear();
         updatePrereqCoreqBoxes();
     }
 

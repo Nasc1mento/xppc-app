@@ -15,6 +15,8 @@ public class PlaceholderReplacer implements IReplacer {
             replaceInFooters(doc);
             save(doc);
         }
+
+        save();
     }
 
     private void replaceInDocument(XWPFDocument doc) {

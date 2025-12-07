@@ -6,12 +6,10 @@ import com.formdev.flatlaf.FlatDarkLaf;
 import javax.swing.*;
 
 public class AppMain {
-    public static void main(String[] args) {
+    static void main() {
         try {
             UIManager.setLookAndFeel(new FlatDarkLaf());
-        } catch (Exception e) {
-           e.printStackTrace();
-        }
+        } catch (Exception _) { }
 
         SwingUtilities.invokeLater(Window::new);
     }

@@ -212,10 +212,10 @@ public class CurricularComponents extends Page implements IValidatable, ISubmitt
         placeholderList.addPlaceholder("cht_ha", Eval.eval("(%s*60)/45", totalSum));
         placeholderList.addPlaceholder("cht_e_estagio", Eval.eval("%s+%s", totalSum, internship));
 
-        var sumMandatoryPer = Eval.eval("%s * 100 / %s", sumMandatoryTotal, totalSum);
-        var sumOptionalPer = Eval.eval("%s * 100 / %s", sumOptionalTotal, totalSum);
-        var caPer = Eval.eval("%s * 100 / %s", ca, totalSum);
-        var internshipPer = Eval.eval("%s * 100 / %s", internship, totalSum);
+        var sumMandatoryPer = Eval.eval("%s*100/%s", sumMandatoryTotal, totalSum);
+        var sumOptionalPer = Eval.eval("%s*100/%s", sumOptionalTotal, totalSum);
+        var caPer = Eval.eval("%s*100/%s", ca, totalSum);
+        var internshipPer = Eval.eval("%s*100/%s", internship, totalSum);
 
         placeholderList.addPlaceholder("ch_obrigatorios_per", sumMandatoryPer);
         placeholderList.addPlaceholder("ch_optativos_per", sumOptionalPer);
@@ -236,7 +236,10 @@ public class CurricularComponents extends Page implements IValidatable, ISubmitt
             if (Eval.evalBoolean("%s<%s", totalCht, recommendedCht)) {
                 return JOptionPane.showConfirmDialog(
                         this,
-                        String.format("Carga horária abaixo da recomendada pelo CNCT: %s < %s",  totalCht, recommendedCht),
+                        String.format(
+                                "Carga horária abaixo da recomendada pelo Catálogo Nacional dos Cursos Tecnólogos. Atual: %s. Recomendada: %s",
+                                totalCht, recommendedCht
+                        ),
                         "Aviso",
                         JOptionPane.YES_NO_OPTION,
                         JOptionPane.WARNING_MESSAGE

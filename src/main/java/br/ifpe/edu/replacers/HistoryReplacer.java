@@ -4,10 +4,9 @@ import br.ifpe.edu.PlaceholderList;
 import br.ifpe.edu.readers.CampusReader;
 import br.ifpe.edu.replacers.helpers.DocumentPath;
 import br.ifpe.edu.replacers.helpers.ParagraphFinder;
-import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
-import org.apache.xmlbeans.XmlCursor; // Importante
+import org.apache.xmlbeans.XmlCursor;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -23,8 +22,6 @@ public class HistoryReplacer implements IReplacer {
     @Override
     public void replace() {
         try (var doc = new XWPFDocument(new FileInputStream(docPath.toFile()))) {
-
-            // Localiza o parágrafo do placeholder ($$historico...$$)
             XWPFParagraph placeholderParagraph = ParagraphFinder.get(doc, "$$historico_do_campus$$");
 
             if (placeholderParagraph != null) {

@@ -10,6 +10,8 @@ import br.ifpe.edu.ui.common.TextField;
 
 import javax.swing.*;
 import java.awt.*;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Map;
 import java.util.Objects;
 
@@ -88,11 +90,13 @@ public class Proponent extends Page implements ISubmittable {
     public void onSubmit() {
         placeholderList.addPlaceholder("campus", Objects.toString(campusBox.getSelectedItem()));
         placeholderList.addPlaceholder("cnpj", cnpjField.getText());
+        placeholderList.addPlaceholder("cidade", Objects.toString(cityField.getText()));
         placeholderList.addPlaceholder("cidade_uf_cep", String.format("%s, PE, %s, %s", cityField.getText(), neighbourhoodField.getText(), cepField.getText()));
         placeholderList.addPlaceholder("rua_numero", String.format("%s, %s", streetField.getText(), numberField.getText()));
         placeholderList.addPlaceholder("telefone", telephoneNumberField.getText());
         placeholderList.addPlaceholder("email", emailField.getText());
         placeholderList.addPlaceholder("ato_legal_de_criacao", aldcField.getText());
         placeholderList.addPlaceholder("sitio", websiteField.getText());
+        placeholderList.addPlaceholder("ano", ZonedDateTime.now(ZoneId.of("America/Recife")).getYear());
     }
 }

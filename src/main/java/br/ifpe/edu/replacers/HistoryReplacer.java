@@ -4,9 +4,10 @@ import br.ifpe.edu.PlaceholderList;
 import br.ifpe.edu.readers.CampusReader;
 import br.ifpe.edu.replacers.helpers.DocumentPath;
 import br.ifpe.edu.replacers.helpers.ParagraphFinder;
+import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
-import org.apache.poi.xwpf.usermodel.XWPFRun;
+import org.apache.xmlbeans.XmlCursor; // Importante
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -16,18 +17,17 @@ import java.nio.file.Path;
 public class HistoryReplacer implements IReplacer {
 
     private final Path docPath = DocumentPath.INSTANCE.getOutputPath();
-
     private final PlaceholderList placeholderList = PlaceholderList.INSTANCE;
     private final CampusReader campusReader = new CampusReader();
 
     @Override
     public void replace() {
-        Path temp = DocumentPath.getTempPath();
-
         try (var doc = new XWPFDocument(new FileInputStream(docPath.toFile()))) {
-            XWPFParagraph paragraph = ParagraphFinder.get(doc, "$$historico_do_campus$$");
 
-            if (paragraph != null) {
+            // Localiza o parágrafo do placeholder ($$historico...$$)
+            XWPFParagraph placeholderParagraph = ParagraphFinder.get(doc, "$$historico_do_campus$$");
+
+            if (placeholderParagraph != null) {
                 String historyFileName = campusReader.getByNameAndColumn(
                         placeholderList.getValue("campus"), CampusReader.Columns.HISTORY_COLUMN
                 ) + ".docx";
@@ -36,17 +36,19 @@ public class HistoryReplacer implements IReplacer {
 
                 if (historyPath != null) {
                     try (var historyDoc = new XWPFDocument(DocumentPath.loadResourceStream(historyFileName))) {
-                        StringBuilder sb = new StringBuilder();
-                        for (XWPFParagraph p : historyDoc.getParagraphs()) {
-                            sb.append(p.getText()).append("\n");
+
+                        try (XmlCursor cursor = placeholderParagraph.getCTP().newCursor()) {
+                            for (XWPFParagraph pHistory : historyDoc.getParagraphs()) {
+                                XWPFParagraph newP = doc.insertNewParagraph(cursor);
+                                newP.getCTP().set(pHistory.getCTP());
+                                cursor.toCursor(newP.getCTP().newCursor());
+                            }
                         }
-                        for (int i = paragraph.getRuns().size() - 1; i >= 0; i--) {
-                            paragraph.removeRun(i);
-                        }
-                        XWPFRun run = paragraph.createRun();
-                        run.setText(sb.toString());
                     }
                 }
+
+                int pos = doc.getPosOfParagraph(placeholderParagraph);
+                doc.removeBodyElement(pos);
             }
 
             save(doc);

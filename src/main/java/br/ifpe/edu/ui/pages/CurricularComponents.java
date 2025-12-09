@@ -229,8 +229,6 @@ public class CurricularComponents extends Page implements IValidatable, ISubmitt
         String totalCht = placeholderList.getValue("cht_e_estagio");
         String typeCourse =  placeholderList.getValue("nivel");
 
-        IO.println(typeCourse);
-
         if (CourseLevel.TECHNOLOGIST.equals(CourseLevel.findByString(typeCourse))) {
             String recommendedCht = cnctReader.getHoursByName(placeholderList.getValue("nome_do_curso"));
             if (Eval.evalBoolean("%s<%s", totalCht, recommendedCht)) {

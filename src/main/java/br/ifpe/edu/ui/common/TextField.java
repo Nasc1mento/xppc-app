@@ -15,14 +15,13 @@ public class TextField extends JFormattedTextField implements IComponent {
 
     private String placeholder;
 
-    public TextField() { }
-
     public TextField(final int pColumns) {
         setColumns(pColumns);
     }
 
-    public TextField(final String pText) {
-        super(pText);
+    public TextField setPlaceholder(String pText) {
+        placeholder = pText;
+        return this;
     }
 
     @Override

@@ -73,7 +73,7 @@ public class CurricularComponents extends Page implements IValidatable, ISubmitt
         addRow(new JLabel("Créditos: "), creditsField);
         addRow(new JLabel("Total de Horas Práticas (H/R): "), hrPrField);
         addRow(new JLabel("Total de Horas Teóricas (H/R): "), hrTeoField);
-        addRow(new JLabel("Total de Horas (H/R EXT): "), extField);
+        addRow(new JLabel("Total de Horas de Extensão (H/R): "), extField);
         addRow(new JLabel("Tipo: "),  typeBox);
         addRow(new JLabel("Período: "), periodField);
         addRow(new JLabel("Pré-requisitos"), prereqBox);
@@ -86,6 +86,7 @@ public class CurricularComponents extends Page implements IValidatable, ISubmitt
 
         BindPropertyFactory.create()
                 .bind(codeField)
+                .bind(creditsField)
                 .bind(ccField)
                 .bind(periodField)
                 .bind(hrPrField)

@@ -14,7 +14,7 @@ public class ReplacerList implements AutoCloseable {
     }
 
     private void loadList() {
-        this.list = List.of(
+        list = List.of(
                 new PlaceholderReplacer(),
                 new CurricularDrawReplacer(),
                 new MatrixReplacer(),

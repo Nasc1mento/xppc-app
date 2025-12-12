@@ -1,7 +1,10 @@
 package br.ifpe.edu.replacers;
 
 import br.ifpe.edu.replacers.helpers.CurrentTable;
+import br.ifpe.edu.replacers.helpers.DocumentPath;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
@@ -15,24 +18,28 @@ public class ReplacerList implements AutoCloseable {
 
     private void loadList() {
         list = List.of(
-                new CurricularDrawReplacer(),
-                new MatrixReplacer(),
-                new OptionalComponentsReplacer(),
-                new EletivosReplacer(),
-                new EmentaryReplacer(),
-                new HistoryReplacer(),
-                new CurricularFormReplacer(),
+                new CurricularDrawReplacer(),       //1
+                new MatrixReplacer(),               //2
+                new OptionalComponentsReplacer(),   //3
+                new EletivosReplacer(),             //4
+                new EmentaryReplacer(),             //5
+                new HistoryReplacer(),              //6
+                new CurricularFormReplacer(),       //7
+
                 new PlaceholderReplacer()
         );
     }
 
-    public void cAll() {
-        try {
-            for (IReplacer replacer : list) {
-                replacer.replace();
+    public void cAll() throws IOException {
+
+        try (XWPFDocument doc = new XWPFDocument(DocumentPath.loadResourceStream("ppc.docx"))) {
+            try (var out = new FileOutputStream(DocumentPath.getTempPath().toFile())) {
+                doc.write(out);
             }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        }
+
+        for (IReplacer replacer : list) {
+            replacer.replace();
         }
     }
 

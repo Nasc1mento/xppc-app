@@ -11,23 +11,17 @@ import java.nio.file.StandardCopyOption;
 public interface IReplacer {
     void replace() throws IOException;
 
-    default void save(XWPFDocument d) {
+    default void save(XWPFDocument d) throws IOException {
         try (var out = new FileOutputStream(DocumentPath.getTempPath().toFile())) {
             d.write(out);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
 
-    default void save() {
-        try {
-            Files.move(
-                    DocumentPath.getTempPath(),
-                    DocumentPath.INSTANCE.getOutputPath(),
-                    StandardCopyOption.REPLACE_EXISTING
-            );
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    default void save() throws IOException {
+        Files.move(
+                DocumentPath.getTempPath(),
+                DocumentPath.INSTANCE.getOutputPath(),
+                StandardCopyOption.REPLACE_EXISTING
+        );
     }
 }

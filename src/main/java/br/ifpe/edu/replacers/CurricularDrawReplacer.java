@@ -32,7 +32,7 @@ public class CurricularDrawReplacer implements IReplacer {
                         TreeMap::new,
                         Collectors.toList()
                 ));
-        try (XWPFDocument doc = new XWPFDocument(DocumentPath.loadResourceStream("ppc.docx"))) {
+        try (XWPFDocument doc = new XWPFDocument(new FileInputStream(temp.toFile()))) {
 
             XWPFParagraph paragraph = ParagraphFinder.get(doc, "@@desenho_curricular@@");
 

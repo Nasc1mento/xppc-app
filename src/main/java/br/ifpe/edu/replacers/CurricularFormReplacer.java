@@ -3,9 +3,11 @@ package br.ifpe.edu.replacers;
 import br.ifpe.edu.CCList;
 import br.ifpe.edu.replacers.helpers.CurrentTable;
 import br.ifpe.edu.replacers.helpers.DocumentPath;
+import br.ifpe.edu.replacers.helpers.ParagraphFinder;
 import br.ifpe.edu.ui.models.CC;
 import br.ifpe.edu.ui.models.CCType;
 import org.apache.poi.xwpf.usermodel.*;
+import org.apache.xmlbeans.XmlCursor;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -24,20 +26,32 @@ public class CurricularFormReplacer implements IReplacer {
     public void replace() throws IOException {
         try (
                 var doc = new XWPFDocument(new FileInputStream(docPath.toFile()));
-                var ccFormDoc = new XWPFDocument(DocumentPath.loadResourceStream("formulario_componente_curricular.docx"))
         ) {
 
-            for (var _ : ccList) {
-                for (IBodyElement element : ccFormDoc.getBodyElements()) {
-                    if (element instanceof XWPFParagraph sourceP) {
-                        XWPFParagraph newP = doc.createParagraph();
-                        newP.getCTP().set(sourceP.getCTP());
-                    } else if (element instanceof XWPFTable sourceT) {
-                        XWPFTable newT = doc.createTable();
-                        if (!newT.getRows().isEmpty()) newT.removeRow(0); {
-                            newT.getCTTbl().set(sourceT.getCTTbl());
+            XWPFParagraph paragraph = ParagraphFinder.get(doc, "@@formulario_componentes_curriculares@@");
+
+            if (paragraph != null) {
+                try (var ccFormDoc = new XWPFDocument(DocumentPath.loadResourceStream("formulario_componente_curricular.docx"))) {
+                    for (var _ : ccList) {
+                        try (XmlCursor insertCursor = paragraph.getCTP().newCursor()) {
+                            for (IBodyElement element : ccFormDoc.getBodyElements().reversed()) {
+                                if (element instanceof XWPFParagraph sourceP) {
+                                    XWPFParagraph newP = doc.insertNewParagraph(insertCursor);
+                                    newP.getCTP().set(sourceP.getCTP());
+                                    insertCursor.toCursor(newP.getCTP().newCursor());
+                                } else if (element instanceof XWPFTable sourceT) {
+                                    XWPFTable newT = doc.insertNewTbl(insertCursor);
+                                    if (!newT.getRows().isEmpty()) newT.removeRow(0); {
+                                        newT.getCTTbl().set(sourceT.getCTTbl());
+                                    }
+                                    insertCursor.toCursor(newT.getCTTbl().newCursor());
+                                }
+                            }
                         }
                     }
+
+                    int pos = doc.getPosOfParagraph(paragraph);
+                    doc.removeBodyElement(pos);
                 }
             }
 

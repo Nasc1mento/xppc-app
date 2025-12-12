@@ -12,6 +12,7 @@ import org.apache.xmlbeans.XmlCursor;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTbl;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
@@ -23,7 +24,7 @@ public class EmentaryReplacer implements IReplacer {
 
 
     @Override
-    public void replace() {
+    public void replace() throws IOException {
         Path temp = DocumentPath.getTempPath();
 
         try (XWPFDocument doc = new XWPFDocument(new FileInputStream(docPath.toFile()))) {
@@ -53,8 +54,6 @@ public class EmentaryReplacer implements IReplacer {
 
             save(doc);
 
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
 
         try (XWPFDocument doc = new XWPFDocument(new FileInputStream(temp.toFile()))) {
@@ -73,8 +72,6 @@ public class EmentaryReplacer implements IReplacer {
 
             save(doc);
 
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
 
         save();

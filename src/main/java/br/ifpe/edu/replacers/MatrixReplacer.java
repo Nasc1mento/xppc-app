@@ -11,6 +11,7 @@ import org.apache.xmlbeans.XmlCursor;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTbl;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
@@ -25,7 +26,7 @@ public class MatrixReplacer implements IReplacer {
     private final CurrentTable currentTable = CurrentTable.INSTANCE;
 
     @Override
-    public void replace() {
+    public void replace() throws IOException {
         Path temp = DocumentPath.getTempPath();
 
         NavigableMap<String, List<CC>> ccPerPeriod = list.getList()
@@ -63,8 +64,6 @@ public class MatrixReplacer implements IReplacer {
 
             save(doc);
 
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
 
         try (XWPFDocument doc = new XWPFDocument(new FileInputStream(temp.toFile()))) {
@@ -110,8 +109,6 @@ public class MatrixReplacer implements IReplacer {
 
             save(doc);
 
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
 
        save();

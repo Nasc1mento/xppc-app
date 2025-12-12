@@ -4,12 +4,13 @@ import br.ifpe.edu.PlaceholderList;
 import br.ifpe.edu.replacers.helpers.DocumentPath;
 import org.apache.poi.xwpf.usermodel.*;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 
 public class PlaceholderReplacer implements IReplacer {
     @Override
     public void replace() throws IOException {
-        try (var doc = new XWPFDocument(DocumentPath.loadResourceStream("ppc.docx"))) {
+        try (var doc = new XWPFDocument(new FileInputStream(DocumentPath.INSTANCE.getOutputPath().toFile()))) {
             replaceInDocument(doc);
             replaceInHeaders(doc);
             replaceInFooters(doc);

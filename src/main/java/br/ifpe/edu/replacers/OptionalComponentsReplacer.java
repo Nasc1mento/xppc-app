@@ -22,7 +22,7 @@ public class OptionalComponentsReplacer implements  IReplacer{
     private final CurrentTable currentTable = CurrentTable.INSTANCE;
 
     @Override
-    public void replace() {
+    public void replace() throws IOException {
         Path temp = DocumentPath.getTempPath();
 
        var optionalComponents = list.getList().stream().filter(c -> CCType.OPTIONAL.equals(c.type())).toList();
@@ -49,8 +49,6 @@ public class OptionalComponentsReplacer implements  IReplacer{
 
             save(doc);
 
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
 
         try (var doc = new XWPFDocument(new FileInputStream(temp.toFile()))) {

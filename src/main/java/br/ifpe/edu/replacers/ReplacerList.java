@@ -15,13 +15,14 @@ public class ReplacerList implements AutoCloseable {
 
     private void loadList() {
         list = List.of(
-                new PlaceholderReplacer(),
                 new CurricularDrawReplacer(),
                 new MatrixReplacer(),
                 new OptionalComponentsReplacer(),
                 new EletivosReplacer(),
                 new EmentaryReplacer(),
-                new HistoryReplacer()
+                new HistoryReplacer(),
+                new CurricularFormReplacer(),
+                new PlaceholderReplacer()
         );
     }
 

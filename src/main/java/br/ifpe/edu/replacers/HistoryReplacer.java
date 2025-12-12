@@ -9,6 +9,7 @@ import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.xmlbeans.XmlCursor;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Path;
@@ -20,7 +21,7 @@ public class HistoryReplacer implements IReplacer {
     private final CampusReader campusReader = new CampusReader();
 
     @Override
-    public void replace() {
+    public void replace() throws IOException {
         try (var doc = new XWPFDocument(new FileInputStream(docPath.toFile()))) {
             XWPFParagraph placeholderParagraph = ParagraphFinder.get(doc, "$$historico_do_campus$$");
 
@@ -50,8 +51,6 @@ public class HistoryReplacer implements IReplacer {
 
             save(doc);
 
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
 
         save();

@@ -19,12 +19,10 @@ import java.util.stream.Collectors;
 
 public class CurricularDrawReplacer implements IReplacer {
 
-    private final Path docPath = DocumentPath.INSTANCE.getOutputPath();
     private final CurrentTable currentTable = CurrentTable.INSTANCE;
 
-
     @Override
-    public void replace() {
+    public void replace() throws IOException {
         Path temp = DocumentPath.getTempPath();
 
         Map<String, List<CC>> ccPerPeriod = CCList.INSTANCE.getList()
@@ -34,7 +32,7 @@ public class CurricularDrawReplacer implements IReplacer {
                         TreeMap::new,
                         Collectors.toList()
                 ));
-        try (XWPFDocument doc = new XWPFDocument(new FileInputStream(docPath.toFile()))) {
+        try (XWPFDocument doc = new XWPFDocument(DocumentPath.loadResourceStream("ppc.docx"))) {
 
             XWPFParagraph paragraph = ParagraphFinder.get(doc, "@@desenho_curricular@@");
 
@@ -57,9 +55,6 @@ public class CurricularDrawReplacer implements IReplacer {
             }
 
             save(doc);
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
 
         try (var doc = new XWPFDocument(new FileInputStream(temp.toFile()))) {
@@ -84,8 +79,6 @@ public class CurricularDrawReplacer implements IReplacer {
             table.removeRow(1);
             save(doc);
 
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
 
         save();

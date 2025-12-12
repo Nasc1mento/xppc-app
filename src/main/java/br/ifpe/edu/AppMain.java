@@ -6,7 +6,9 @@ import com.formdev.flatlaf.FlatDarkLaf;
 import javax.swing.*;
 
 public class AppMain {
+
     static void main() {
+        System.setProperty("sun.java2d.uiScale", "1");
         try {
             UIManager.setLookAndFeel(new FlatDarkLaf());
         } catch (Exception _) { }

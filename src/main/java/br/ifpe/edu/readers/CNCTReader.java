@@ -4,9 +4,18 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 public class CNCTReader extends AbstractCSVReader {
-    private static final int AXIS_COLUMN = 0;
-    private static final int NAME_COLUMN = 2;
-    private static final int MINIMUM_SUM_OF_CREDIT_HOURS_COLUMN = 5;
+
+    private enum Columns {
+        AXIS(0),
+        NAME(2),
+        MINIMUM_SUM_OF_CREDIT_HOURS(5);
+
+        private final int index;
+
+        Columns(int index) {
+            this.index = index;
+        }
+    }
 
     public CNCTReader() {
         super(
@@ -17,17 +26,17 @@ public class CNCTReader extends AbstractCSVReader {
     }
 
     public List<String> getAllNames() {
-        return getAllFromA(NAME_COLUMN);
+        return getAllFromA(Columns.NAME.index);
     }
 
     public String getHoursByName(String name) {
         return getAFromB(
-                        NAME_COLUMN, name, MINIMUM_SUM_OF_CREDIT_HOURS_COLUMN
+                        Columns.NAME.index, name, Columns.MINIMUM_SUM_OF_CREDIT_HOURS.index
                 ).split(" ")[0].replaceAll("\\D+", "");
 
     }
 
     public String getAxisByName(String name) {
-        return getAFromB(NAME_COLUMN, name, AXIS_COLUMN);
+        return getAFromB(Columns.NAME.index, name, Columns.AXIS.index);
     }
 }

@@ -62,11 +62,11 @@ public class EmentaryReplacer implements IReplacer {
             for (var cc : list.getList()) {
                 List<XWPFTableRow> rows = table.getRows();
                 var currentRow = rows.getFirst();
-                currentRow.getCell(0).setText("Componente Curricular: " + cc.name());
-                currentRow.getCell(1).setText("Créditos: " + cc.credits());
+                currentRow.getCell(0).getParagraphArray(0).createRun().setText(cc.name());
+                currentRow.getCell(1).getParagraphArray(0).createRun().setText(cc.credits());
 
                 currentRow = rows.get(1);
-                currentRow.getCell(0).setText("Carga horária: " + cc.ha());
+                currentRow.getCell(0).getParagraphArray(0).createRun().setText(cc.ha());
                 table = doc.getTableArray(currentTable.nextTable());
             }
 

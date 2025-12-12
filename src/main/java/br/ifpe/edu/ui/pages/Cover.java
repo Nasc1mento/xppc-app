@@ -35,9 +35,9 @@ public class Cover extends Page {
 
             for (var person : peopleReader.get()) {
                 sb.append("<li><b>")
-                        .append(person[PeopleReader.NAME_COLUMN])
+                        .append(person[PeopleReader.Columns.NAME.getIndex()])
                         .append("</b>: ")
-                        .append(person[PeopleReader.ROLE_COLUMN])
+                        .append(person[PeopleReader.Columns.ROLE.getIndex()])
                         .append("</li>");
             }
 

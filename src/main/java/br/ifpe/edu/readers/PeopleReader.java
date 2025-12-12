@@ -5,8 +5,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PeopleReader extends AbstractCSVReader {
-    public static final int NAME_COLUMN = 0;
-    public static final int ROLE_COLUMN = 1;
+
+    public enum Columns {
+        NAME(0),
+        ROLE(1);
+
+
+        private final int index;
+
+        Columns(int index) {
+            this.index = index;
+        }
+
+        public int getIndex() {
+            return index;
+        }
+    }
 
     public PeopleReader() {
         super("pessoas.csv", StandardCharsets.UTF_8, ',');
@@ -16,8 +30,8 @@ public class PeopleReader extends AbstractCSVReader {
         final List<String[]> people = new ArrayList<>();
         for (var line : super.read()) {
             var arr =  new String[2];
-            arr[0] = line[NAME_COLUMN];
-            arr[1] = line[ROLE_COLUMN];
+            arr[0] = line[Columns.NAME.index];
+            arr[1] = line[Columns.ROLE.index];
             people.add(arr);
         }
 

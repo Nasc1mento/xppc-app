@@ -6,18 +6,18 @@ import java.util.List;
 public class CampusReader extends AbstractCSVReader {
 
     public enum Columns {
-        NAME_COLUMN (),
-        CNPJ_COLUMN,
-        CITY_COLUMN,
-        NEIGHBOURHOOD_COLUMN,
-        CEP_COLUMN,
-        STREET_COLUMN,
-        NUMBER_COLUMN,
-        PHONE_COLUMN,
-        EMAIL_COLUMN,
-        ALDC_COLUMN,
-        WEBSITE_COLUMN,
-        HISTORY_COLUMN,
+        NAME(),
+        CNPJ,
+        CITY,
+        NEIGHBOURHOOD,
+        CEP,
+        STREET,
+        NUMBER,
+        PHONE,
+        EMAIL,
+        ALDC,
+        WEBSITE,
+        HISTORY,
     }
 
     public CampusReader() {
@@ -29,10 +29,10 @@ public class CampusReader extends AbstractCSVReader {
     }
 
     public List<String> getAllNames() {
-        return getAllFromA(Columns.NAME_COLUMN.ordinal());
+        return getAllFromA(Columns.NAME.ordinal());
     }
 
     public String getByNameAndColumn(String name, Columns column) {
-        return getAFromB(Columns.NAME_COLUMN.ordinal(), name, column.ordinal());
+        return getAFromB(Columns.NAME.ordinal(), name, column.ordinal());
     }
 }

@@ -48,16 +48,16 @@ public class Proponent extends Page implements ISubmittable {
 
     private void setupListeners() {
         var fieldMapping = Map.of(
-                cnpjField, CampusReader.Columns.CNPJ_COLUMN,
-                cityField, CampusReader.Columns.CITY_COLUMN,
-                cepField, CampusReader.Columns.CEP_COLUMN,
-                neighbourhoodField, CampusReader.Columns.NEIGHBOURHOOD_COLUMN,
-                streetField, CampusReader.Columns.STREET_COLUMN,
-                numberField, CampusReader.Columns.NUMBER_COLUMN,
-                telephoneNumberField, CampusReader.Columns.PHONE_COLUMN,
-                emailField, CampusReader.Columns.EMAIL_COLUMN,
-                aldcField, CampusReader.Columns.ALDC_COLUMN,
-                websiteField, CampusReader.Columns.WEBSITE_COLUMN
+                cnpjField, CampusReader.Columns.CNPJ,
+                cityField, CampusReader.Columns.CITY,
+                cepField, CampusReader.Columns.CEP,
+                neighbourhoodField, CampusReader.Columns.NEIGHBOURHOOD,
+                streetField, CampusReader.Columns.STREET,
+                numberField, CampusReader.Columns.NUMBER,
+                telephoneNumberField, CampusReader.Columns.PHONE,
+                emailField, CampusReader.Columns.EMAIL,
+                aldcField, CampusReader.Columns.ALDC,
+                websiteField, CampusReader.Columns.WEBSITE
         );
         campusBox.addActionListener(_ -> {
             String selectedCampus = (String) campusBox.getSelectedItem();

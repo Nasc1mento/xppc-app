@@ -9,7 +9,6 @@ import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.xmlbeans.XmlCursor;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Path;
@@ -27,7 +26,7 @@ public class HistoryReplacer implements IReplacer {
 
             if (placeholderParagraph != null) {
                 String historyFileName = campusReader.getByNameAndColumn(
-                        placeholderList.getValue("campus"), CampusReader.Columns.HISTORY_COLUMN
+                        placeholderList.getValue("campus"), CampusReader.Columns.HISTORY
                 ) + ".docx";
 
                 URL historyPath = Thread.currentThread().getContextClassLoader().getResource(historyFileName);

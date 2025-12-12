@@ -1,6 +1,7 @@
 package br.ifpe.edu.replacers;
 
 import br.ifpe.edu.CCList;
+import br.ifpe.edu.Eval;
 import br.ifpe.edu.replacers.helpers.CurrentTable;
 import br.ifpe.edu.replacers.helpers.DocumentPath;
 import br.ifpe.edu.replacers.helpers.ParagraphFinder;
@@ -85,7 +86,7 @@ public class CurricularFormReplacer implements IReplacer {
                 table.getRows().get(1).getCell(0).setText(cc.name());
                 table.getRows().get(1).getCell(3).setText(cc.credits());
                 table.getRows().get(1).getCell(4).setText(cc.ha());
-                table.getRows().get(1).getCell(5).setText(cc.hr());
+                table.getRows().get(1).getCell(5).setText(Eval.eval("%s+%s", cc.hr(), cc.ext()));
                 table.getRows().get(1).getCell(6).setText(cc.period());
 
 

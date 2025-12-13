@@ -14,6 +14,11 @@ import java.net.URL;
 
 public class HistoryReplacer implements IReplacer {
 
+    @Override
+    public int getPriority() {
+        return 60;
+    }
+
     private final PlaceholderList placeholderList = PlaceholderList.INSTANCE;
     private final CampusReader campusReader = new CampusReader();
 

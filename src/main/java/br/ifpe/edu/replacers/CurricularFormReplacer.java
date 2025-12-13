@@ -20,6 +20,11 @@ public class CurricularFormReplacer implements IReplacer {
     private final List<CC> ccList = CCList.INSTANCE.getList();
 
     @Override
+    public int getPriority() {
+        return 70;
+    }
+
+    @Override
     public void replace() throws IOException {
         try (
                 var doc = new XWPFDocument(new FileInputStream(DocumentHelper.getTempPath().toFile()))

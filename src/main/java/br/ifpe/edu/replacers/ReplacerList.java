@@ -1,11 +1,13 @@
 package br.ifpe.edu.replacers;
 
+import br.ifpe.edu.replacers.helpers.DocumentHelper;
 import br.ifpe.edu.replacers.helpers.ParagraphHelper;
 import br.ifpe.edu.replacers.helpers.TableLocationHelper;
-import br.ifpe.edu.replacers.helpers.DocumentHelper;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ReplacerList implements AutoCloseable {
 
@@ -17,16 +19,16 @@ public class ReplacerList implements AutoCloseable {
     }
 
     private void loadList() {
-        list = List.of(
-                new CurricularDrawReplacer(),       //1
-                new MatrixReplacer(),               //2
-                new OptionalComponentsReplacer(),   //3
-                new EletivosReplacer(),             //4
-                new EmentaryReplacer(),             //5
-                new HistoryReplacer(),              //6
-                new CurricularFormReplacer(),       //7
+                this.list = Stream.of(
+                new CurricularDrawReplacer(),
+                new CurricularFormReplacer(),
+                new EletivosReplacer(),
+                new EmentaryReplacer(),
+                new HistoryReplacer(),
+                new MatrixReplacer(),
+                new OptionalComponentsReplacer(),
                 new PlaceholderReplacer()
-        );
+        ).sorted().collect(Collectors.toList());
     }
 
     public void cAll() throws IOException {

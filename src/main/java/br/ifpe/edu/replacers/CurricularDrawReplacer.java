@@ -21,6 +21,11 @@ public class CurricularDrawReplacer implements IReplacer {
     private final TableLocationHelper tableLocationHelper = TableLocationHelper.INSTANCE;
 
     @Override
+    public int getPriority() {
+        return 10;
+    }
+
+    @Override
     public void replace() throws IOException {
 
         Map<String, List<CC>> ccPerPeriod = CCList.INSTANCE.getList()
@@ -54,7 +59,6 @@ public class CurricularDrawReplacer implements IReplacer {
         }
 
         try (var doc = new XWPFDocument(new FileInputStream(DocumentHelper.getTempPath().toFile()))) {
-            IO.println(tableLocationHelper.getValue());
             XWPFTable table = doc.getTableArray(tableLocationHelper.getValue());
 
             for (var entry : ccPerPeriod.entrySet()) {
@@ -75,7 +79,6 @@ public class CurricularDrawReplacer implements IReplacer {
 
             table.removeRow(1);
             commit(doc);
-
         }
     }
 }

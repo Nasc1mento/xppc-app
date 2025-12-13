@@ -12,7 +12,6 @@ import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTbl;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.List;
 import java.util.NavigableMap;
 import java.util.TreeMap;
@@ -20,13 +19,17 @@ import java.util.stream.Collectors;
 
 public class MatrixReplacer implements IReplacer {
 
+
+    @Override
+    public int getPriority() {
+        return 20;
+    }
+
     private final CCList list = CCList.INSTANCE;
-    private final Path docPath = DocumentHelper.INSTANCE.getOutputPath();
     private final TableLocationHelper tableLocationHelper = TableLocationHelper.INSTANCE;
 
     @Override
     public void replace() throws IOException {
-        Path temp = DocumentHelper.getTempPath();
 
         NavigableMap<String, List<CC>> ccPerPeriod = list.getList()
                 .stream()
@@ -65,7 +68,6 @@ public class MatrixReplacer implements IReplacer {
 
         try (XWPFDocument doc = new XWPFDocument(new FileInputStream(DocumentHelper.getTempPath().toFile()))) {
             var table = doc.getTableArray(tableLocationHelper.getValue());
-            IO.println(tableLocationHelper.getValue());
 
             for (var entry : ccPerPeriod.entrySet()) {
                 List<CC> ccs = entry.getValue();

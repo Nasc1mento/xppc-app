@@ -13,7 +13,7 @@ public class ParagraphHelper {
     private ParagraphHelper() {}
 
     public static XWPFParagraph find(XWPFDocument doc, String placeholder) {
-        List<IBodyElement> bodyElements = doc.getBodyElements();
+        final List<IBodyElement> bodyElements = doc.getBodyElements();
         int currentTableCount = lastTableCount;
         int tablesToSkip = tblHelper.getValue();
 

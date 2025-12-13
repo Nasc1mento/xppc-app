@@ -258,13 +258,13 @@ public class CurricularComponents extends Page implements IValidatable, ISubmitt
                 return JOptionPane.showConfirmDialog(
                         this,
                         String.format(
-                                "<html>"
-                                        + "A carga horária do curso <b>%s</b> está <b>abaixo</b> da recomendada pelo "
-                                        + "Catálogo Nacional dos Cursos Tecnólogos.<hr>"
-                                        + "<b>Carga horária atual:</b> %s horas<br>"
-                                        + "<b>Carga horária recomendada:</b> %s horas<br><br>"
-                                        + "Deseja continuar mesmo assim?"
-                                        + "</html>",
+                            "<html>"
+                            + "A carga horária do curso <b>%s</b> está <b>abaixo</b> da recomendada pelo "
+                            + "Catálogo Nacional dos Cursos Tecnólogos.<hr>"
+                            + "<b>Carga horária atual:</b> %s horas<br>"
+                            + "<b>Carga horária recomendada:</b> %s horas<br><br>"
+                            + "Deseja continuar mesmo assim?"
+                            + "</html>",
                                 courseName, totalCht, recommendedCht
                         ),
                         "Aviso",

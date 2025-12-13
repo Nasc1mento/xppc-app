@@ -21,6 +21,11 @@ public class EletivosReplacer implements  IReplacer{
     private final TableLocationHelper tableLocationHelper = TableLocationHelper.INSTANCE;
 
     @Override
+    public int getPriority() {
+        return 40;
+    }
+
+    @Override
     public void replace() throws IOException {
 
         var electiveComponents = list.getList().stream().filter(c -> CCType.ELECTIVE.equals(c.type())).toList();

@@ -8,6 +8,12 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 public class PlaceholderReplacer implements IReplacer {
+
+    @Override
+    public int getPriority() {
+        return 80;
+    }
+
     @Override
     public void replace() throws IOException {
         try (var doc = new XWPFDocument(new FileInputStream(DocumentHelper.getTempPath().toFile()))) {

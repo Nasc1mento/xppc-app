@@ -31,7 +31,7 @@ public class Generation extends Page implements ISubmittable {
     }
 
     private void setupForm() {
-        add(generateButton);
+        addRow(generateButton);
     }
 
     @Override
@@ -63,12 +63,18 @@ public class Generation extends Page implements ISubmittable {
 
             try (var rl = new ReplacerList()) {
                 rl.cAll();
-                JOptionPane.showMessageDialog(this, "Documento gerado com sucesso!");
+                JOptionPane.showMessageDialog(
+                        this,
+                        "Documento gerado com sucesso!"
+                );
             } catch (Exception ex) {
                 ex.printStackTrace();
                 JOptionPane.showMessageDialog(
                         this,
-                        "Erro ao gerar documento:\n" + ex.getMessage(),
+                        String.format("<html>" +
+                                "Erro inesperado ao tentar gerar documento<hr><br>" +
+                                "<b>Erro: </b> <i>%s</i>" +
+                                "</html>", ex.getMessage()),
                         "Erro",
                         JOptionPane.ERROR_MESSAGE
                 );

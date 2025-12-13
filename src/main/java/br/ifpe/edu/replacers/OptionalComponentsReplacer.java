@@ -14,7 +14,12 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
 
-public class OptionalComponentsReplacer implements  IReplacer{
+public class OptionalComponentsReplacer implements  IReplacer {
+
+    @Override
+    public int getPriority() {
+        return 30;
+    }
 
     private final List<CC> list = CCList.INSTANCE.getList();
     private final TableLocationHelper tableLocationHelper = TableLocationHelper.INSTANCE;

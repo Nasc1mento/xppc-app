@@ -13,8 +13,15 @@ import java.io.IOException;
 import java.util.List;
 
 public class EmentaryReplacer implements IReplacer {
+
     private final CCList list = CCList.INSTANCE;
     private final TableLocationHelper tableLocationHelper = TableLocationHelper.INSTANCE;
+
+
+    @Override
+    public int getPriority() {
+        return 50;
+    }
 
     @Override
     public void replace() throws IOException {

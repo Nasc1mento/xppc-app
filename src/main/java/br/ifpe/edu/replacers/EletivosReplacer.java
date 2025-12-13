@@ -18,7 +18,6 @@ import java.util.List;
 public class EletivosReplacer implements  IReplacer{
 
     private final CCList list = CCList.INSTANCE;
-    private final Path docPath = DocumentHelper.INSTANCE.getOutputPath();
     private final TableLocationHelper tableLocationHelper = TableLocationHelper.INSTANCE;
 
     @Override

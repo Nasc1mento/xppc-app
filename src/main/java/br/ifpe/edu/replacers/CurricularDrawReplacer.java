@@ -54,6 +54,7 @@ public class CurricularDrawReplacer implements IReplacer {
         }
 
         try (var doc = new XWPFDocument(new FileInputStream(DocumentHelper.getTempPath().toFile()))) {
+            IO.println(tableLocationHelper.getValue());
             XWPFTable table = doc.getTableArray(tableLocationHelper.getValue());
 
             for (var entry : ccPerPeriod.entrySet()) {

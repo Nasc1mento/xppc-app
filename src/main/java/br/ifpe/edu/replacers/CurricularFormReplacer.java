@@ -56,7 +56,7 @@ public class CurricularFormReplacer implements IReplacer {
         }
 
         try (var doc = new XWPFDocument(new FileInputStream(DocumentHelper.getTempPath().toFile()))) {
-            var table = doc.getTableArray(tableLocationHelper.getCounter().addAndGet(24));
+            var table = doc.getTableArray(tableLocationHelper.getValue());
             for (var cc : ccList) {
                 table.getRows().getFirst().getCell(0).setText("X");
                 table = doc.getTableArray(tableLocationHelper.nextTable());

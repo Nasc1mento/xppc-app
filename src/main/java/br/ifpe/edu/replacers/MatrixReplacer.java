@@ -64,7 +64,9 @@ public class MatrixReplacer implements IReplacer {
         }
 
         try (XWPFDocument doc = new XWPFDocument(new FileInputStream(DocumentHelper.getTempPath().toFile()))) {
-            var table = doc.getTableArray(tableLocationHelper.nextTable());
+            var table = doc.getTableArray(tableLocationHelper.getValue());
+            IO.println(tableLocationHelper.getValue());
+
             for (var entry : ccPerPeriod.entrySet()) {
                 List<CC> ccs = entry.getValue();
                 var mandatoryCcs = ccs.stream().filter(cc -> CCType.MANDATORY.equals(cc.type())).toList();

@@ -6,11 +6,7 @@ public enum TableLocationHelper {
 
     INSTANCE;
 
-    private AtomicInteger counter;
-
-    TableLocationHelper() {
-        setInitialValue();
-    }
+    private final AtomicInteger counter = new AtomicInteger(0);
 
     public int nextTable() {
         return counter.incrementAndGet();
@@ -20,11 +16,15 @@ public enum TableLocationHelper {
         return counter.get();
     }
 
+    public void setValue(int value) {
+        counter.set(value);
+    }
+
     public AtomicInteger getCounter() {
         return counter;
     }
 
-    public void setInitialValue() {
-        counter = new AtomicInteger(8);
+    public void reset() {
+        setValue(0);
     }
 }

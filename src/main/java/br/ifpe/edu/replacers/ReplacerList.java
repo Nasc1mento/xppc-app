@@ -1,5 +1,6 @@
 package br.ifpe.edu.replacers;
 
+import br.ifpe.edu.replacers.helpers.ParagraphHelper;
 import br.ifpe.edu.replacers.helpers.TableLocationHelper;
 import br.ifpe.edu.replacers.helpers.DocumentHelper;
 
@@ -24,7 +25,6 @@ public class ReplacerList implements AutoCloseable {
                 new EmentaryReplacer(),             //5
                 new HistoryReplacer(),              //6
                 new CurricularFormReplacer(),       //7
-
                 new PlaceholderReplacer()
         );
     }
@@ -43,6 +43,7 @@ public class ReplacerList implements AutoCloseable {
     @Override
     public void close() {
         loadList();
-        TableLocationHelper.INSTANCE.setInitialValue();
+        TableLocationHelper.INSTANCE.reset();
+        ParagraphHelper.reset();
     }
 }

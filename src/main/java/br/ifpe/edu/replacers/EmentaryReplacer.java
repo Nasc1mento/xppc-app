@@ -45,7 +45,7 @@ public class EmentaryReplacer implements IReplacer {
         }
 
         try (XWPFDocument doc = new XWPFDocument(new FileInputStream(DocumentHelper.getTempPath().toFile()))) {
-            var table = doc.getTableArray(tableLocationHelper.getCounter().addAndGet(3));
+            var table = doc.getTableArray(tableLocationHelper.getValue());
 
             for (var cc : list.getList()) {
                 List<XWPFTableRow> rows = table.getRows();

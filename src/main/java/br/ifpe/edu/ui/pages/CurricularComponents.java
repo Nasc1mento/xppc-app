@@ -111,8 +111,9 @@ public class CurricularComponents extends Page implements IValidatable, ISubmitt
 
         InputMap inputMap = table.getInputMap(JTable.WHEN_FOCUSED);
         KeyStroke deleteKey = KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0);
-        inputMap.put(deleteKey, "deleteRow");
-        table.getActionMap().put("deleteRow", deleteAction);
+        String actionKey = "deleteRow";
+        inputMap.put(deleteKey, actionKey);
+        table.getActionMap().put(actionKey, deleteAction);
     }
 
     private void addComponent() {
@@ -161,15 +162,20 @@ public class CurricularComponents extends Page implements IValidatable, ISubmitt
 
         ccList.add(newCC);
 
+        clearFields();
+        updatePrereqCoreqBoxes();
+    }
+
+    private void clearFields() {
         codeField.clear();
         apField.clear();
         atField.clear();
+        aeField.clear();
         ccField.clear();
         hrPrField.clear();
         hrTeoField.clear();
         extField.clear();
         periodField.clear();
-        updatePrereqCoreqBoxes();
     }
 
     private void updatePrereqCoreqBoxes() {

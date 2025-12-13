@@ -135,6 +135,6 @@ public class Course extends Page implements ISubmittable {
         placeholderList.addPlaceholder("vagas_por_semestre", seatsPerSemesterField.getText());
         placeholderList.addPlaceholder("duracao",durationField.getText());
         placeholderList.addPlaceholder("inicio_do_curso", startField.getText());
-        placeholderList.addPlaceholder("vagas_anuais", Eval.eval("%s*2", seatsPerSemesterField.getText()));
+        placeholderList.addPlaceholder("vagas_anuais", Eval.evalDecimal("%s*2", seatsPerSemesterField.getText()));
     }
 }

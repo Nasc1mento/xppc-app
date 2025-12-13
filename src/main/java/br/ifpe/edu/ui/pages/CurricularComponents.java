@@ -24,7 +24,8 @@ public class CurricularComponents extends Page implements IValidatable, ISubmitt
     private final TextField codeField = new TextField(15);
     private final TextField ccField = new TextField(30);
     private final TextField periodField = new TextField(10).setInteger();
-    private final TextField creditsField = new TextField(10).setInteger();
+    private final TextField apField = new TextField(10).setInteger();
+    private final TextField atField = new TextField(10).setInteger();
     private final TextField hrPrField = new TextField(10).setDouble();
     private final TextField hrTeoField = new TextField(10).setDouble();
     private final TextField extField = new TextField(10).setDouble();
@@ -70,7 +71,8 @@ public class CurricularComponents extends Page implements IValidatable, ISubmitt
         addTable(table);
         addRow(new JLabel("Código: "), codeField);
         addRow(new JLabel("Nome do Componente Curricular"), ccField);
-        addRow(new JLabel("Créditos: "), creditsField);
+        addRow(new JLabel("Aulas Práticas Semanais: "), apField);
+        addRow(new JLabel("Aulas Teóricas Semanais: "), atField);
         addRow(new JLabel("Total de Horas Práticas (H/R): "), hrPrField);
         addRow(new JLabel("Total de Horas Teóricas (H/R): "), hrTeoField);
         addRow(new JLabel("Total de Horas de Extensão (H/R): "), extField);
@@ -86,7 +88,8 @@ public class CurricularComponents extends Page implements IValidatable, ISubmitt
 
         BindPropertyFactory.create()
                 .bind(codeField)
-                .bind(creditsField)
+                .bind(apField)
+                .bind(atField)
                 .bind(ccField)
                 .bind(periodField)
                 .bind(hrPrField)
@@ -114,42 +117,48 @@ public class CurricularComponents extends Page implements IValidatable, ISubmitt
         String name = ccField.getText();
         String type = Objects.toString(typeBox.getSelectedItem());
         String period = periodField.getText();
-        String credits = creditsField.getText();
-        String hr = Eval.eval("%s+%s", hrPrField.getText(), hrTeoField.getText());
+        String ap = apField.getText();
+        String at = atField.getText();
+        String hrPr = hrPrField.getText();
+        String hrTeo = hrTeoField.getText();
         String ext = extField.getText();
-        String ha = Eval.eval("((%s+%s)*60)/45", hr, ext);
         String prereq = (String) prereqBox.getSelectedItem();
         String coreq = (String) coreqBox.getSelectedItem();
-
-        tableModel.addRow(new Object[]{
-                code,
-                name,
-                type,
-                period,
-                credits,
-                ha,
-                hr,
-                ext,
-                prereq,
-                coreq
-        });
 
         CC newCC = new CC(
                 code,
                 name,
                 CCType.findByString(type),
                 period,
-                credits,
-                ha,
-                hr,
+                ap,
+                at,
+                hrPr,
+                hrTeo,
                 ext,
                 prereq,
                 coreq
         );
+
+        tableModel.addRow(new Object[]{
+                code,
+                name,
+                type,
+                period,
+                newCC.credits(),
+                newCC.ha(),
+                newCC.hr(),
+                ext,
+                ext,
+                prereq,
+                coreq
+        });
+
+
         ccList.add(newCC);
 
         codeField.clear();
-        creditsField.clear();
+        apField.clear();
+        atField.clear();
         ccField.clear();
         hrPrField.clear();
         hrTeoField.clear();
@@ -197,10 +206,10 @@ public class CurricularComponents extends Page implements IValidatable, ISubmitt
     public void onSubmit() {
 
         var sumMandatory = ccList.getSum(ccList.getList(), CCType.MANDATORY);
-        var sumMandatoryTotal = Eval.eval("%s+%s",  sumMandatory.totalHr, sumMandatory.totalExt);
+        var sumMandatoryTotal = Eval.evalDecimal("%s+%s",  sumMandatory.totalHr, sumMandatory.totalExt);
 
         var sumOptional = ccList.getSum(ccList.getList(), CCType.OPTIONAL);
-        var sumOptionalTotal = Eval.eval("%s+%s",  sumOptional.totalHr, sumOptional.totalExt);
+        var sumOptionalTotal = Eval.evalDecimal("%s+%s",  sumOptional.totalHr, sumOptional.totalExt);
 
         var ca = placeholderList.getValue("carga_horaria_atividades_complementares_hr");
         var internship = placeholderList.getValue("carga_horaria_estagio_supervisionado_hr");
@@ -208,15 +217,15 @@ public class CurricularComponents extends Page implements IValidatable, ISubmitt
         placeholderList.addPlaceholder("ch_obrigatorios_hr", sumMandatoryTotal);
         placeholderList.addPlaceholder("ch_optativos_hr", sumOptionalTotal);
 
-        var totalSum = Eval.eval("%s+%s+%s+%s", ca, sumOptionalTotal, sumMandatoryTotal, internship);
+        var totalSum = Eval.evalDecimal("%s+%s+%s+%s", ca, sumOptionalTotal, sumMandatoryTotal, internship);
         placeholderList.addPlaceholder("cht",totalSum);
-        placeholderList.addPlaceholder("cht_ha", Eval.eval("(%s*60)/45", totalSum));
-        placeholderList.addPlaceholder("cht_e_estagio", Eval.eval("%s+%s", totalSum, internship));
+        placeholderList.addPlaceholder("cht_ha", Eval.evalDecimal("(%s*60)/45", totalSum));
+        placeholderList.addPlaceholder("cht_e_estagio", Eval.evalDecimal("%s+%s", totalSum, internship));
 
-        var sumMandatoryPer = Eval.eval("%s*100/%s", sumMandatoryTotal, totalSum);
-        var sumOptionalPer = Eval.eval("%s*100/%s", sumOptionalTotal, totalSum);
-        var caPer = Eval.eval("%s*100/%s", ca, totalSum);
-        var internshipPer = Eval.eval("%s*100/%s", internship, totalSum);
+        var sumMandatoryPer = Eval.evalDecimal("%s*100/%s", sumMandatoryTotal, totalSum);
+        var sumOptionalPer = Eval.evalDecimal("%s*100/%s", sumOptionalTotal, totalSum);
+        var caPer = Eval.evalDecimal("%s*100/%s", ca, totalSum);
+        var internshipPer = Eval.evalDecimal("%s*100/%s", internship, totalSum);
 
         placeholderList.addPlaceholder("ch_obrigatorios_per", sumMandatoryPer);
         placeholderList.addPlaceholder("ch_optativos_per", sumOptionalPer);

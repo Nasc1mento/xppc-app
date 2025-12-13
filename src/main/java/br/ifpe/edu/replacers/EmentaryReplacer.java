@@ -4,10 +4,7 @@ import br.ifpe.edu.CCList;
 import br.ifpe.edu.replacers.helpers.CurrentTable;
 import br.ifpe.edu.replacers.helpers.DocumentPath;
 import br.ifpe.edu.replacers.helpers.ParagraphFinder;
-import org.apache.poi.xwpf.usermodel.XWPFDocument;
-import org.apache.poi.xwpf.usermodel.XWPFParagraph;
-import org.apache.poi.xwpf.usermodel.XWPFTable;
-import org.apache.poi.xwpf.usermodel.XWPFTableRow;
+import org.apache.poi.xwpf.usermodel.*;
 import org.apache.xmlbeans.XmlCursor;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTbl;
 
@@ -19,15 +16,12 @@ import java.util.List;
 
 public class EmentaryReplacer implements IReplacer {
     private final CCList list = CCList.INSTANCE;
-    private final Path docPath = DocumentPath.INSTANCE.getOutputPath();
     private final CurrentTable currentTable = CurrentTable.INSTANCE;
 
 
     @Override
     public void replace() throws IOException {
-        Path temp = DocumentPath.getTempPath();
-
-        try (XWPFDocument doc = new XWPFDocument(new FileInputStream(docPath.toFile()))) {
+        try (XWPFDocument doc = new XWPFDocument(new FileInputStream(DocumentPath.getTempPath().toFile()))) {
 
             XWPFParagraph paragraph = ParagraphFinder.get(doc, "@@ementário@@");
 
@@ -56,7 +50,7 @@ public class EmentaryReplacer implements IReplacer {
 
         }
 
-        try (XWPFDocument doc = new XWPFDocument(new FileInputStream(temp.toFile()))) {
+        try (XWPFDocument doc = new XWPFDocument(new FileInputStream(DocumentPath.getTempPath().toFile()))) {
             var table = doc.getTableArray(currentTable.getCounter().addAndGet(3));
 
             for (var cc : list.getList()) {
@@ -71,9 +65,6 @@ public class EmentaryReplacer implements IReplacer {
             }
 
             save(doc);
-
         }
-
-        save();
     }
 }

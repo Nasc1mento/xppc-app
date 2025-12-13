@@ -5,11 +5,25 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 public class Eval {
-    public static String eval(String format, String ...args) {
+    public static String evalDecimal(String format, String ...args) {
         Expression e = new Expression(String.format(format, (Object[]) args));
+        return evalNumber(e, true);
+    }
+
+    public static String evalInteger(String format, String ...args) {
+        Expression e = new Expression(String.format(format, (Object[]) args));
+        return evalNumber(e, false);
+    }
+
+    private static String evalNumber(Expression e, boolean isFloat) {
         try {
             BigDecimal r = e.evaluate().getNumberValue();
-            return r.setScale(2, RoundingMode.HALF_UP).toPlainString();
+            if (isFloat) {
+                return r.setScale(2, RoundingMode.HALF_UP).toPlainString();
+            }
+
+            return r.toBigInteger().toString();
+
         } catch (Exception _) {
             return "";
         }

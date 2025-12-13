@@ -17,16 +17,14 @@ import java.util.List;
 
 public class OptionalComponentsReplacer implements  IReplacer{
 
-    private final CCList list = CCList.INSTANCE;
-    private final Path docPath = DocumentPath.INSTANCE.getOutputPath();
+    private final List<CC> list = CCList.INSTANCE.getList();
     private final CurrentTable currentTable = CurrentTable.INSTANCE;
 
     @Override
     public void replace() throws IOException {
-        Path temp = DocumentPath.getTempPath();
 
-       var optionalComponents = list.getList().stream().filter(c -> CCType.OPTIONAL.equals(c.type())).toList();
-        try (XWPFDocument doc = new XWPFDocument(new FileInputStream(docPath.toFile()))) {
+       var optionalComponents = list.stream().filter(c -> CCType.OPTIONAL.equals(c.type())).toList();
+        try (XWPFDocument doc = new XWPFDocument(new FileInputStream(DocumentPath.getTempPath().toFile()))) {
 
             XWPFParagraph paragraph = ParagraphFinder.get(doc, "@@componentes_optativos@@");
 
@@ -48,10 +46,9 @@ public class OptionalComponentsReplacer implements  IReplacer{
             }
 
             save(doc);
-
         }
 
-        try (var doc = new XWPFDocument(new FileInputStream(temp.toFile()))) {
+        try (var doc = new XWPFDocument(new FileInputStream(DocumentPath.getTempPath().toFile()))) {
             XWPFTable table = doc.getTableArray(currentTable.getValue());
 
                 for (CC cc : optionalComponents) {
@@ -75,11 +72,6 @@ public class OptionalComponentsReplacer implements  IReplacer{
             currentTable.nextTable();
 
             save(doc);
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
-
-        save();
     }
 }

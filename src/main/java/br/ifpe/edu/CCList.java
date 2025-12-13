@@ -39,9 +39,9 @@ public enum CCList {
         var total = new Sum();
         for (CC cc : list) {
             if (cc.type().equals(ccType)) {
-                total.totalHa = Eval.eval("%s+%s", total.totalHa, cc.ha());
-                total.totalHr = Eval.eval("%s+%s", total.totalHr, cc.hr());
-                total.totalExt = Eval.eval("%s+%s", total.totalExt, cc.ext());
+                total.totalHa = Eval.evalDecimal("%s+%s", total.totalHa, cc.ha());
+                total.totalHr = Eval.evalDecimal("%s+%s", total.totalHr, cc.hr());
+                total.totalExt = Eval.evalDecimal("%s+%s", total.totalExt, cc.ext());
             }
         }
 

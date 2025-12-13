@@ -10,14 +10,12 @@ import java.io.IOException;
 public class PlaceholderReplacer implements IReplacer {
     @Override
     public void replace() throws IOException {
-        try (var doc = new XWPFDocument(new FileInputStream(DocumentPath.INSTANCE.getOutputPath().toFile()))) {
+        try (var doc = new XWPFDocument(new FileInputStream(DocumentPath.getTempPath().toFile()))) {
             replaceInDocument(doc);
             replaceInHeaders(doc);
             replaceInFooters(doc);
             save(doc);
         }
-
-        save();
     }
 
     private void replaceInDocument(XWPFDocument doc) {

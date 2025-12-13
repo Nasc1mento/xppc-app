@@ -11,6 +11,7 @@ import java.util.List;
 public class ReplacerList implements AutoCloseable {
 
     private List<IReplacer> list;
+    private final DocumentPath  documentPath = DocumentPath.INSTANCE;
 
     public ReplacerList() {
         loadList();
@@ -31,16 +32,13 @@ public class ReplacerList implements AutoCloseable {
     }
 
     public void cAll() throws IOException {
-
-        try (XWPFDocument doc = new XWPFDocument(DocumentPath.loadResourceStream("ppc.docx"))) {
-            try (var out = new FileOutputStream(DocumentPath.getTempPath().toFile())) {
-                doc.write(out);
-            }
-        }
+        documentPath.createTempDoc();
 
         for (IReplacer replacer : list) {
             replacer.replace();
         }
+
+        documentPath.save();
     }
 
 

@@ -15,13 +15,12 @@ import java.nio.file.Path;
 
 public class HistoryReplacer implements IReplacer {
 
-    private final Path docPath = DocumentPath.INSTANCE.getOutputPath();
     private final PlaceholderList placeholderList = PlaceholderList.INSTANCE;
     private final CampusReader campusReader = new CampusReader();
 
     @Override
     public void replace() throws IOException {
-        try (var doc = new XWPFDocument(new FileInputStream(docPath.toFile()))) {
+        try (var doc = new XWPFDocument(new FileInputStream(DocumentPath.getTempPath().toFile()))) {
             XWPFParagraph placeholderParagraph = ParagraphFinder.get(doc, "$$historico_do_campus$$");
 
             if (placeholderParagraph != null) {
@@ -49,9 +48,6 @@ public class HistoryReplacer implements IReplacer {
             }
 
             save(doc);
-
         }
-
-        save();
     }
 }

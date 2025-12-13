@@ -23,7 +23,6 @@ public class CurricularDrawReplacer implements IReplacer {
 
     @Override
     public void replace() throws IOException {
-        Path temp = DocumentPath.getTempPath();
 
         Map<String, List<CC>> ccPerPeriod = CCList.INSTANCE.getList()
                 .stream()
@@ -32,7 +31,7 @@ public class CurricularDrawReplacer implements IReplacer {
                         TreeMap::new,
                         Collectors.toList()
                 ));
-        try (XWPFDocument doc = new XWPFDocument(new FileInputStream(temp.toFile()))) {
+        try (XWPFDocument doc = new XWPFDocument(new FileInputStream(DocumentPath.getTempPath().toFile()))) {
 
             XWPFParagraph paragraph = ParagraphFinder.get(doc, "@@desenho_curricular@@");
 
@@ -57,7 +56,7 @@ public class CurricularDrawReplacer implements IReplacer {
             save(doc);
         }
 
-        try (var doc = new XWPFDocument(new FileInputStream(temp.toFile()))) {
+        try (var doc = new XWPFDocument(new FileInputStream(DocumentPath.getTempPath().toFile()))) {
             XWPFTable table = doc.getTableArray(currentTable.getValue());
 
             for (var entry : ccPerPeriod.entrySet()) {
@@ -80,7 +79,5 @@ public class CurricularDrawReplacer implements IReplacer {
             save(doc);
 
         }
-
-        save();
     }
 }

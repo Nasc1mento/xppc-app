@@ -24,10 +24,9 @@ public class EletivosReplacer implements  IReplacer{
 
     @Override
     public void replace() throws IOException {
-        Path temp = DocumentPath.getTempPath();
 
         var electiveComponents = list.getList().stream().filter(c -> CCType.ELECTIVE.equals(c.type())).toList();
-        try (var doc = new XWPFDocument(new FileInputStream(docPath.toFile()))) {
+        try (var doc = new XWPFDocument(new FileInputStream(DocumentPath.getTempPath().toFile()))) {
 
             XWPFParagraph paragraph = ParagraphFinder.get(doc, "@@componentes_optativos@@");
 
@@ -50,10 +49,9 @@ public class EletivosReplacer implements  IReplacer{
             }
 
             save(doc);
-
         }
 
-        try (var doc = new XWPFDocument(new FileInputStream(temp.toFile()))) {
+        try (var doc = new XWPFDocument(new FileInputStream(DocumentPath.getTempPath().toFile()))) {
             XWPFTable table = doc.getTableArray(currentTable.getValue());
 
             for (CC cc : electiveComponents) {
@@ -77,10 +75,7 @@ public class EletivosReplacer implements  IReplacer{
             table.removeRow(1);
             currentTable.nextTable();
 
-           save(doc);
-
+            save(doc);
         }
-
-       save();
     }
 }

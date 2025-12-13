@@ -19,14 +19,11 @@ public class CurricularFormReplacer implements IReplacer {
 
     private final CurrentTable currentTable = CurrentTable.INSTANCE;
     private final List<CC> ccList = CCList.INSTANCE.getList();
-    private final Path docPath = DocumentPath.INSTANCE.getOutputPath();
-
-
 
     @Override
     public void replace() throws IOException {
         try (
-                var doc = new XWPFDocument(new FileInputStream(docPath.toFile()));
+                var doc = new XWPFDocument(new FileInputStream(DocumentPath.getTempPath().toFile()));
         ) {
 
             XWPFParagraph paragraph = ParagraphFinder.get(doc, "@@formulario_componentes_curriculares@@");
@@ -59,17 +56,12 @@ public class CurricularFormReplacer implements IReplacer {
             save(doc);
         }
 
-        save();
-
-        try (var doc = new XWPFDocument(new FileInputStream(docPath.toFile()))) {
+        try (var doc = new XWPFDocument(new FileInputStream(DocumentPath.getTempPath().toFile()))) {
             var table = doc.getTableArray(currentTable.getCounter().addAndGet(24));
-
             for (var cc : ccList) {
-
                 table.getRows().getFirst().getCell(0).setText("X");
-
-
                 table = doc.getTableArray(currentTable.nextTable());
+
                 if (CCType.MANDATORY.equals(cc.type())) {
                     table.getRows().getFirst().getCell(0).setText("X");
                 } else if (CCType.ELECTIVE.equals(cc.type())) {
@@ -80,29 +72,30 @@ public class CurricularFormReplacer implements IReplacer {
 
                 table = doc.getTableArray(currentTable.nextTable());
 
-                table.getRows().get(2).getCell(0).setText(cc.name());
-
-
-                table.getRows().get(1).getCell(0).setText(cc.name());
-                table.getRows().get(1).getCell(3).setText(cc.credits());
-                table.getRows().get(1).getCell(4).setText(cc.ha());
-                table.getRows().get(1).getCell(5).setText(Eval.eval("%s+%s", cc.hr(), cc.ext()));
-                table.getRows().get(1).getCell(6).setText(cc.period());
-
+                {
+                    XWPFTableRow row = table.getRows().getLast();
+                    row.getCell(0).setText(cc.name());
+                    row.getCell(1).setText(cc.hrTeo());
+                    row.getCell(2).setText(cc.hrPr());
+                    row.getCell(3).setText(cc.ext());
+                    row = table.getRows().get(1);
+                    row.getCell(4).setText(cc.credits());
+                    row.getCell(5).setText(cc.ha());
+                    row.getCell(6).setText(Eval.evalDecimal("%s+%s", cc.hr(), cc.ext()));
+                    row.getCell(7).setText(cc.period() + "°");
+                }
 
                 table = doc.getTableArray(currentTable.nextTable());
 
-                var row0 = table.getRows().get(0);
-                row0.getCell(0).getParagraphs().getFirst().createRun().setText(cc.prereq() == null ? "Não há" : cc.prereq());
-                row0.getCell(1).getParagraphs().getFirst().createRun().setText(cc.coreq() == null ? "Não há" : cc.coreq());
+                {
+                    XWPFTableRow row = table.getRows().getFirst();
+                    row.getCell(0).getParagraphs().getFirst().createRun().setText(cc.prereq() == null ? "Não há" : cc.prereq());
+                    row.getCell(1).getParagraphs().getFirst().createRun().setText(cc.coreq() == null ? "Não há" : cc.coreq());
+                }
 
-                table =  doc.getTableArray(currentTable.getCounter().addAndGet(6));
+                table = doc.getTableArray(currentTable.getCounter().addAndGet(6));
             }
-
             save(doc);
-
         }
-
-        save();
     }
 }

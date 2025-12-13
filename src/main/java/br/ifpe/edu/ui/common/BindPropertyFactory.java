@@ -5,6 +5,7 @@ import javax.swing.event.DocumentListener;
 import java.awt.event.ItemEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
 
@@ -51,7 +52,6 @@ public class BindPropertyFactory {
             if (onStatusChange == null) return;
 
             boolean isValid = validators.stream().allMatch(BooleanSupplier::getAsBoolean);
-
             onStatusChange.accept(isValid);
         }
     }

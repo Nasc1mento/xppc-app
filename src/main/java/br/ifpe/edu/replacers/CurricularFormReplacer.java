@@ -12,7 +12,6 @@ import org.apache.xmlbeans.XmlCursor;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.List;
 
 public class CurricularFormReplacer implements IReplacer {
@@ -53,7 +52,7 @@ public class CurricularFormReplacer implements IReplacer {
                 }
             }
 
-            save(doc);
+            commit(doc);
         }
 
         try (var doc = new XWPFDocument(new FileInputStream(DocumentPath.getTempPath().toFile()))) {
@@ -95,7 +94,7 @@ public class CurricularFormReplacer implements IReplacer {
 
                 table = doc.getTableArray(currentTable.getCounter().addAndGet(6));
             }
-            save(doc);
+            commit(doc);
         }
     }
 }

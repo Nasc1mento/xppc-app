@@ -11,7 +11,6 @@ import org.apache.xmlbeans.XmlCursor;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTbl;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
@@ -62,7 +61,7 @@ public class MatrixReplacer implements IReplacer {
                 }
             }
 
-            save(doc);
+            commit(doc);
 
         }
 
@@ -107,7 +106,7 @@ public class MatrixReplacer implements IReplacer {
                 table = doc.getTableArray(currentTable.nextTable());
             }
 
-            save(doc);
+            commit(doc);
 
         }
     }

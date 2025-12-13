@@ -12,7 +12,6 @@ import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTbl;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.List;
 
 public class OptionalComponentsReplacer implements  IReplacer{
@@ -45,7 +44,7 @@ public class OptionalComponentsReplacer implements  IReplacer{
                 }
             }
 
-            save(doc);
+            commit(doc);
         }
 
         try (var doc = new XWPFDocument(new FileInputStream(DocumentPath.getTempPath().toFile()))) {
@@ -71,7 +70,7 @@ public class OptionalComponentsReplacer implements  IReplacer{
             table.removeRow(1);
             currentTable.nextTable();
 
-            save(doc);
+            commit(doc);
         }
     }
 }

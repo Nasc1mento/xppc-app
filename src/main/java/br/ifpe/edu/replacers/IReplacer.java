@@ -9,7 +9,7 @@ import java.io.IOException;
 public interface IReplacer {
     void replace() throws IOException;
 
-    default void save(XWPFDocument d) throws IOException {
+    default void commit(XWPFDocument d) throws IOException {
         try (var out = new FileOutputStream(DocumentPath.getTempPath().toFile())) {
             d.write(out);
         }

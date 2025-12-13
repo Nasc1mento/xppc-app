@@ -11,7 +11,6 @@ import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTbl;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -53,7 +52,7 @@ public class CurricularDrawReplacer implements IReplacer {
                 }
             }
 
-            save(doc);
+            commit(doc);
         }
 
         try (var doc = new XWPFDocument(new FileInputStream(DocumentPath.getTempPath().toFile()))) {
@@ -76,7 +75,7 @@ public class CurricularDrawReplacer implements IReplacer {
             }
 
             table.removeRow(1);
-            save(doc);
+            commit(doc);
 
         }
     }

@@ -11,7 +11,6 @@ import org.apache.xmlbeans.XmlCursor;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Path;
 
 public class HistoryReplacer implements IReplacer {
 
@@ -47,7 +46,7 @@ public class HistoryReplacer implements IReplacer {
                 doc.removeBodyElement(pos);
             }
 
-            save(doc);
+            commit(doc);
         }
     }
 }

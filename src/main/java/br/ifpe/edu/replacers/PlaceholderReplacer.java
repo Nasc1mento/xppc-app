@@ -14,7 +14,7 @@ public class PlaceholderReplacer implements IReplacer {
             replaceInDocument(doc);
             replaceInHeaders(doc);
             replaceInFooters(doc);
-            save(doc);
+            commit(doc);
         }
     }
 

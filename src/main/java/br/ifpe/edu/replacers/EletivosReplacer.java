@@ -11,7 +11,6 @@ import org.apache.xmlbeans.XmlCursor;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTbl;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
@@ -48,7 +47,7 @@ public class EletivosReplacer implements  IReplacer{
                 }
             }
 
-            save(doc);
+            commit(doc);
         }
 
         try (var doc = new XWPFDocument(new FileInputStream(DocumentPath.getTempPath().toFile()))) {
@@ -75,7 +74,7 @@ public class EletivosReplacer implements  IReplacer{
             table.removeRow(1);
             currentTable.nextTable();
 
-            save(doc);
+            commit(doc);
         }
     }
 }

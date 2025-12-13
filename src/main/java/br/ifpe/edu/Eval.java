@@ -29,11 +29,9 @@ public class Eval {
         }
     }
 
-    public static boolean evalBoolean(String format, String ...args) {
-        Expression e = new Expression(String.format(format, (Object[]) args));
+    public static boolean compare(String v1, String v2) {
         try {
-            BigDecimal r = e.evaluate().getNumberValue();
-            return r.compareTo(BigDecimal.ZERO) != 0;
+            return Double.parseDouble(v1) >= Double.parseDouble(v2);
         } catch (Exception _) {
             return false;
         }

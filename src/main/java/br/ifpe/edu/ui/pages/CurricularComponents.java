@@ -228,15 +228,16 @@ public class CurricularComponents extends Page implements IValidatable, ISubmitt
         placeholderList.addPlaceholder("ch_obrigatorios_hr", sumMandatoryTotal);
         placeholderList.addPlaceholder("ch_optativos_hr", sumOptionalTotal);
 
-        var totalSum = Eval.evalDecimal("%s+%s+%s+%s", ca, sumOptionalTotal, sumMandatoryTotal, internship);
+        var totalSum = Eval.evalDecimal("%s+%s+%s", ca, sumOptionalTotal, sumMandatoryTotal);
         placeholderList.addPlaceholder("cht",totalSum);
         placeholderList.addPlaceholder("cht_ha", Eval.evalDecimal("(%s*60)/45", totalSum));
-        placeholderList.addPlaceholder("cht_e_estagio", Eval.evalDecimal("%s+%s", totalSum, internship));
+        var trueTotal =  Eval.evalDecimal("%s+%s", totalSum, internship);
+        placeholderList.addPlaceholder("cht_e_estagio", trueTotal);
 
-        var sumMandatoryPer = Eval.evalDecimal("%s*100/%s", sumMandatoryTotal, totalSum);
-        var sumOptionalPer = Eval.evalDecimal("%s*100/%s", sumOptionalTotal, totalSum);
-        var caPer = Eval.evalDecimal("%s*100/%s", ca, totalSum);
-        var internshipPer = Eval.evalDecimal("%s*100/%s", internship, totalSum);
+        var sumMandatoryPer = Eval.evalDecimal("%s*100/%s", sumMandatoryTotal, trueTotal);
+        var sumOptionalPer = Eval.evalDecimal("%s*100/%s", sumOptionalTotal, trueTotal);
+        var caPer = Eval.evalDecimal("%s*100/%s", ca, trueTotal);
+        var internshipPer = Eval.evalDecimal("%s*100/%s", internship, trueTotal);
 
         placeholderList.addPlaceholder("ch_obrigatorios_per", sumMandatoryPer);
         placeholderList.addPlaceholder("ch_optativos_per", sumOptionalPer);
@@ -251,13 +252,20 @@ public class CurricularComponents extends Page implements IValidatable, ISubmitt
         String typeCourse =  placeholderList.getValue("nivel");
 
         if (CourseLevel.TECHNOLOGIST.equals(CourseLevel.findByString(typeCourse))) {
-            String recommendedCht = cnctReader.getHoursByName(placeholderList.getValue("nome_do_curso"));
-            if (Eval.evalBoolean("%s<%s", totalCht, recommendedCht)) {
+            String courseName = placeholderList.getValue("nome_do_curso");
+            String recommendedCht = cnctReader.getHoursByName(courseName);
+            if (!Eval.compare(totalCht, recommendedCht)) {
                 return JOptionPane.showConfirmDialog(
                         this,
                         String.format(
-                                "Carga horária abaixo da recomendada pelo Catálogo Nacional dos Cursos Tecnólogos. Atual: %s. Recomendada: %s",
-                                totalCht, recommendedCht
+                                "<html>"
+                                        + "A carga horária do curso <b>%s</b> está <b>abaixo</b> da recomendada pelo "
+                                        + "Catálogo Nacional dos Cursos Tecnólogos.<hr>"
+                                        + "<b>Carga horária atual:</b> %s horas<br>"
+                                        + "<b>Carga horária recomendada:</b> %s horas<br><br>"
+                                        + "Deseja continuar mesmo assim?"
+                                        + "</html>",
+                                courseName, totalCht, recommendedCht
                         ),
                         "Aviso",
                         JOptionPane.YES_NO_OPTION,

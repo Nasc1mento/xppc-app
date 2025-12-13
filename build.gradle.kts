@@ -35,6 +35,7 @@ dependencies {
     implementation("org.apache.poi:poi-ooxml-full:5.4.1")
     implementation("com.opencsv:opencsv:5.12.0")
     implementation("com.formdev:flatlaf:3.6.1")
+    implementation("com.formdev:flatlaf-extras:3.6.1")
     implementation("com.ezylang:EvalEx:3.5.0")
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")

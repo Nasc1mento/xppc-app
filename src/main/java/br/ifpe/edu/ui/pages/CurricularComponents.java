@@ -80,8 +80,8 @@ public class CurricularComponents extends Page implements IValidatable, ISubmitt
         addRow(new JLabel("Total de Horas de Extensão (H/R): "), extField);
         addRow(new JLabel("Tipo: "),  typeBox);
         addRow(new JLabel("Período: "), periodField);
-        addRow(new JLabel("Pré-requisitos"), prereqBox);
-        addRow(new JLabel("Correquisitos"), coreqBox);
+        addRow(new JLabel("Pré-requisitos: "), prereqBox);
+        addRow(new JLabel("Correquisitos: "), coreqBox);
         addRow(addButton);
     }
 

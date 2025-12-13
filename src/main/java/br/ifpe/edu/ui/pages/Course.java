@@ -52,17 +52,17 @@ public class Course extends Page implements ISubmittable {
     private void setupForm() {
         addRow(new JLabel("Tipo do curso: "), levelBox);
         addRow(new JLabel("Nome do curso: "), nameBox);
-        addRow(new JLabel("Eixo tecnológico"), axisBox);
+        addRow(new JLabel("Eixo tecnológico: "), axisBox);
         addRow(new JLabel("Modalidade: "), modalityBox);
-        addRow(new JLabel("Formas de oferta"), offersField);
+        addRow(new JLabel("Formas de oferta: "), offersField);
         addRow(new JLabel("Titulação: "), certificationField);
         addRow(new JLabel("CH estágio supervisionado (H/R): "), internshipHoursField);
         addRow(new JLabel("Número de semanas letivas: "), weeksField);
         addRow(new JLabel("Atividades Complementares (H/R): "),  extraActivitiesHoursField);
-        addRow(new JLabel("Período de integralização mínima(semestres e anos)"), minCompletionField);
-        addRow(new JLabel("Período de integralização máxima (semestre e anos)"), maxCompletionField);
-        addRow(new JLabel("Formas de acesso"), entryMethodsField);
-        addRow(new JLabel("Pré-requisito para ingresso"), prereqField);
+        addRow(new JLabel("Período de integralização mínima(semestres e anos): "), minCompletionField);
+        addRow(new JLabel("Período de integralização máxima (semestre e anos): "), maxCompletionField);
+        addRow(new JLabel("Formas de acesso: "), entryMethodsField);
+        addRow(new JLabel("Pré-requisito para ingresso: "), prereqField);
         addRow(new JLabel("Regime: "), regimeBox);
         addRow(new JLabel("Turnos: "), shiftsField);
         addRow(new JLabel("Número de turmas por turno de oferta: "), classesPerShiftField);
@@ -70,7 +70,7 @@ public class Course extends Page implements ISubmittable {
         addRow(new JLabel("Número de vagas por turno de oferta: "), seatsPerShiftField);
         addRow(new JLabel("Vagas por semestre: "), seatsPerSemesterField);
         addRow(new JLabel("Duração do Curso: "), durationField);
-        addRow(new JLabel("Início do Curso/ Matriz Curricular"),  startField);
+        addRow(new JLabel("Início do Curso/ Matriz Curricular: "),  startField);
     }
 
     private void setupListeners() {

@@ -29,7 +29,7 @@ public class CourseSituation extends Page implements ISubmittable {
 
     private void setupForm() {
         addRow(new JLabel("Conceito de Curso (CC): "), cc);
-        addRow(new JLabel("Conceito Preliminar de Curso (CPC)"), cpc);
+        addRow(new JLabel("Conceito Preliminar de Curso (CPC): "), cpc);
         addRow(new JLabel("Conceito Enade: "), enade);
         addRow(new JLabel("Índice Geral de Cursos (IGC): "), igc);
         addRow(new JLabel("Situação do Curso: "),  situationBox);

@@ -1,5 +1,7 @@
 package br.ifpe.edu.ui.common;
 
+import com.formdev.flatlaf.FlatClientProperties;
+
 import javax.swing.*;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.NumberFormatter;
@@ -23,6 +25,7 @@ public class TextField extends JFormattedTextField implements IComponent {
         placeholder = pText;
         return this;
     }
+
 
     @Override
     protected void paintComponent(final Graphics pG) {

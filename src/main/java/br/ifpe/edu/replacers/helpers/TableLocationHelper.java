@@ -2,13 +2,13 @@ package br.ifpe.edu.replacers.helpers;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-public enum CurrentTable {
+public enum TableLocationHelper {
 
     INSTANCE;
 
     private AtomicInteger counter;
 
-    CurrentTable() {
+    TableLocationHelper() {
         setInitialValue();
     }
 

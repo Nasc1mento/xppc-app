@@ -28,7 +28,7 @@ public class PeopleReader extends AbstractCSVReader {
 
     public List<String[]> get() {
         final List<String[]> people = new ArrayList<>();
-        for (var line : super.read()) {
+        for (var line : read()) {
             var arr =  new String[2];
             arr[0] = line[Columns.NAME.index];
             arr[1] = line[Columns.ROLE.index];

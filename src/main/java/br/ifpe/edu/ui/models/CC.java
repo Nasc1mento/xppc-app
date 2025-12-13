@@ -9,6 +9,7 @@ public record CC(
     String period,
     String ap,
     String at,
+    String ae,
     String hrPr,
     String hrTeo,
     String ext,
@@ -17,7 +18,7 @@ public record CC(
 ) {
 
     public String credits() {
-        return Eval.evalInteger("%s+%s", ap, at);
+        return Eval.evalInteger("%s+%s+%s", ap, at, ae);
     }
 
     public String hr() {

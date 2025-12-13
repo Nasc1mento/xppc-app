@@ -2,8 +2,8 @@ package br.ifpe.edu.replacers;
 
 import br.ifpe.edu.PlaceholderList;
 import br.ifpe.edu.readers.CampusReader;
-import br.ifpe.edu.replacers.helpers.DocumentPath;
-import br.ifpe.edu.replacers.helpers.ParagraphFinder;
+import br.ifpe.edu.replacers.helpers.DocumentHelper;
+import br.ifpe.edu.replacers.helpers.ParagraphHelper;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.xmlbeans.XmlCursor;
@@ -19,8 +19,8 @@ public class HistoryReplacer implements IReplacer {
 
     @Override
     public void replace() throws IOException {
-        try (var doc = new XWPFDocument(new FileInputStream(DocumentPath.getTempPath().toFile()))) {
-            XWPFParagraph placeholderParagraph = ParagraphFinder.get(doc, "$$historico_do_campus$$");
+        try (var doc = new XWPFDocument(new FileInputStream(DocumentHelper.getTempPath().toFile()))) {
+            XWPFParagraph placeholderParagraph = ParagraphHelper.find(doc, "$$historico_do_campus$$");
 
             if (placeholderParagraph != null) {
                 String historyFileName = campusReader.getByNameAndColumn(
@@ -30,7 +30,7 @@ public class HistoryReplacer implements IReplacer {
                 URL historyPath = Thread.currentThread().getContextClassLoader().getResource(historyFileName);
 
                 if (historyPath != null) {
-                    try (var historyDoc = new XWPFDocument(DocumentPath.loadResourceStream(historyFileName))) {
+                    try (var historyDoc = new XWPFDocument(DocumentHelper.loadResourceStream(historyFileName))) {
 
                         try (XmlCursor cursor = placeholderParagraph.getCTP().newCursor()) {
                             for (XWPFParagraph pHistory : historyDoc.getParagraphs()) {

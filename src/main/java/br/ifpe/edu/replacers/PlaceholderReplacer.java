@@ -1,7 +1,7 @@
 package br.ifpe.edu.replacers;
 
 import br.ifpe.edu.PlaceholderList;
-import br.ifpe.edu.replacers.helpers.DocumentPath;
+import br.ifpe.edu.replacers.helpers.DocumentHelper;
 import org.apache.poi.xwpf.usermodel.*;
 
 import java.io.FileInputStream;
@@ -10,7 +10,7 @@ import java.io.IOException;
 public class PlaceholderReplacer implements IReplacer {
     @Override
     public void replace() throws IOException {
-        try (var doc = new XWPFDocument(new FileInputStream(DocumentPath.getTempPath().toFile()))) {
+        try (var doc = new XWPFDocument(new FileInputStream(DocumentHelper.getTempPath().toFile()))) {
             replaceInDocument(doc);
             replaceInHeaders(doc);
             replaceInFooters(doc);
@@ -50,8 +50,8 @@ public class PlaceholderReplacer implements IReplacer {
         }
     }
 
-    private void replaceInParagraph(XWPFParagraph paragraph) {
-        for (XWPFRun run : paragraph.getRuns()) {
+    private void replaceInParagraph(XWPFParagraph p) {
+        for (XWPFRun run : p.getRuns()) {
 
             if (run.getText(0) == null) continue;
 

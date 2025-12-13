@@ -1,9 +1,9 @@
 package br.ifpe.edu.replacers;
 
 import br.ifpe.edu.CCList;
-import br.ifpe.edu.replacers.helpers.CurrentTable;
-import br.ifpe.edu.replacers.helpers.DocumentPath;
-import br.ifpe.edu.replacers.helpers.ParagraphFinder;
+import br.ifpe.edu.replacers.helpers.TableLocationHelper;
+import br.ifpe.edu.replacers.helpers.DocumentHelper;
+import br.ifpe.edu.replacers.helpers.ParagraphHelper;
 import br.ifpe.edu.ui.models.CC;
 import br.ifpe.edu.ui.models.CCType;
 import org.apache.poi.xwpf.usermodel.*;
@@ -18,23 +18,20 @@ import java.util.List;
 public class EletivosReplacer implements  IReplacer{
 
     private final CCList list = CCList.INSTANCE;
-    private final Path docPath = DocumentPath.INSTANCE.getOutputPath();
-    private final CurrentTable currentTable = CurrentTable.INSTANCE;
+    private final Path docPath = DocumentHelper.INSTANCE.getOutputPath();
+    private final TableLocationHelper tableLocationHelper = TableLocationHelper.INSTANCE;
 
     @Override
     public void replace() throws IOException {
 
         var electiveComponents = list.getList().stream().filter(c -> CCType.ELECTIVE.equals(c.type())).toList();
-        try (var doc = new XWPFDocument(new FileInputStream(DocumentPath.getTempPath().toFile()))) {
+        try (var doc = new XWPFDocument(new FileInputStream(DocumentHelper.getTempPath().toFile()))) {
 
-            XWPFParagraph paragraph = ParagraphFinder.get(doc, "@@componentes_optativos@@");
+            XWPFParagraph paragraph = ParagraphHelper.find(doc, "@@componentes_optativos@@");
 
             if (paragraph != null) {
-                try (var dcDoc = new XWPFDocument(DocumentPath.loadResourceStream("tabela_componentes_optativos_e_eletivos.docx"))) {
-
-                    List<XWPFTable> tables = dcDoc.getTables();
-
-                    CTTbl xmlTblToCopy = tables.getFirst().getCTTbl();
+                try (var dcDoc = new XWPFDocument(DocumentHelper.loadResourceStream("tabela_componentes_optativos_e_eletivos.docx"))) {
+                    CTTbl xmlTblToCopy = dcDoc.getTables().getFirst().getCTTbl();
                     try (XmlCursor insertCursor = paragraph.getCTP().newCursor()) {
                         XWPFTable newTable = doc.insertNewTbl(insertCursor);
                         newTable.getCTTbl().set(xmlTblToCopy.copy());
@@ -50,8 +47,8 @@ public class EletivosReplacer implements  IReplacer{
             commit(doc);
         }
 
-        try (var doc = new XWPFDocument(new FileInputStream(DocumentPath.getTempPath().toFile()))) {
-            XWPFTable table = doc.getTableArray(currentTable.getValue());
+        try (var doc = new XWPFDocument(new FileInputStream(DocumentHelper.getTempPath().toFile()))) {
+            XWPFTable table = doc.getTableArray(tableLocationHelper.getValue());
 
             for (CC cc : electiveComponents) {
                 XWPFTableRow currentRow = table.getRows().getLast();
@@ -72,7 +69,7 @@ public class EletivosReplacer implements  IReplacer{
             }
 
             table.removeRow(1);
-            currentTable.nextTable();
+            tableLocationHelper.nextTable();
 
             commit(doc);
         }

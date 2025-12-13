@@ -1,9 +1,9 @@
 package br.ifpe.edu.replacers;
 
 import br.ifpe.edu.CCList;
-import br.ifpe.edu.replacers.helpers.CurrentTable;
-import br.ifpe.edu.replacers.helpers.DocumentPath;
-import br.ifpe.edu.replacers.helpers.ParagraphFinder;
+import br.ifpe.edu.replacers.helpers.TableLocationHelper;
+import br.ifpe.edu.replacers.helpers.DocumentHelper;
+import br.ifpe.edu.replacers.helpers.ParagraphHelper;
 import br.ifpe.edu.ui.models.CC;
 import org.apache.poi.xwpf.usermodel.*;
 import org.apache.xmlbeans.XmlCursor;
@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 public class CurricularDrawReplacer implements IReplacer {
 
-    private final CurrentTable currentTable = CurrentTable.INSTANCE;
+    private final TableLocationHelper tableLocationHelper = TableLocationHelper.INSTANCE;
 
     @Override
     public void replace() throws IOException {
@@ -30,16 +30,14 @@ public class CurricularDrawReplacer implements IReplacer {
                         TreeMap::new,
                         Collectors.toList()
                 ));
-        try (XWPFDocument doc = new XWPFDocument(new FileInputStream(DocumentPath.getTempPath().toFile()))) {
+        try (XWPFDocument doc = new XWPFDocument(new FileInputStream(DocumentHelper.getTempPath().toFile()))) {
 
-            XWPFParagraph paragraph = ParagraphFinder.get(doc, "@@desenho_curricular@@");
+            XWPFParagraph paragraph = ParagraphHelper.find(doc, "@@desenho_curricular@@");
 
             if (paragraph != null) {
-                try (var dcDoc = new XWPFDocument(DocumentPath.loadResourceStream("tabela_desenho_curricular.docx"))) {
+                try (var dcDoc = new XWPFDocument(DocumentHelper.loadResourceStream("tabela_desenho_curricular.docx"))) {
 
-                    List<XWPFTable> tables = dcDoc.getTables();
-
-                    CTTbl xmlTblToCopy = tables.getFirst().getCTTbl();
+                    CTTbl xmlTblToCopy = dcDoc.getTables().getFirst().getCTTbl();
                     try (XmlCursor insertCursor = paragraph.getCTP().newCursor()) {
                         XWPFTable newTable = doc.insertNewTbl(insertCursor);
                         newTable.getCTTbl().set(xmlTblToCopy.copy());
@@ -55,8 +53,8 @@ public class CurricularDrawReplacer implements IReplacer {
             commit(doc);
         }
 
-        try (var doc = new XWPFDocument(new FileInputStream(DocumentPath.getTempPath().toFile()))) {
-            XWPFTable table = doc.getTableArray(currentTable.getValue());
+        try (var doc = new XWPFDocument(new FileInputStream(DocumentHelper.getTempPath().toFile()))) {
+            XWPFTable table = doc.getTableArray(tableLocationHelper.getValue());
 
             for (var entry : ccPerPeriod.entrySet()) {
                 List<CC> ccs = entry.getValue();

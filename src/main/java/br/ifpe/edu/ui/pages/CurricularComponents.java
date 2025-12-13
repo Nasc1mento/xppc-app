@@ -26,6 +26,7 @@ public class CurricularComponents extends Page implements IValidatable, ISubmitt
     private final TextField periodField = new TextField(10).setInteger();
     private final TextField apField = new TextField(10).setInteger();
     private final TextField atField = new TextField(10).setInteger();
+    private final TextField aeField = new TextField(10).setInteger();
     private final TextField hrPrField = new TextField(10).setDouble();
     private final TextField hrTeoField = new TextField(10).setDouble();
     private final TextField extField = new TextField(10).setDouble();
@@ -71,8 +72,9 @@ public class CurricularComponents extends Page implements IValidatable, ISubmitt
         addTable(table);
         addRow(new JLabel("Código: "), codeField);
         addRow(new JLabel("Nome do Componente Curricular"), ccField);
-        addRow(new JLabel("Aulas Práticas Semanais: "), apField);
-        addRow(new JLabel("Aulas Teóricas Semanais: "), atField);
+        addRow(new JLabel("Créditos de Aulas Práticas: "), apField);
+        addRow(new JLabel("Créditos de Aulas Teóricas: "), atField);
+        addRow(new JLabel("Créditos de Extensão: "), aeField);
         addRow(new JLabel("Total de Horas Práticas (H/R): "), hrPrField);
         addRow(new JLabel("Total de Horas Teóricas (H/R): "), hrTeoField);
         addRow(new JLabel("Total de Horas de Extensão (H/R): "), extField);
@@ -90,6 +92,7 @@ public class CurricularComponents extends Page implements IValidatable, ISubmitt
                 .bind(codeField)
                 .bind(apField)
                 .bind(atField)
+                .bind(aeField)
                 .bind(ccField)
                 .bind(periodField)
                 .bind(hrPrField)
@@ -119,6 +122,7 @@ public class CurricularComponents extends Page implements IValidatable, ISubmitt
         String period = periodField.getText();
         String ap = apField.getText();
         String at = atField.getText();
+        String ae = aeField.getText();
         String hrPr = hrPrField.getText();
         String hrTeo = hrTeoField.getText();
         String ext = extField.getText();
@@ -132,6 +136,7 @@ public class CurricularComponents extends Page implements IValidatable, ISubmitt
                 period,
                 ap,
                 at,
+                ae,
                 hrPr,
                 hrTeo,
                 ext,

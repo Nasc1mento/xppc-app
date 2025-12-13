@@ -1,6 +1,6 @@
 package br.ifpe.edu.replacers;
 
-import br.ifpe.edu.replacers.helpers.DocumentPath;
+import br.ifpe.edu.replacers.helpers.DocumentHelper;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 
 import java.io.FileOutputStream;
@@ -10,7 +10,7 @@ public interface IReplacer {
     void replace() throws IOException;
 
     default void commit(XWPFDocument d) throws IOException {
-        try (var out = new FileOutputStream(DocumentPath.getTempPath().toFile())) {
+        try (var out = new FileOutputStream(DocumentHelper.getTempPath().toFile())) {
             d.write(out);
         }
     }

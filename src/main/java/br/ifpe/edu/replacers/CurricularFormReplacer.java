@@ -2,9 +2,9 @@ package br.ifpe.edu.replacers;
 
 import br.ifpe.edu.CCList;
 import br.ifpe.edu.Eval;
-import br.ifpe.edu.replacers.helpers.CurrentTable;
-import br.ifpe.edu.replacers.helpers.DocumentPath;
-import br.ifpe.edu.replacers.helpers.ParagraphFinder;
+import br.ifpe.edu.replacers.helpers.TableLocationHelper;
+import br.ifpe.edu.replacers.helpers.DocumentHelper;
+import br.ifpe.edu.replacers.helpers.ParagraphHelper;
 import br.ifpe.edu.ui.models.CC;
 import br.ifpe.edu.ui.models.CCType;
 import org.apache.poi.xwpf.usermodel.*;
@@ -16,19 +16,19 @@ import java.util.List;
 
 public class CurricularFormReplacer implements IReplacer {
 
-    private final CurrentTable currentTable = CurrentTable.INSTANCE;
+    private final TableLocationHelper tableLocationHelper = TableLocationHelper.INSTANCE;
     private final List<CC> ccList = CCList.INSTANCE.getList();
 
     @Override
     public void replace() throws IOException {
         try (
-                var doc = new XWPFDocument(new FileInputStream(DocumentPath.getTempPath().toFile()));
+                var doc = new XWPFDocument(new FileInputStream(DocumentHelper.getTempPath().toFile()))
         ) {
 
-            XWPFParagraph paragraph = ParagraphFinder.get(doc, "@@formulario_componentes_curriculares@@");
+            XWPFParagraph paragraph = ParagraphHelper.find(doc, "@@formulario_componentes_curriculares@@");
 
             if (paragraph != null) {
-                try (var ccFormDoc = new XWPFDocument(DocumentPath.loadResourceStream("formulario_componente_curricular.docx"))) {
+                try (var ccFormDoc = new XWPFDocument(DocumentHelper.loadResourceStream("formulario_componente_curricular.docx"))) {
                     for (var _ : ccList) {
                         try (XmlCursor insertCursor = paragraph.getCTP().newCursor()) {
                             for (IBodyElement element : ccFormDoc.getBodyElements().reversed()) {
@@ -55,11 +55,11 @@ public class CurricularFormReplacer implements IReplacer {
             commit(doc);
         }
 
-        try (var doc = new XWPFDocument(new FileInputStream(DocumentPath.getTempPath().toFile()))) {
-            var table = doc.getTableArray(currentTable.getCounter().addAndGet(24));
+        try (var doc = new XWPFDocument(new FileInputStream(DocumentHelper.getTempPath().toFile()))) {
+            var table = doc.getTableArray(tableLocationHelper.getCounter().addAndGet(24));
             for (var cc : ccList) {
                 table.getRows().getFirst().getCell(0).setText("X");
-                table = doc.getTableArray(currentTable.nextTable());
+                table = doc.getTableArray(tableLocationHelper.nextTable());
 
                 if (CCType.MANDATORY.equals(cc.type())) {
                     table.getRows().getFirst().getCell(0).setText("X");
@@ -69,30 +69,26 @@ public class CurricularFormReplacer implements IReplacer {
                     table.getRows().getFirst().getCell(4).setText("X");
                 }
 
-                table = doc.getTableArray(currentTable.nextTable());
+                table = doc.getTableArray(tableLocationHelper.nextTable());
 
-                {
-                    XWPFTableRow row = table.getRows().getLast();
-                    row.getCell(0).setText(cc.name());
-                    row.getCell(1).setText(cc.hrTeo());
-                    row.getCell(2).setText(cc.hrPr());
-                    row.getCell(3).setText(cc.ext());
-                    row = table.getRows().get(1);
-                    row.getCell(4).setText(cc.credits());
-                    row.getCell(5).setText(cc.ha());
-                    row.getCell(6).setText(Eval.evalDecimal("%s+%s", cc.hr(), cc.ext()));
-                    row.getCell(7).setText(cc.period() + "°");
-                }
+                XWPFTableRow row = table.getRows().getLast();
+                row.getCell(0).setText(cc.name());
+                row.getCell(1).setText(cc.hrTeo());
+                row.getCell(2).setText(cc.hrPr());
+                row.getCell(3).setText(cc.ext());
+                row = table.getRows().get(1);
+                row.getCell(4).setText(cc.credits());
+                row.getCell(5).setText(cc.ha());
+                row.getCell(6).setText(Eval.evalDecimal("%s+%s", cc.hr(), cc.ext()));
+                row.getCell(7).setText(cc.period() + "°");
 
-                table = doc.getTableArray(currentTable.nextTable());
+                table = doc.getTableArray(tableLocationHelper.nextTable());
 
-                {
-                    XWPFTableRow row = table.getRows().getFirst();
-                    row.getCell(0).getParagraphs().getFirst().createRun().setText(cc.prereq() == null ? "Não há" : cc.prereq());
-                    row.getCell(1).getParagraphs().getFirst().createRun().setText(cc.coreq() == null ? "Não há" : cc.coreq());
-                }
+                row = table.getRows().getFirst();
+                row.getCell(0).getParagraphs().getFirst().createRun().setText(cc.prereq() == null ? "Não há" : cc.prereq());
+                row.getCell(1).getParagraphs().getFirst().createRun().setText(cc.coreq() == null ? "Não há" : cc.coreq());
 
-                table = doc.getTableArray(currentTable.getCounter().addAndGet(6));
+                table = doc.getTableArray(tableLocationHelper.getCounter().addAndGet(6));
             }
             commit(doc);
         }

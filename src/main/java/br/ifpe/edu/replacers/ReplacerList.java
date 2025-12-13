@@ -1,17 +1,15 @@
 package br.ifpe.edu.replacers;
 
-import br.ifpe.edu.replacers.helpers.CurrentTable;
-import br.ifpe.edu.replacers.helpers.DocumentPath;
-import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import br.ifpe.edu.replacers.helpers.TableLocationHelper;
+import br.ifpe.edu.replacers.helpers.DocumentHelper;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
 public class ReplacerList implements AutoCloseable {
 
     private List<IReplacer> list;
-    private final DocumentPath  documentPath = DocumentPath.INSTANCE;
+    private final DocumentHelper documentHelper = DocumentHelper.INSTANCE;
 
     public ReplacerList() {
         loadList();
@@ -32,19 +30,19 @@ public class ReplacerList implements AutoCloseable {
     }
 
     public void cAll() throws IOException {
-        documentPath.createTempDoc();
+        documentHelper.createTempDoc();
 
         for (IReplacer replacer : list) {
             replacer.replace();
         }
 
-        documentPath.save();
+        documentHelper.save();
     }
 
 
     @Override
     public void close() {
         loadList();
-        CurrentTable.INSTANCE.setInitialValue();
+        TableLocationHelper.INSTANCE.setInitialValue();
     }
 }

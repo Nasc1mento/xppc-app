@@ -11,7 +11,7 @@ jobs:
       - uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
-          java-version: '21'
+          java-version: '25'
 
       - name: setup
         uses: gradle/actions/setup-gradle@v3
@@ -32,9 +32,6 @@ jobs:
             --main-class br.ifpe.edu.AppMain \
             --type app-image \
             --dest dist
-
-      - name: zip compress
-        run: Compress-Archive -Path dist/xppc -DestinationPath xppc.zip
 
       - name: upload zip
         uses: actions/upload-artifact@v4

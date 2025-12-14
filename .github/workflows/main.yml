@@ -1,4 +1,4 @@
-name: xppc 1.0 windows portable
+name: xppc windows portable
 on: [workflow_dispatch]
 
 jobs:
@@ -37,4 +37,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: xppc-portable-windows
-          path: xppc.zip
+          path: dist/xppc

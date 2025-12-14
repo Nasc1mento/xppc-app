@@ -16,7 +16,7 @@ public class HistoryReplacer implements IReplacer {
 
     @Override
     public int getPriority() {
-        return 60;
+        return 5;
     }
 
     private final PlaceholderList placeholderList = PlaceholderList.INSTANCE;
@@ -25,7 +25,8 @@ public class HistoryReplacer implements IReplacer {
     @Override
     public void replace() throws IOException {
         try (var doc = new XWPFDocument(new FileInputStream(DocumentHelper.getTempPath().toFile()))) {
-            XWPFParagraph placeholderParagraph = ParagraphHelper.find(doc, "$$historico_do_campus$$");
+
+            XWPFParagraph placeholderParagraph = ParagraphHelper.find(doc, "@@historico_do_campus@@");
 
             if (placeholderParagraph != null) {
                 String historyFileName = campusReader.getByNameAndColumn(

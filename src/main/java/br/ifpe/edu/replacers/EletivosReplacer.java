@@ -31,7 +31,7 @@ public class EletivosReplacer implements  IReplacer{
         var electiveComponents = list.getList().stream().filter(c -> CCType.ELECTIVE.equals(c.type())).toList();
         try (var doc = new XWPFDocument(new FileInputStream(DocumentHelper.getTempPath().toFile()))) {
 
-            XWPFParagraph paragraph = ParagraphHelper.find(doc, "@@componentes_optativos@@");
+            XWPFParagraph paragraph = ParagraphHelper.find(doc, "@@componentes_eletivos@@");
 
             if (paragraph != null) {
                 try (var dcDoc = new XWPFDocument(DocumentHelper.loadResourceStream("tabela_componentes_optativos_e_eletivos.docx"))) {

@@ -1,39 +1,60 @@
 package br.ifpe.edu;
 
-import com.ezylang.evalex.Expression;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
+import org.apache.commons.jexl3.*;
+
+import java.util.Collections;
+import java.util.Locale;
+import java.util.Map;
 
 public class Eval {
+
+    private static final JexlEngine JEXL_ENGINE = new JexlBuilder()
+            .cache(512)
+            .strict(true)
+            .silent(false)
+            .create();
+
+    public static boolean evalBoolean(String format, String ...args) {
+        Object r = execute(format, args);
+        if (r != null) {
+            return (Boolean) r;
+        }
+
+        return false;
+    }
+
     public static String evalDecimal(String format, String ...args) {
-        Expression e = new Expression(String.format(format, (Object[]) args));
-        return evalNumber(e, true);
+        Object r = execute(format, args);
+        if (r != null) {
+            double val = ((Number) r).doubleValue();
+            return String.format(Locale.US, "%.2f", val);
+        }
+
+        return "0.00";
     }
 
     public static String evalInteger(String format, String ...args) {
-        Expression e = new Expression(String.format(format, (Object[]) args));
-        return evalNumber(e, false);
+        Object r = execute(format, args);
+        if (r != null) {
+            return r.toString();
+        }
+
+        return "0";
     }
 
-    private static String evalNumber(Expression e, boolean isFloat) {
+    public static Object eval(String expression, Map<String, Object> vars) {
         try {
-            BigDecimal r = e.evaluate().getNumberValue();
-            if (isFloat) {
-                return r.setScale(2, RoundingMode.HALF_UP).toPlainString();
-            }
-
-            return r.toBigInteger().toString();
-
-        } catch (Exception _) {
-            return "";
+            JexlContext context = new MapContext(vars != null ? vars : Collections.emptyMap());
+            JexlExpression jexlExpr = JEXL_ENGINE.createExpression(expression);
+            return jexlExpr.evaluate(context);
+        } catch (JexlException ex) {
+            return null;
         }
     }
 
-    public static boolean compare(String v1, String v2) {
-        try {
-            return Double.parseDouble(v1) >= Double.parseDouble(v2);
-        } catch (Exception _) {
-            return false;
-        }
+    private static Object execute(String format, String... args) {
+        String expression = String.format(format, (Object[]) args);
+        return eval(expression, Collections.emptyMap());
     }
+
 }

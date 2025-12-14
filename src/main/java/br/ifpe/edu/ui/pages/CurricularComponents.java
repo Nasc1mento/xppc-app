@@ -254,7 +254,7 @@ public class CurricularComponents extends Page implements IValidatable, ISubmitt
         if (CourseLevel.TECHNOLOGIST.equals(CourseLevel.findByString(typeCourse))) {
             String courseName = placeholderList.getValue("nome_do_curso");
             String recommendedCht = cnctReader.getHoursByName(courseName);
-            if (!Eval.compare(totalCht, recommendedCht)) {
+            if (Eval.evalBoolean("%s<%s", totalCht, recommendedCht)) {
                 return JOptionPane.showConfirmDialog(
                         this,
                         String.format(

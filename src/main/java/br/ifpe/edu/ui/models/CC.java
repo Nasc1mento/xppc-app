@@ -22,11 +22,11 @@ public record CC(
     }
 
     public String hr() {
-        return Eval.evalDecimal("%s+%s", hrPr, hrTeo);
+        return Eval.evalInteger("%s+%s", hrPr, hrTeo);
     }
 
     public String ha() {
-        return Eval.evalDecimal("((%s + %s) *60)/45", hr(), ext());
+        return Eval.evalInteger("((%s + %s) *60)/45", hr(), ext());
     }
 
 }

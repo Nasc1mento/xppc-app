@@ -1,11 +1,6 @@
 name: Publicar Release Windows
 on:
   workflow_dispatch:
-    inputs:
-      version:
-        description: 'version: '
-        required: true
-        default: '1.0.0'
 
 permissions:
   contents: write
@@ -27,23 +22,30 @@ jobs:
       - name: gradle build
         run: ./gradlew clean build
 
+      - name: version
+        id: get_version
+        shell: bash
+        run: |
+          VERSION=$(./gradlew properties -q | grep "^version:" | awk '{print $2}')
+          echo "APP_VERSION=$VERSION" >> $GITHUB_ENV
+
       - name: jpackage
         shell: bash
         run: |
           jpackage --input build/libs \
             --name "xppc" \
-            --main-jar xppc-1.0.0-all.jar \
+            --main-jar "xppc-${{ env.APP_VERSION }}-all.jar" \
             --main-class br.ifpe.edu.AppMain \
             --type app-image \
             --dest dist
 
       - name: zip release
-        run: Compress-Archive -Path dist/xppc -DestinationPath xppc-windows.zip
+        run: Compress-Archive -Path dist/xppc -DestinationPath "xppc-windows-${{ env.APP_VERSION }}.zip"
 
       - name: create release
         shell: bash
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release create "${{ inputs.version }}" xppc-windows.zip \
-            --title "XPPC ${{ inputs.version }}" \
+          gh release create "${{ env.APP_VERSION }}" "xppc-windows-${{ env.APP_VERSION }}.zip" \
+            --title "XPPC ${{ env.APP_VERSION }}" \

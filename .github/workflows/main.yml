@@ -1,4 +1,4 @@
-name: build portable windows xppc
+name: xppc 1.0 windows portable
 on: [workflow_dispatch]
 
 jobs:

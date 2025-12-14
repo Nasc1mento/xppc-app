@@ -1,0 +1,44 @@
+name: build portable windows xppc
+on: [workflow_dispatch]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: setup
+        uses: gradle/actions/setup-gradle@v3
+
+      - name: build
+        run: ./gradlew clean build
+
+      - name: list
+        shell: bash
+        run: ls -R build/libs
+
+      - name: app-image creation
+        shell: bash 
+        run: |
+          jpackage --input build/libs \
+            --name "xppc" \
+            --main-jar xppc-1.0-all.jar \
+            --main-class br.ifpe.edu.AppMain \
+            --type app-image \
+            --dest dist \
+            --win-console false
+
+      - name: zip compress
+        run: Compress-Archive -Path dist/xppc -DestinationPath xppc.zip
+
+      - name: upload zip
+        uses: actions/upload-artifact@v4
+        with:
+          name: xppc-portable-windows
+          path: xppc.zip

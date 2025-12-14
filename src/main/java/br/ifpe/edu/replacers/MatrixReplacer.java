@@ -79,7 +79,7 @@ public class MatrixReplacer implements IReplacer {
                 pRun1.setItalic(false);
                 pRun1.setText(entry.getValue().getFirst().period() + "° Período");
                 XWPFTableRow currentRow =  table.getRows().get(table.getRows().size() - 2);
-                IO.println(currentRow.getTableCells().size());
+
                 for (CC cc : mandatoryCcs) {
                     currentRow.getCell(0).setText(cc.code());
                     currentRow.getCell(1).setText(cc.name());

@@ -6,7 +6,7 @@ public enum TableLocationHelper {
 
     INSTANCE;
 
-    private final AtomicInteger counter = new AtomicInteger(0);
+    private final AtomicInteger counter = new AtomicInteger();
 
     public int nextTable() {
         return counter.incrementAndGet();

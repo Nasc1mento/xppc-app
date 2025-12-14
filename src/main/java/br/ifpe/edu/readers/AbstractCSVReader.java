@@ -1,6 +1,7 @@
 package br.ifpe.edu.readers;
 
 import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVFormat.Builder;
 import org.apache.commons.csv.CSVRecord;
 
 import java.io.IOException;
@@ -20,7 +21,7 @@ public abstract class AbstractCSVReader {
         this.fileName = fileName;
         this.charset = charset;
 
-        this.csvFormat = CSVFormat.Builder.create()
+        csvFormat = Builder.create()
                 .setDelimiter(separator)
                 .setIgnoreEmptyLines(true)
                 .setHeader()
@@ -40,7 +41,7 @@ public abstract class AbstractCSVReader {
             list = csvFormat.parse(reader).getRecords();
 
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                throw new RuntimeException("Failed to read csv file", e);
             }
         }
 

@@ -1,13 +1,13 @@
 package br.ifpe.edu.readers;
 
-import com.opencsv.CSVParserBuilder;
-import com.opencsv.CSVReaderBuilder;
-import com.opencsv.exceptions.CsvException;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -15,38 +15,38 @@ public abstract class AbstractCSVReader {
 
     private final String fileName;
     private final Charset charset;
-    private final char separator;
+    private final CSVFormat csvFormat;
+    private List<List<String>> list;
 
     protected AbstractCSVReader(String fileName, Charset charset, char separator) {
         this.fileName = fileName;
         this.charset = charset;
-        this.separator = separator;
+
+        this.csvFormat = CSVFormat.Builder.create()
+                .setDelimiter(separator)
+                .setIgnoreEmptyLines(true)
+                .setHeader()
+                .setSkipHeaderRecord(true)
+                .setTrim(true)
+                .get();
     }
 
-    private List<String[]> list;
-
-    protected List<String[]> read() {
+    protected List<List<String>> read() {
         if (list == null) {
-            try (var reader = new CSVReaderBuilder(
-                    new InputStreamReader(
-                            Objects.requireNonNull(
-                                    Thread.currentThread().getContextClassLoader().getResourceAsStream(fileName)
-                            ),
-                            charset
-                    ))
-                    .withCSVParser(new CSVParserBuilder().withSeparator(separator).build())
-                    .build())
-            {
+            list = new ArrayList<>();
 
-                var records = reader.readAll();
+            try (var reader = new InputStreamReader(
+                    Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResourceAsStream(fileName)),
+                    charset
+            )) {
 
-                list = records.stream()
-                        .skip(1)
-                        .filter(line -> line != null && line.length > 1)
-                        .filter(line -> !isEmptyLine(line))
-                        .toList();
+                try (CSVParser parser = CSVParser.parse(reader, csvFormat)) {
+                    for (CSVRecord record : parser) {
+                        list.add(record.toList());
+                    }
+                }
 
-            } catch (IOException | CsvException e) {
+            } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -56,21 +56,17 @@ public abstract class AbstractCSVReader {
 
     protected String getAFromB(int c1, String b, int c2) {
         return read().stream()
-                .filter(line -> line.length > Math.max(c1, c2))
-                .filter(line -> b.equals(line[c1]))
-                .map(line -> line[c2].trim())
+                .filter(line -> line.size() > Math.max(c1, c2))
+                .filter(line -> b.equals(line.get(c1)))
+                .map(line -> line.get(c2).trim())
                 .findFirst()
                 .orElse(null);
     }
 
     protected List<String> getAllFromA(int a) {
         return read().stream()
-                .map(line -> line[a])
+                .map(line -> line.get(a))
                 .sorted()
                 .toList();
-    }
-
-    private boolean isEmptyLine(String[] l) {
-        return Arrays.stream(l).noneMatch(s -> Objects.nonNull(s) && !s.isBlank());
     }
 }

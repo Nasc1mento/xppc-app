@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "br.ifpe.edu"
-version = "1.0"
+version = "1.0.0"
 
 
 tasks.withType<ProcessResources> {

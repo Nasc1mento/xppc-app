@@ -10,7 +10,7 @@ import java.awt.*;
 
 public class Cover extends Page {
 
-    private final JLabel titleLabel = new JLabel("xPPC - Aplicação para Geração Automatizada de Projetos Pedagógicos de Curso Superiores do IFPE");
+    private final JLabel titleLabel = new JLabel("xPPC - Aplicação para Geração Automatizada de Projetos Pedagógicos de Cursos Superiores do IFPE");
     private final Button aboutButton = new Button().icon(UIManager.getIcon("OptionPane.questionIcon"));
     private final PeopleReader peopleReader = new PeopleReader();
 
@@ -27,7 +27,7 @@ public class Cover extends Page {
                     .append("<p><b>Versão:</b> ").append(AppConfig.getVersion()).append("</p>")
                     .append("<hr>")
                     .append("<p>").append(AppConfig.getName())
-                    .append(" - Aplicação para Geração Automatizada de Projetos Pedagógicos de Curso Superiores do IFPE")
+                    .append(" - Aplicação para Geração Automatizada de Projetos Pedagógicos de Cursos Superiores do IFPE")
                     .append("</p>")
                     .append("<br>")
                     .append("<p><b>Equipe</b></p>")

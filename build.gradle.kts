@@ -34,7 +34,6 @@ dependencies {
     implementation("org.apache.commons:commons-jexl3:3.6.0")
     implementation("org.apache.poi:poi:5.5.1")
     implementation("org.apache.poi:poi-ooxml:5.5.1")
-    implementation("org.apache.poi:poi-ooxml-full:5.5.1")
     implementation("org.projectlombok:lombok:1.18.42")
     implementation("ch.qos.logback:logback-classic:1.5.22")
     implementation("com.formdev:flatlaf:3.6.1")

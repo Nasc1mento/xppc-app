@@ -19,6 +19,7 @@ public class ThemeConfig {
     private static void setupUIManager() {
         var sansSerifBold = new Font("SansSerif", Font.BOLD, 13);
         var sansSerifRegular = new Font("SansSerif", Font.PLAIN, 13);
+        var accentColor = new Color(40, 90, 160);
 
         UIManager.put("Component.arc", 12);
         UIManager.put("Button.arc", 20);
@@ -45,7 +46,7 @@ public class ThemeConfig {
         UIManager.put("Table.showVerticalLines", true);
         UIManager.put("Table.showHorizontalLines", true);
 
-        UIManager.put("Table.selectionBackground", new Color(40, 90, 160));
+        UIManager.put("Table.selectionBackground", accentColor);
         UIManager.put("Table.selectionForeground", Color.WHITE);
 
         UIManager.put("OptionPane.minimumSize", new Dimension(400, 150));
@@ -53,5 +54,11 @@ public class ThemeConfig {
         UIManager.put("OptionPane.messageAreaBorder", new EmptyBorder(10, 15, 10, 15));
         UIManager.put("OptionPane.buttonPadding", 12);
         UIManager.put("OptionPane.messageFont", sansSerifRegular);
+
+        UIManager.put("ProgressBar.foreground", accentColor);
+        UIManager.put("ProgressBar.background", new Color(0, 0, 0, 0));
+        UIManager.put("ProgressBar.font", sansSerifBold);
+        UIManager.put("ProgressBar.arc", 99);
+        UIManager.put("ProgressBar.height", 14);
     }
 }

@@ -5,6 +5,8 @@ import java.util.List;
 
 public class CampusReader extends AbstractCSVReader {
 
+    public static final CampusReader INSTANCE = new CampusReader();
+
     public enum Columns {
         NAME(),
         CNPJ,
@@ -20,7 +22,7 @@ public class CampusReader extends AbstractCSVReader {
         HISTORY,
     }
 
-    public CampusReader() {
+    private CampusReader() {
         super(
                 "campi.csv",
                 StandardCharsets.UTF_8,

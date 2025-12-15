@@ -1,9 +1,9 @@
 package br.ifpe.edu.replacers;
 
-import br.ifpe.edu.CCList;
-import br.ifpe.edu.replacers.helpers.TableLocationHelper;
-import br.ifpe.edu.replacers.helpers.DocumentHelper;
-import br.ifpe.edu.replacers.helpers.ParagraphHelper;
+import br.ifpe.edu.services.CCList;
+import br.ifpe.edu.helpers.TableLocationHelper;
+import br.ifpe.edu.helpers.DocumentHelper;
+import br.ifpe.edu.helpers.ParagraphHelper;
 import org.apache.poi.xwpf.usermodel.*;
 import org.apache.xmlbeans.XmlCursor;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTbl;

@@ -1,9 +1,9 @@
 package br.ifpe.edu.replacers;
 
-import br.ifpe.edu.PlaceholderList;
+import br.ifpe.edu.services.PlaceholderList;
 import br.ifpe.edu.readers.CampusReader;
-import br.ifpe.edu.replacers.helpers.DocumentHelper;
-import br.ifpe.edu.replacers.helpers.ParagraphHelper;
+import br.ifpe.edu.helpers.DocumentHelper;
+import br.ifpe.edu.helpers.ParagraphHelper;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.xmlbeans.XmlCursor;
@@ -20,7 +20,7 @@ public class HistoryReplacer implements IReplacer {
     }
 
     private final PlaceholderList placeholderList = PlaceholderList.INSTANCE;
-    private final CampusReader campusReader = new CampusReader();
+    private final CampusReader campusReader = CampusReader.INSTANCE;
 
     @Override
     public void replace() throws IOException {

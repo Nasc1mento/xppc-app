@@ -1,12 +1,12 @@
 package br.ifpe.edu.ui.pages;
 
 
-import br.ifpe.edu.PlaceholderList;
+import br.ifpe.edu.services.PlaceholderList;
 import br.ifpe.edu.readers.CampusReader;
-import br.ifpe.edu.ui.common.ComboBox;
-import br.ifpe.edu.ui.common.ISubmittable;
-import br.ifpe.edu.ui.common.Page;
-import br.ifpe.edu.ui.common.TextField;
+import br.ifpe.edu.ui.components.ComboBox;
+import br.ifpe.edu.ui.components.ISubmittable;
+import br.ifpe.edu.ui.components.Page;
+import br.ifpe.edu.ui.components.TextField;
 
 import javax.swing.*;
 import java.awt.*;
@@ -29,7 +29,7 @@ public class Proponent extends Page implements ISubmittable {
     private final TextField websiteField = new TextField(30);
     private final ComboBox<String> campusBox = new ComboBox<>();
 
-    private final CampusReader campusReader = new CampusReader();
+    private final CampusReader campusReader = CampusReader.INSTANCE;
     private final PlaceholderList placeholderList = PlaceholderList.INSTANCE;
 
     public Proponent() {

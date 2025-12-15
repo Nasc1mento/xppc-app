@@ -1,0 +1,29 @@
+package br.ifpe.edu.helpers;
+
+import lombok.Getter;
+
+import java.util.concurrent.atomic.AtomicInteger;
+
+@Getter
+public enum TableLocationHelper {
+
+    INSTANCE;
+
+    private final AtomicInteger counter = new AtomicInteger();
+
+    public int nextTable() {
+        return counter.incrementAndGet();
+    }
+
+    public int getValue() {
+        return counter.get();
+    }
+
+    public void setValue(int value) {
+        counter.set(value);
+    }
+
+    public void reset() {
+        setValue(0);
+    }
+}

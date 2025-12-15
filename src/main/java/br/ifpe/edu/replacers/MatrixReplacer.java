@@ -1,11 +1,11 @@
 package br.ifpe.edu.replacers;
 
-import br.ifpe.edu.CCList;
-import br.ifpe.edu.replacers.helpers.TableLocationHelper;
-import br.ifpe.edu.replacers.helpers.DocumentHelper;
-import br.ifpe.edu.replacers.helpers.ParagraphHelper;
-import br.ifpe.edu.ui.models.CC;
-import br.ifpe.edu.ui.models.CCType;
+import br.ifpe.edu.services.CCList;
+import br.ifpe.edu.helpers.TableLocationHelper;
+import br.ifpe.edu.helpers.DocumentHelper;
+import br.ifpe.edu.helpers.ParagraphHelper;
+import br.ifpe.edu.models.CC;
+import br.ifpe.edu.models.enums.CCType;
 import org.apache.poi.xwpf.usermodel.*;
 import org.apache.xmlbeans.XmlCursor;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTbl;
@@ -102,9 +102,9 @@ public class MatrixReplacer implements IReplacer {
 
                 XWPFTableRow lastRow = table.getRows().getLast();
                 var sum = list.getSum(entry.getValue(), CCType.MANDATORY);
-                lastRow.getCell(1).setText(sum.totalHa);
-                lastRow.getCell(2).setText(sum.totalHr);
-                lastRow.getCell(3).setText(sum.totalExt);
+                lastRow.getCell(1).setText(sum.getTotalHa());
+                lastRow.getCell(2).setText(sum.getTotalHr());
+                lastRow.getCell(3).setText(sum.getTotalExt());
                 table = doc.getTableArray(tableLocationHelper.nextTable());
             }
 

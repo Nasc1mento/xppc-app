@@ -1,14 +1,14 @@
 package br.ifpe.edu.ui.pages;
 
-import br.ifpe.edu.CCList;
-import br.ifpe.edu.Eval;
-import br.ifpe.edu.PlaceholderList;
+import br.ifpe.edu.services.CCList;
+import br.ifpe.edu.utils.Eval;
+import br.ifpe.edu.services.PlaceholderList;
 import br.ifpe.edu.readers.CNCTReader;
-import br.ifpe.edu.ui.common.*;
-import br.ifpe.edu.ui.common.TextField;
-import br.ifpe.edu.ui.models.CC;
-import br.ifpe.edu.ui.models.CCType;
-import br.ifpe.edu.ui.models.CourseLevel;
+import br.ifpe.edu.ui.components.*;
+import br.ifpe.edu.ui.components.TextField;
+import br.ifpe.edu.models.CC;
+import br.ifpe.edu.models.enums.CCType;
+import br.ifpe.edu.models.enums.CourseLevel;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -217,10 +217,10 @@ public class CurricularComponents extends Page implements IValidatable, ISubmitt
     public void onSubmit() {
 
         var sumMandatory = ccList.getSum(ccList.getList(), CCType.MANDATORY);
-        var sumMandatoryTotal = Eval.evalDecimal("%s+%s",  sumMandatory.totalHr, sumMandatory.totalExt);
+        var sumMandatoryTotal = Eval.evalDecimal("%s+%s",  sumMandatory.getTotalHr(), sumMandatory.getTotalExt());
 
         var sumOptional = ccList.getSum(ccList.getList(), CCType.OPTIONAL);
-        var sumOptionalTotal = Eval.evalDecimal("%s+%s",  sumOptional.totalHr, sumOptional.totalExt);
+        var sumOptionalTotal = Eval.evalDecimal("%s+%s",  sumOptional.getTotalHr(), sumOptional.getTotalExt());
 
         var ca = placeholderList.getValue("carga_horaria_atividades_complementares_hr");
         var internship = placeholderList.getValue("carga_horaria_estagio_supervisionado_hr");
@@ -247,7 +247,7 @@ public class CurricularComponents extends Page implements IValidatable, ISubmitt
     
     @Override
     public int check() {
-        final CNCTReader cnctReader = new CNCTReader();
+        final CNCTReader cnctReader = CNCTReader.INSTANCE;
         String totalCht = placeholderList.getValue("cht_e_estagio");
         String typeCourse =  placeholderList.getValue("nivel");
 

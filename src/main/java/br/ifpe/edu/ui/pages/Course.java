@@ -1,15 +1,15 @@
 package br.ifpe.edu.ui.pages;
 
-import br.ifpe.edu.Eval;
-import br.ifpe.edu.PlaceholderList;
+import br.ifpe.edu.utils.Eval;
+import br.ifpe.edu.services.PlaceholderList;
 import br.ifpe.edu.readers.CNCTReader;
-import br.ifpe.edu.ui.common.ComboBox;
-import br.ifpe.edu.ui.common.Page;
-import br.ifpe.edu.ui.common.ISubmittable;
-import br.ifpe.edu.ui.common.TextField;
-import br.ifpe.edu.ui.models.CourseLevel;
-import br.ifpe.edu.ui.models.CourseModality;
-import br.ifpe.edu.ui.models.CourseRegime;
+import br.ifpe.edu.ui.components.ComboBox;
+import br.ifpe.edu.ui.components.Page;
+import br.ifpe.edu.ui.components.ISubmittable;
+import br.ifpe.edu.ui.components.TextField;
+import br.ifpe.edu.models.enums.CourseLevel;
+import br.ifpe.edu.models.enums.CourseModality;
+import br.ifpe.edu.models.enums.CourseRegime;
 
 import javax.swing.*;
 import java.awt.*;
@@ -39,7 +39,7 @@ public class Course extends Page implements ISubmittable {
     private final TextField startField = new TextField(15);
     private final TextField durationField = new TextField(10);
 
-    private final CNCTReader cnctReader = new CNCTReader();
+    private final CNCTReader cnctReader = CNCTReader.INSTANCE;
     private final PlaceholderList placeholderList = PlaceholderList.INSTANCE;
 
     public Course() {

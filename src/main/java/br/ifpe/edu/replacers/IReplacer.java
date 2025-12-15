@@ -1,10 +1,8 @@
 package br.ifpe.edu.replacers;
 
-import br.ifpe.edu.replacers.helpers.DocumentHelper;
+import br.ifpe.edu.helpers.DocumentHelper;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -20,7 +18,7 @@ public interface IReplacer extends Comparable<IReplacer> {
     }
 
     @Override
-    default int compareTo(IReplacer o) {
-        return Integer.compare(getPriority(), o.getPriority());
+    default int compareTo(IReplacer r) {
+        return Integer.compare(getPriority(), r.getPriority());
     }
 }

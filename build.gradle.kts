@@ -22,7 +22,7 @@ java {
 
 
 application {
-    mainClass.set("br.ifpe.edu.AppMain")
+    mainClass.set("br.ifpe.edu.launcher.AppMain")
 }
 
 repositories {

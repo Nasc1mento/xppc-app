@@ -1,12 +1,12 @@
 package br.ifpe.edu.ui.pages;
 
-import br.ifpe.edu.PlaceholderList;
-import br.ifpe.edu.ui.common.ComboBox;
-import br.ifpe.edu.ui.common.Page;
-import br.ifpe.edu.ui.common.ISubmittable;
-import br.ifpe.edu.ui.common.TextField;
-import br.ifpe.edu.ui.models.Situation;
-import br.ifpe.edu.ui.models.Status;
+import br.ifpe.edu.services.PlaceholderList;
+import br.ifpe.edu.ui.components.ComboBox;
+import br.ifpe.edu.ui.components.Page;
+import br.ifpe.edu.ui.components.ISubmittable;
+import br.ifpe.edu.ui.components.TextField;
+import br.ifpe.edu.models.enums.Situation;
+import br.ifpe.edu.models.enums.Status;
 
 import javax.swing.*;
 import java.util.List;

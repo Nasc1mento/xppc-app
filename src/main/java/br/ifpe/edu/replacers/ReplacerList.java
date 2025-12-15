@@ -1,8 +1,8 @@
 package br.ifpe.edu.replacers;
 
-import br.ifpe.edu.replacers.helpers.DocumentHelper;
-import br.ifpe.edu.replacers.helpers.ParagraphHelper;
-import br.ifpe.edu.replacers.helpers.TableLocationHelper;
+import br.ifpe.edu.helpers.DocumentHelper;
+import br.ifpe.edu.helpers.ParagraphHelper;
+import br.ifpe.edu.helpers.TableLocationHelper;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;

@@ -8,6 +8,8 @@ import java.util.List;
 
 public class CNCTReader extends AbstractCSVReader {
 
+    public static final CNCTReader INSTANCE = new CNCTReader();
+
     @AllArgsConstructor
     private enum Columns {
         AXIS(0),
@@ -17,7 +19,7 @@ public class CNCTReader extends AbstractCSVReader {
         private final int index;
     }
 
-    public CNCTReader() {
+    private CNCTReader() {
         super(
                 "catalogo_cncst_2024.csv",
                 StandardCharsets.ISO_8859_1,

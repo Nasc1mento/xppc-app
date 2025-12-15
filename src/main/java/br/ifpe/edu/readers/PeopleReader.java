@@ -9,6 +9,8 @@ import java.util.List;
 
 public class PeopleReader extends AbstractCSVReader {
 
+    public static final PeopleReader INSTANCE = new PeopleReader();
+
     @AllArgsConstructor
     @Getter
     public enum Columns {
@@ -18,7 +20,7 @@ public class PeopleReader extends AbstractCSVReader {
         private final int index;
     }
 
-    public PeopleReader() {
+    private PeopleReader() {
         super("pessoas.csv", StandardCharsets.UTF_8, ',');
     }
 

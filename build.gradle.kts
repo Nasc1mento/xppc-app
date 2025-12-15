@@ -35,8 +35,14 @@ dependencies {
     implementation("org.apache.poi:poi:5.5.1")
     implementation("org.apache.poi:poi-ooxml:5.5.1")
     implementation("org.apache.poi:poi-ooxml-full:5.5.1")
+    implementation("org.projectlombok:lombok:1.18.42")
+    implementation("ch.qos.logback:logback-classic:1.5.22")
     implementation("com.formdev:flatlaf:3.6.1")
     implementation("com.formdev:flatlaf-extras:3.6.1")
+
+    compileOnly("org.projectlombok:lombok:1.18.42")
+    annotationProcessor("org.projectlombok:lombok:1.18.42")
+
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")

@@ -24,7 +24,7 @@ public class HistoryReplacer implements IReplacer {
 
     @Override
     public void replace() throws IOException {
-        try (var doc = new XWPFDocument(new FileInputStream(DocumentHelper.getTempPath().toFile()))) {
+        try (var doc = new XWPFDocument(new FileInputStream(DocumentHelper.INSTANCE.getTempPath().toFile()))) {
 
             XWPFParagraph placeholderParagraph = ParagraphHelper.find(doc, "@@historico_do_campus@@");
 

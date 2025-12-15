@@ -16,7 +16,7 @@ public class PlaceholderReplacer implements IReplacer {
 
     @Override
     public void replace() throws IOException {
-        try (var doc = new XWPFDocument(new FileInputStream(DocumentHelper.getTempPath().toFile()))) {
+        try (var doc = new XWPFDocument(new FileInputStream(DocumentHelper.INSTANCE.getTempPath().toFile()))) {
             replaceInDocument(doc);
             replaceInHeaders(doc);
             replaceInFooters(doc);

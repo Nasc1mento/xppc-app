@@ -1,5 +1,9 @@
 package br.ifpe.edu.ui.models;
 
+import lombok.AllArgsConstructor;
+
+
+@AllArgsConstructor
 public enum Status {
     OPTION1("Aguardando autorização do conselho superior"),
     OPTION2("Autorizado pelo conselho superior"),
@@ -8,10 +12,6 @@ public enum Status {
     OPTION5("Cadastrado no SISTEC");
 
     private final String s;
-
-    Status(String s) {
-        this.s = s;
-    }
 
     @Override
     public String toString() {

@@ -1,25 +1,21 @@
 package br.ifpe.edu.readers;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PeopleReader extends AbstractCSVReader {
 
+    @AllArgsConstructor
+    @Getter
     public enum Columns {
         NAME(0),
         ROLE(1);
 
-
         private final int index;
-
-        Columns(int index) {
-            this.index = index;
-        }
-
-        public int getIndex() {
-            return index;
-        }
     }
 
     public PeopleReader() {

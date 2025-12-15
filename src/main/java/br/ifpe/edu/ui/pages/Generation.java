@@ -59,7 +59,7 @@ public class Generation extends Page implements ISubmittable {
 
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedDir = chooser.getSelectedFile();
-            DocumentHelper.INSTANCE.setOutputPath(Paths.get(Paths.get(selectedDir.toURI()).toString(), "ppc.docx"));
+            DocumentHelper.INSTANCE.outputPath(Paths.get(Paths.get(selectedDir.toURI()).toString(), "ppc.docx"));
 
             try (var rl = new ReplacerList()) {
                 rl.cAll();
@@ -68,7 +68,6 @@ public class Generation extends Page implements ISubmittable {
                         "Documento gerado com sucesso!"
                 );
             } catch (Exception ex) {
-                ex.printStackTrace();
                 JOptionPane.showMessageDialog(
                         this,
                         String.format("<html>" +

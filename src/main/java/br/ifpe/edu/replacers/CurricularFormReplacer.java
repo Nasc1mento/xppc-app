@@ -27,7 +27,7 @@ public class CurricularFormReplacer implements IReplacer {
     @Override
     public void replace() throws IOException {
         try (
-                var doc = new XWPFDocument(new FileInputStream(DocumentHelper.getTempPath().toFile()))
+                var doc = new XWPFDocument(new FileInputStream(DocumentHelper.INSTANCE.getTempPath().toFile()))
         ) {
 
             XWPFParagraph paragraph = ParagraphHelper.find(doc, "@@formulario_componentes_curriculares@@");
@@ -60,7 +60,7 @@ public class CurricularFormReplacer implements IReplacer {
             commit(doc);
         }
 
-        try (var doc = new XWPFDocument(new FileInputStream(DocumentHelper.getTempPath().toFile()))) {
+        try (var doc = new XWPFDocument(new FileInputStream(DocumentHelper.INSTANCE.getTempPath().toFile()))) {
             var table = doc.getTableArray(tableLocationHelper.getValue());
             for (var cc : ccList) {
                 table.getRows().getFirst().getCell(0).setText("X");

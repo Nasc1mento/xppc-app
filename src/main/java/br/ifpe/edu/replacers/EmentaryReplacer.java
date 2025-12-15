@@ -25,7 +25,7 @@ public class EmentaryReplacer implements IReplacer {
 
     @Override
     public void replace() throws IOException {
-        try (XWPFDocument doc = new XWPFDocument(new FileInputStream(DocumentHelper.getTempPath().toFile()))) {
+        try (XWPFDocument doc = new XWPFDocument(new FileInputStream(DocumentHelper.INSTANCE.getTempPath().toFile()))) {
 
             XWPFParagraph paragraph = ParagraphHelper.find(doc, "@@ementário@@");
 
@@ -51,7 +51,7 @@ public class EmentaryReplacer implements IReplacer {
             commit(doc);
         }
 
-        try (XWPFDocument doc = new XWPFDocument(new FileInputStream(DocumentHelper.getTempPath().toFile()))) {
+        try (XWPFDocument doc = new XWPFDocument(new FileInputStream(DocumentHelper.INSTANCE.getTempPath().toFile()))) {
             var table = doc.getTableArray(tableLocationHelper.getValue());
 
             for (var cc : list.getList()) {

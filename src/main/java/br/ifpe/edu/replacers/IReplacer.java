@@ -14,7 +14,7 @@ public interface IReplacer extends Comparable<IReplacer> {
     int getPriority();
 
     default void commit(XWPFDocument d) throws IOException {
-        try (var out = new FileOutputStream(DocumentHelper.getTempPath().toFile())) {
+        try (var out = new FileOutputStream(DocumentHelper.INSTANCE.getTempPath().toFile())) {
             d.write(out);
         }
     }

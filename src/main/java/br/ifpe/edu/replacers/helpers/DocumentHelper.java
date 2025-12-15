@@ -1,5 +1,7 @@
 package br.ifpe.edu.replacers.helpers;
 
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 
 import java.io.FileOutputStream;
@@ -9,33 +11,33 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 
+@Slf4j
+@Getter
 public enum DocumentHelper {
 
     INSTANCE;
 
     private Path outputPath;
+    private final Path tempPath = Path.of("ppc_temp.docx");
 
-    public Path getOutputPath() {
-        return outputPath;
-    }
-
-    public void setOutputPath(final Path outputPath) {
+    public void outputPath(final Path outputPath) {
         this.outputPath = outputPath;
+
+        log.debug("Output path defined: {}", this.outputPath);
     }
 
     public static InputStream loadResourceStream(final String name) {
         InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(name);
 
         if (is == null) {
+            log.error("Resource not found: {}", name);
+
             throw new IllegalArgumentException("Template not found: ppc.docx");
         }
 
         return is;
     }
 
-    public static Path getTempPath() {
-        return Path.of("ppc_temp.docx");
-    }
 
     public void createTempDoc() throws IOException {
         try (XWPFDocument doc = new XWPFDocument(loadResourceStream("ppc.docx"))) {

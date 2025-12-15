@@ -1,5 +1,6 @@
 package br.ifpe.edu.readers;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVFormat.Builder;
 import org.apache.commons.csv.CSVRecord;
@@ -10,6 +11,8 @@ import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Objects;
 
+
+@Slf4j
 public abstract class AbstractCSVReader {
 
     private final String fileName;
@@ -28,6 +31,8 @@ public abstract class AbstractCSVReader {
                 .setSkipHeaderRecord(true)
                 .setTrim(true)
                 .get();
+
+        log.info("CSV reader initialized for {}", fileName);
     }
 
     protected List<CSVRecord> read() {
@@ -40,7 +45,10 @@ public abstract class AbstractCSVReader {
 
             list = csvFormat.parse(reader).getRecords();
 
-            } catch (IOException e) {
+            log.info("File {} loaded successfully", fileName);
+
+            } catch (IOException | NullPointerException e) {
+                log.error("Failed processing CSV file {}", fileName, e);
                 throw new RuntimeException("Failed to read csv file", e);
             }
         }

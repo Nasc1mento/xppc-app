@@ -39,7 +39,7 @@ public class MatrixReplacer implements IReplacer {
                         TreeMap::new,
                         Collectors.toList()
                 ));
-        try (XWPFDocument doc = new XWPFDocument(new FileInputStream(DocumentHelper.getTempPath().toFile()))) {
+        try (XWPFDocument doc = new XWPFDocument(new FileInputStream(DocumentHelper.INSTANCE.getTempPath().toFile()))) {
 
             XWPFParagraph paragraph = ParagraphHelper.find(doc, "@@matriz_curricular@@");
 
@@ -66,7 +66,7 @@ public class MatrixReplacer implements IReplacer {
 
         }
 
-        try (XWPFDocument doc = new XWPFDocument(new FileInputStream(DocumentHelper.getTempPath().toFile()))) {
+        try (XWPFDocument doc = new XWPFDocument(new FileInputStream(DocumentHelper.INSTANCE.getTempPath().toFile()))) {
             var table = doc.getTableArray(tableLocationHelper.getValue());
 
             for (var entry : ccPerPeriod.entrySet()) {

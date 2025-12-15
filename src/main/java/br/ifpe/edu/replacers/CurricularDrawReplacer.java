@@ -35,7 +35,7 @@ public class CurricularDrawReplacer implements IReplacer {
                         TreeMap::new,
                         Collectors.toList()
                 ));
-        try (XWPFDocument doc = new XWPFDocument(new FileInputStream(DocumentHelper.getTempPath().toFile()))) {
+        try (XWPFDocument doc = new XWPFDocument(new FileInputStream(DocumentHelper.INSTANCE.getTempPath().toFile()))) {
 
             XWPFParagraph paragraph = ParagraphHelper.find(doc, "@@desenho_curricular@@");
 
@@ -58,7 +58,7 @@ public class CurricularDrawReplacer implements IReplacer {
             commit(doc);
         }
 
-        try (var doc = new XWPFDocument(new FileInputStream(DocumentHelper.getTempPath().toFile()))) {
+        try (var doc = new XWPFDocument(new FileInputStream(DocumentHelper.INSTANCE.getTempPath().toFile()))) {
             XWPFTable table = doc.getTableArray(tableLocationHelper.getValue());
 
             for (var entry : ccPerPeriod.entrySet()) {

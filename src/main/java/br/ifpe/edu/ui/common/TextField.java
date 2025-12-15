@@ -1,7 +1,5 @@
 package br.ifpe.edu.ui.common;
 
-import com.formdev.flatlaf.FlatClientProperties;
-
 import javax.swing.*;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.NumberFormatter;

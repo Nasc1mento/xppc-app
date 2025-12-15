@@ -1,7 +1,10 @@
 package br.ifpe.edu.replacers.helpers;
 
+import lombok.Getter;
+
 import java.util.concurrent.atomic.AtomicInteger;
 
+@Getter
 public enum TableLocationHelper {
 
     INSTANCE;
@@ -18,10 +21,6 @@ public enum TableLocationHelper {
 
     public void setValue(int value) {
         counter.set(value);
-    }
-
-    public AtomicInteger getCounter() {
-        return counter;
     }
 
     public void reset() {

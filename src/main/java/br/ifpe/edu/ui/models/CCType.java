@@ -1,17 +1,17 @@
 package br.ifpe.edu.ui.models;
 
+import lombok.AllArgsConstructor;
+
 import java.util.Objects;
 
+
+@AllArgsConstructor
 public enum CCType {
     MANDATORY("Obrigatória"),
     OPTIONAL("Optativa"),
     ELECTIVE("Eletiva");
 
     private final String s;
-
-    CCType(String s) {
-        this.s = s;
-    }
 
     @Override
     public String toString() {

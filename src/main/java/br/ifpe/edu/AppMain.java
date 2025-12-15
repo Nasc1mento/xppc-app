@@ -2,14 +2,23 @@ package br.ifpe.edu;
 
 import br.ifpe.edu.ui.Window;
 import com.formdev.flatlaf.FlatDarkLaf;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
+@Slf4j
 public class AppMain {
 
     static void main() {
+
+        Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
+
+        log.info("App version: {}", AppConfig.getVersion());
+        log.info("OS: {}, ({})", System.getProperty("os.name"), System.getProperty("os.version"));
+        log.info("Resolution: {}", (int) size.getWidth() + "x" + (int) size.getHeight());
+
         System.setProperty("sun.java2d.uiScale", "1");
         System.setProperty("flatlaf.useWindowDecorations", "true");
 

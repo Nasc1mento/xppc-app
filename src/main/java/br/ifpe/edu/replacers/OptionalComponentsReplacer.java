@@ -28,7 +28,7 @@ public class OptionalComponentsReplacer implements  IReplacer {
     public void replace() throws IOException {
 
        var optionalComponents = list.stream().filter(c -> CCType.OPTIONAL.equals(c.type())).toList();
-        try (XWPFDocument doc = new XWPFDocument(new FileInputStream(DocumentHelper.getTempPath().toFile()))) {
+        try (XWPFDocument doc = new XWPFDocument(new FileInputStream(DocumentHelper.INSTANCE.getTempPath().toFile()))) {
 
             XWPFParagraph paragraph = ParagraphHelper.find(doc, "@@componentes_optativos@@");
 
@@ -51,7 +51,7 @@ public class OptionalComponentsReplacer implements  IReplacer {
             commit(doc);
         }
 
-        try (var doc = new XWPFDocument(new FileInputStream(DocumentHelper.getTempPath().toFile()))) {
+        try (var doc = new XWPFDocument(new FileInputStream(DocumentHelper.INSTANCE.getTempPath().toFile()))) {
             XWPFTable table = doc.getTableArray(tableLocationHelper.getValue());
 
                 for (CC cc : optionalComponents) {

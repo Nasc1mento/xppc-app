@@ -29,7 +29,7 @@ public class EletivosReplacer implements  IReplacer{
     public void replace() throws IOException {
 
         var electiveComponents = list.getList().stream().filter(c -> CCType.ELECTIVE.equals(c.type())).toList();
-        try (var doc = new XWPFDocument(new FileInputStream(DocumentHelper.getTempPath().toFile()))) {
+        try (var doc = new XWPFDocument(new FileInputStream(DocumentHelper.INSTANCE.getTempPath().toFile()))) {
 
             XWPFParagraph paragraph = ParagraphHelper.find(doc, "@@componentes_eletivos@@");
 
@@ -51,7 +51,7 @@ public class EletivosReplacer implements  IReplacer{
             commit(doc);
         }
 
-        try (var doc = new XWPFDocument(new FileInputStream(DocumentHelper.getTempPath().toFile()))) {
+        try (var doc = new XWPFDocument(new FileInputStream(DocumentHelper.INSTANCE.getTempPath().toFile()))) {
             XWPFTable table = doc.getTableArray(tableLocationHelper.getValue());
 
             for (CC cc : electiveComponents) {

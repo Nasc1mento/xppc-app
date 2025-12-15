@@ -1,4 +1,4 @@
-package br.ifpe.edu.replacers;
+package br.ifpe.edu.services.replacers;
 
 import br.ifpe.edu.services.PlaceholderList;
 import br.ifpe.edu.readers.CampusReader;
@@ -14,13 +14,15 @@ import java.net.URL;
 
 public class HistoryReplacer implements IReplacer {
 
+
+
+    private final PlaceholderList placeholderList = PlaceholderList.INSTANCE;
+    private final CampusReader campusReader = CampusReader.INSTANCE;
+
     @Override
     public int getPriority() {
         return 5;
     }
-
-    private final PlaceholderList placeholderList = PlaceholderList.INSTANCE;
-    private final CampusReader campusReader = CampusReader.INSTANCE;
 
     @Override
     public void replace() throws IOException {

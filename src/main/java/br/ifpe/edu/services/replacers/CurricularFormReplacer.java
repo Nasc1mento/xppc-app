@@ -1,4 +1,4 @@
-package br.ifpe.edu.replacers;
+package br.ifpe.edu.services.replacers;
 
 import br.ifpe.edu.services.CCList;
 import br.ifpe.edu.utils.Eval;

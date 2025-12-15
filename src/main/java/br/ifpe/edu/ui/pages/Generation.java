@@ -1,6 +1,6 @@
 package br.ifpe.edu.ui.pages;
 
-import br.ifpe.edu.replacers.ReplacerList;
+import br.ifpe.edu.services.replacers.ReplacerList;
 import br.ifpe.edu.helpers.DocumentHelper;
 import br.ifpe.edu.ui.components.ISubmittable;
 import br.ifpe.edu.ui.components.IValidatable;

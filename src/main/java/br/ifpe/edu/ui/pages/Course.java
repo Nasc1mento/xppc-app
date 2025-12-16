@@ -1,12 +1,10 @@
 package br.ifpe.edu.ui.pages;
 
+import br.ifpe.edu.ui.components.*;
+import br.ifpe.edu.ui.components.TextField;
 import br.ifpe.edu.utils.Eval;
 import br.ifpe.edu.services.PlaceholderList;
 import br.ifpe.edu.readers.CNCTReader;
-import br.ifpe.edu.ui.components.ComboBox;
-import br.ifpe.edu.ui.components.Page;
-import br.ifpe.edu.ui.components.ISubmittable;
-import br.ifpe.edu.ui.components.TextField;
 import br.ifpe.edu.models.enums.CourseLevel;
 import br.ifpe.edu.models.enums.CourseModality;
 import br.ifpe.edu.models.enums.CourseRegime;
@@ -17,10 +15,10 @@ import java.util.Objects;
 
 public class Course extends Page implements ISubmittable {
 
-    private final ComboBox<CourseLevel> levelBox = new ComboBox<>(CourseLevel.values());
+    private final LabeledEnumComboBox<CourseLevel> levelBox = new LabeledEnumComboBox<>(CourseLevel.class);
     private final TextField axisBox = new TextField(30);
     private final ComboBox<String> nameBox = new ComboBox<>();
-    private final ComboBox<CourseModality> modalityBox = new ComboBox<>(CourseModality.values());
+    private final LabeledEnumComboBox<CourseModality> modalityBox = new LabeledEnumComboBox<>(CourseModality.class);
     private final TextField offersField = new TextField(30);
     private final TextField certificationField = new TextField(30);
     private final TextField internshipHoursField = new TextField(30).setDouble();
@@ -30,7 +28,7 @@ public class Course extends Page implements ISubmittable {
     private final TextField maxCompletionField = new TextField(10).setInteger();
     private final TextField entryMethodsField = new TextField(30);
     private final TextField prereqField = new TextField(30);
-    private final ComboBox<CourseRegime> regimeBox = new ComboBox<>(CourseRegime.values());
+    private final LabeledEnumComboBox<CourseRegime> regimeBox = new LabeledEnumComboBox<>(CourseRegime.class);
     private final TextField shiftsField = new TextField(30);
     private final TextField classesPerShiftField = new TextField(10).setInteger();
     private final TextField seatsPerClassField = new TextField(10).setInteger();

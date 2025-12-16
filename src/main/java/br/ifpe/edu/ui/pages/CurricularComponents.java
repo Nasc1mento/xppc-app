@@ -29,7 +29,7 @@ public class CurricularComponents extends Page implements IValidatable, ISubmitt
     private final TextField hrPrField = new TextField(10).setDouble();
     private final TextField hrTeoField = new TextField(10).setDouble();
     private final TextField extField = new TextField(10).setDouble();
-    private final ComboBox<CCType> typeBox = new ComboBox<>(CCType.values());
+    private final LabeledEnumComboBox<CCType> typeBox = new LabeledEnumComboBox<>(CCType.class);
     private final ComboBox<String> prereqBox = new ComboBox<>();
     private final ComboBox<String> coreqBox = new ComboBox<>();
     private final JButton addButton = new JButton("Adicionar");

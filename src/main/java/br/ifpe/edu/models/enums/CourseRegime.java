@@ -6,7 +6,7 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public enum CourseRegime implements ILabeledEnum<String> {
+public enum CourseRegime implements ILabeledEnum {
     FULL_TIME("Integral"),
     PART_TIME("Parcial");
 

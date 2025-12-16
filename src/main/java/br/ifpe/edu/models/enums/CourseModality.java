@@ -6,7 +6,7 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public enum CourseModality implements ILabeledEnum<String> {
+public enum CourseModality implements ILabeledEnum {
     ON_SITE("Presencial"),
     HYBRID("Semipresencial"),
     ONLINE("Educação à distância");

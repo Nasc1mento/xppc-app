@@ -6,7 +6,7 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public enum CCType implements ILabeledEnum<String> {
+public enum CCType implements ILabeledEnum {
     MANDATORY("Obrigatória"),
     OPTIONAL("Optativa"),
     ELECTIVE("Eletiva");

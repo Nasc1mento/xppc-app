@@ -1,10 +1,7 @@
 package br.ifpe.edu.ui.pages;
 
 import br.ifpe.edu.services.PlaceholderList;
-import br.ifpe.edu.ui.components.ComboBox;
-import br.ifpe.edu.ui.components.Page;
-import br.ifpe.edu.ui.components.ISubmittable;
-import br.ifpe.edu.ui.components.TextField;
+import br.ifpe.edu.ui.components.*;
 import br.ifpe.edu.models.enums.Situation;
 import br.ifpe.edu.models.enums.Status;
 
@@ -17,8 +14,8 @@ public class CourseSituation extends Page implements ISubmittable {
     private final TextField cpc = new TextField(10);
     private final TextField enade = new TextField(10);
     private final TextField igc = new TextField(10);
-    private final ComboBox<Situation> situationBox = new ComboBox<>(Situation.values());
-    private final ComboBox<Status> statusBox = new ComboBox<>(Status.values());
+    private final LabeledEnumComboBox<Situation> situationBox = new LabeledEnumComboBox<>(Situation.class);
+    private final LabeledEnumComboBox<Status> statusBox = new LabeledEnumComboBox<>(Status.class);
 
     private final PlaceholderList placeholderList = PlaceholderList.INSTANCE;
 

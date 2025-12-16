@@ -5,14 +5,13 @@ import br.ifpe.edu.models.enums.ILabeledEnum;
 import javax.swing.*;
 import java.awt.*;
 
-public class LabeledEnumRenderer extends DefaultListCellRenderer {
+public class LabeledEnumRenderer<T extends Enum<T> & ILabeledEnum> extends DefaultListCellRenderer {
 
+    @SuppressWarnings("unchecked")
     @Override
     public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
         super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-
-        if (value instanceof ILabeledEnum<?> le)
-            setText(le.getLabel().toString());
+        setText(((T)value).getLabel());
 
         return this;
     }

@@ -6,7 +6,7 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public enum Situation implements ILabeledEnum<String> {
+public enum Situation implements ILabeledEnum {
     OPTION1("Apresentação Inicial do PPC"),
     OPTION2("Reformulação Integral do PPC"),
     OPTION3("Reformulação Parcial do PPC");

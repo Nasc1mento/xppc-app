@@ -58,7 +58,7 @@ public class ThemeConfig {
         UIManager.put("ProgressBar.foreground", accentColor);
         UIManager.put("ProgressBar.background", new Color(0, 0, 0, 0));
         UIManager.put("ProgressBar.font", sansSerifBold);
-        UIManager.put("ProgressBar.arc", 99);
+        UIManager.put("ProgressBar.arc", 999);
         UIManager.put("ProgressBar.height", 14);
     }
 }

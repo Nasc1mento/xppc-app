@@ -1,21 +1,20 @@
 package br.ifpe.edu.ui.pages;
 
-import br.ifpe.edu.services.CCList;
-import br.ifpe.edu.utils.Eval;
-import br.ifpe.edu.services.PlaceholderList;
-import br.ifpe.edu.readers.CNCTReader;
-import br.ifpe.edu.ui.components.*;
-import br.ifpe.edu.ui.components.TextField;
 import br.ifpe.edu.models.CC;
 import br.ifpe.edu.models.enums.CCType;
 import br.ifpe.edu.models.enums.CourseLevel;
+import br.ifpe.edu.readers.CNCTReader;
+import br.ifpe.edu.services.CCList;
+import br.ifpe.edu.services.PlaceholderList;
+import br.ifpe.edu.ui.components.*;
+import br.ifpe.edu.ui.components.TextField;
+import br.ifpe.edu.utils.Eval;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.util.Objects;
 
 public class CurricularComponents extends Page implements IValidatable, ISubmittable {
 
@@ -119,7 +118,7 @@ public class CurricularComponents extends Page implements IValidatable, ISubmitt
     private void addComponent() {
         String code = codeField.getText();
         String name = ccField.getText();
-        String type = Objects.toString(typeBox.getSelectedItem());
+        CCType type = typeBox.getSelectedItem();
         String period = periodField.getText();
         String ap = apField.getText();
         String at = atField.getText();
@@ -127,13 +126,13 @@ public class CurricularComponents extends Page implements IValidatable, ISubmitt
         String hrPr = hrPrField.getText();
         String hrTeo = hrTeoField.getText();
         String ext = extField.getText();
-        String prereq = (String) prereqBox.getSelectedItem();
-        String coreq = (String) coreqBox.getSelectedItem();
+        String prereq = prereqBox.getStringValue();
+        String coreq = coreqBox.getStringValue();
 
         CC newCC = new CC(
                 code,
                 name,
-                CCType.findByString(type),
+                type,
                 period,
                 ap,
                 at,
@@ -146,17 +145,16 @@ public class CurricularComponents extends Page implements IValidatable, ISubmitt
         );
 
         tableModel.addRow(new Object[]{
-                code,
-                name,
-                type,
-                period,
+                newCC.code(),
+                newCC.name(),
+                newCC.type().getLabel(),
+                newCC.period(),
                 newCC.credits(),
                 newCC.ha(),
                 newCC.hr(),
-                ext,
-                ext,
-                prereq,
-                coreq
+                newCC.ext(),
+                newCC.prereq(),
+                newCC.coreq()
         });
 
 
@@ -176,6 +174,8 @@ public class CurricularComponents extends Page implements IValidatable, ISubmitt
         hrTeoField.clear();
         extField.clear();
         periodField.clear();
+
+        typeBox.setSelectedIndex(0);
     }
 
     private void updatePrereqCoreqBoxes() {
@@ -250,8 +250,9 @@ public class CurricularComponents extends Page implements IValidatable, ISubmitt
         final CNCTReader cnctReader = CNCTReader.INSTANCE;
         String totalCht = placeholderList.getValue("cht_e_estagio");
         String typeCourse =  placeholderList.getValue("nivel");
+        IO.println(typeCourse);
 
-        if (CourseLevel.TECHNOLOGIST.equals(CourseLevel.findByString(typeCourse))) {
+        if (CourseLevel.TECHNOLOGIST.getLabel().equals(typeCourse)) {
             String courseName = placeholderList.getValue("nome_do_curso");
             String recommendedCht = cnctReader.getHoursByName(courseName);
             if (Eval.evalBoolean("%s<%s", totalCht, recommendedCht)) {

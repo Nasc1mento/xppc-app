@@ -1,5 +1,6 @@
 package br.ifpe.edu.ui.components;
 
+import br.ifpe.edu.models.enums.ILabeledEnum;
 import br.ifpe.edu.ui.renderers.LabeledEnumRenderer;
 
 import javax.swing.*;
@@ -27,9 +28,23 @@ public class ComboBox<T> extends JComboBox<T> implements IComponent {
     }
 
     public String getStringValue() {
-        if (this.getSelectedItem() == null) {
+
+        var selectedItem = getSelectedItem();
+
+        if (selectedItem == null) {
            return null;
         }
-        return this.getSelectedItem().toString();
+
+        if (selectedItem instanceof ILabeledEnum<?> s) {
+            return s.getLabel().toString();
+        }
+
+        return selectedItem.toString();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public T getSelectedItem() {
+        return (T) super.getSelectedItem();
     }
 }

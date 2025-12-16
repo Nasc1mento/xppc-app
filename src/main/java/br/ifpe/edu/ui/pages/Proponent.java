@@ -60,7 +60,7 @@ public class Proponent extends Page implements ISubmittable {
                 websiteField, CampusReader.Columns.WEBSITE
         );
         campusBox.addActionListener(_ -> {
-            String selectedCampus = (String) campusBox.getSelectedItem();
+            String selectedCampus = campusBox.getSelectedItem();
             if (selectedCampus != null) {
                 fieldMapping.forEach((field, column) -> field.setText(campusReader.getByNameAndColumn(selectedCampus, column)));
             }
@@ -88,9 +88,9 @@ public class Proponent extends Page implements ISubmittable {
 
     @Override
     public void onSubmit() {
-        placeholderList.addPlaceholder("campus", Objects.toString(campusBox.getSelectedItem()));
+        placeholderList.addPlaceholder("campus", campusBox.getStringValue());
         placeholderList.addPlaceholder("cnpj", cnpjField.getText());
-        placeholderList.addPlaceholder("cidade", Objects.toString(cityField.getText()));
+        placeholderList.addPlaceholder("cidade",cityField.getText());
         placeholderList.addPlaceholder("cidade_uf_cep", String.format("%s, PE, %s, %s", cityField.getText(), neighbourhoodField.getText(), cepField.getText()));
         placeholderList.addPlaceholder("rua_numero", String.format("%s, %s", streetField.getText(), numberField.getText()));
         placeholderList.addPlaceholder("telefone", telephoneNumberField.getText());

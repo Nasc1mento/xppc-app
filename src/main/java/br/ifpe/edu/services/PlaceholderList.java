@@ -34,7 +34,7 @@ public enum PlaceholderList  {
 
     public <V> void addPlaceholder(String key, V value) {
         this.removeIf(key);
-        this.placeholders.add(new Placeholder<>(key, value.toString()));
+        this.placeholders.add(new Placeholder<>(key, Objects.toString(value)));
     }
 
     public <K> void addPrefersPlaceholder(final List<? extends K> keys, final int ...indexes) {

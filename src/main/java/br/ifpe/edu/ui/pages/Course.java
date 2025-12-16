@@ -75,7 +75,7 @@ public class Course extends Page implements ISubmittable {
 
     private void setupListeners() {
         levelBox.addActionListener(_ -> {
-            var selectedLevel = (CourseLevel) levelBox.getSelectedItem();
+            var selectedLevel = levelBox.getSelectedItem();
 
             nameBox.removeAllItems();
 
@@ -85,8 +85,8 @@ public class Course extends Page implements ISubmittable {
         });
 
         nameBox.addActionListener(_ -> {
-            CourseLevel selectedLevel = (CourseLevel) levelBox.getSelectedItem();
-            String selectedName = (String) nameBox.getSelectedItem();
+            CourseLevel selectedLevel = levelBox.getSelectedItem();
+            String selectedName = nameBox.getSelectedItem();
 
 
             if (CourseLevel.TECHNOLOGIST.equals(selectedLevel) && Objects.nonNull(selectedName)) {
@@ -114,10 +114,10 @@ public class Course extends Page implements ISubmittable {
 
     @Override
     public void onSubmit() {
-        placeholderList.addPlaceholder("nome_do_curso", Objects.toString(nameBox.getSelectedItem(), ""));
-        placeholderList.addPlaceholder("eixo_tecnologico", Objects.toString(axisBox.getText()));
-        placeholderList.addPlaceholder("nivel", Objects.toString(levelBox.getSelectedItem()));
-        placeholderList.addPlaceholder("modalidade", Objects.toString(modalityBox.getSelectedItem()));
+        placeholderList.addPlaceholder("nome_do_curso", nameBox.getStringValue());
+        placeholderList.addPlaceholder("eixo_tecnologico", axisBox.getText());
+        placeholderList.addPlaceholder("nivel", levelBox.getStringValue());
+        placeholderList.addPlaceholder("modalidade", modalityBox.getStringValue());
         placeholderList.addPlaceholder("formas_de_oferta", offersField.getText());
         placeholderList.addPlaceholder("titulacao", certificationField.getText());
         placeholderList.addPlaceholder("carga_horaria_estagio_supervisionado_hr", internshipHoursField.getText());
@@ -127,7 +127,7 @@ public class Course extends Page implements ISubmittable {
         placeholderList.addPlaceholder("integralizacao_maxima", maxCompletionField.getText());
         placeholderList.addPlaceholder("forma_de_acesso", entryMethodsField.getText());
         placeholderList.addPlaceholder("pre-requisito_ingresso", prereqField.getText());
-        placeholderList.addPlaceholder("regime", Objects.toString(regimeBox.getSelectedItem(), ""));
+        placeholderList.addPlaceholder("regime", regimeBox.getStringValue());
         placeholderList.addPlaceholder("turnos", shiftsField.getText());
         placeholderList.addPlaceholder("turmas_por_turno", classesPerShiftField.getText());
         placeholderList.addPlaceholder("vagas_por_turma", seatsPerClassField.getText());

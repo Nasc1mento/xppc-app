@@ -8,10 +8,9 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.Locale;
-import java.util.Objects;
 
 
-public class TextField extends JFormattedTextField implements IComponent {
+public class TextField extends JFormattedTextField implements IInput {
 
     private String placeholder;
 
@@ -78,7 +77,13 @@ public class TextField extends JFormattedTextField implements IComponent {
         return getText();
     }
 
+    @Override
     public void clear() {
         setText("");
+    }
+
+    @Override
+    public void addChangeListener(Runnable r) {
+        getDocument().addDocumentListener(new SimpleDocumentListener(r));
     }
 }

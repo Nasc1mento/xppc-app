@@ -174,8 +174,7 @@ public class CurricularComponents extends Page implements IValidatable, ISubmitt
         hrTeoField.clear();
         extField.clear();
         periodField.clear();
-
-        typeBox.setSelectedIndex(0);
+        typeBox.clear();
     }
 
     private void updatePrereqCoreqBoxes() {

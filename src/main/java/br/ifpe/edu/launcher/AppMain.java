@@ -13,7 +13,7 @@ public class AppMain {
 
     static void main() {
 
-        System.setProperty("sun.java2d.uiScale", "2.0");
+        System.setProperty("sun.java2d.uiScale", "1.0");
         Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
 
         log.info("App version: {}", AppConfig.getVersion());

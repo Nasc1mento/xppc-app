@@ -1,8 +1,5 @@
 package br.ifpe.edu.ui.components;
 
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import java.awt.event.ItemEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BooleanSupplier;
@@ -10,9 +7,7 @@ import java.util.function.Consumer;
 
 public class BindPropertyFactory {
 
-    private BindPropertyFactory() {
-
-    }
+    private BindPropertyFactory() {  }
 
     public static BindProperty create() {
         return new BindProperty();
@@ -22,23 +17,13 @@ public class BindPropertyFactory {
         private final List<BooleanSupplier> validators = new ArrayList<>();
         private Consumer<Boolean> onStatusChange;
 
-        public BindProperty bind(IComponent c) {
-            if (c instanceof TextField tf) {
-                validators.add(() -> isNotNullAndNotEmpty(c));
-                tf.getDocument().addDocumentListener(new SimpleDocumentListener(this::check));
-            } else if (c instanceof ComboBox<?> cb) {
-                validators.add(() -> isNotNullAndNotEmpty(c));
-                cb.addItemListener(e -> {
-                    if (e.getStateChange() == ItemEvent.SELECTED || e.getStateChange() == ItemEvent.DESELECTED) {
-                        check();
-                    }
-                });
-            }
-
+        public BindProperty bind(IInput c) {
+            validators.add(() -> isNotNullAndNotEmpty(c));
+            c.addChangeListener(this::check);
             return this;
         }
 
-        private boolean isNotNullAndNotEmpty(IComponent c) {
+        private boolean isNotNullAndNotEmpty(IInput c) {
             return c.getStringValue() != null && !c.getStringValue().trim().isEmpty();
         }
 
@@ -52,20 +37,6 @@ public class BindPropertyFactory {
 
             boolean isValid = validators.stream().allMatch(BooleanSupplier::getAsBoolean);
             onStatusChange.accept(isValid);
-        }
-    }
-
-    private record SimpleDocumentListener(Runnable action) implements DocumentListener {
-        public void insertUpdate(DocumentEvent e) {
-            action.run();
-        }
-
-        public void removeUpdate(DocumentEvent e) {
-            action.run();
-        }
-
-        public void changedUpdate(DocumentEvent e) {
-            action.run();
         }
     }
 }

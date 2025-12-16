@@ -1,9 +1,10 @@
 package br.ifpe.edu.ui.components;
 
 import javax.swing.*;
+import java.awt.event.ItemEvent;
 
-public class ComboBox<T> extends JComboBox<T> implements IComponent {
 
+public class ComboBox<T> extends JComboBox<T> implements IInput {
 
     public ComboBox(Iterable<? extends T> items) {
         this();
@@ -34,5 +35,21 @@ public class ComboBox<T> extends JComboBox<T> implements IComponent {
     @Override
     public T getSelectedItem() {
         return (T) super.getSelectedItem();
+    }
+
+    @Override
+    public void addChangeListener(Runnable r) {
+        addItemListener(e -> {
+            if (e.getStateChange() == ItemEvent.SELECTED || e.getStateChange() == ItemEvent.DESELECTED) {
+                r.run();
+            }
+        });
+    }
+
+    @Override
+    public void clear() {
+        if (getItemCount() > 0) {
+            setSelectedIndex(0);
+        }
     }
 }

@@ -3,6 +3,8 @@ package br.ifpe.edu.helpers;
 import org.apache.poi.xwpf.usermodel.*;
 
 import java.util.List;
+
+
 public class ParagraphHelper {
 
     private static int lastBodyElIndex = 0;

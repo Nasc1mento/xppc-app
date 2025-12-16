@@ -6,6 +6,7 @@ public class ComboBox<T> extends JComboBox<T> implements IComponent {
 
 
     public ComboBox(Iterable<? extends T> items) {
+        this();
         addAll(items);
     }
 
@@ -23,6 +24,7 @@ public class ComboBox<T> extends JComboBox<T> implements IComponent {
         }
     }
 
+    @Override
     public String getStringValue() {
         T selectedItem = getSelectedItem();
         return selectedItem == null ? null : selectedItem.toString();

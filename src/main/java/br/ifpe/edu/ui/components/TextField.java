@@ -24,7 +24,6 @@ public class TextField extends JFormattedTextField implements IComponent {
         return this;
     }
 
-
     @Override
     protected void paintComponent(final Graphics pG) {
         super.paintComponent(pG);
@@ -44,13 +43,13 @@ public class TextField extends JFormattedTextField implements IComponent {
 
     public TextField setDouble() {
 
-        DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.US);
+        var symbols = new DecimalFormatSymbols(Locale.US);
         symbols.setDecimalSeparator('.');
 
-        DecimalFormat dFormat = new DecimalFormat("#0.00", symbols);
+        var dFormat = new DecimalFormat("#0.00", symbols);
         dFormat.setGroupingUsed(false);
 
-        NumberFormatter formatter = new NumberFormatter(dFormat);
+        var formatter = new NumberFormatter(dFormat);
         formatter.setValueClass(Double.class);
         formatter.setMinimum(0.0);
         formatter.setAllowsInvalid(true);
@@ -64,7 +63,7 @@ public class TextField extends JFormattedTextField implements IComponent {
         NumberFormat format = NumberFormat.getIntegerInstance();
         format.setGroupingUsed(false);
 
-        NumberFormatter formatter = new NumberFormatter(format);
+        var formatter = new NumberFormatter(format);
         formatter.setValueClass(Integer.class);
         formatter.setMinimum(0);
         formatter.setAllowsInvalid(true);
@@ -74,8 +73,9 @@ public class TextField extends JFormattedTextField implements IComponent {
         return this;
     }
 
+    @Override
     public String getStringValue() {
-        return Objects.toString(this.getText());
+        return getText();
     }
 
     public void clear() {

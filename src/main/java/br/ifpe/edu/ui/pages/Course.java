@@ -1,22 +1,21 @@
 package br.ifpe.edu.ui.pages;
 
-import br.ifpe.edu.ui.components.*;
-import br.ifpe.edu.ui.components.TextField;
-import br.ifpe.edu.utils.Eval;
-import br.ifpe.edu.services.PlaceholderList;
-import br.ifpe.edu.readers.CNCTReader;
 import br.ifpe.edu.models.enums.CourseLevel;
 import br.ifpe.edu.models.enums.CourseModality;
 import br.ifpe.edu.models.enums.CourseRegime;
+import br.ifpe.edu.readers.CNCTReader;
+import br.ifpe.edu.services.PlaceholderList;
+import br.ifpe.edu.ui.components.*;
+import br.ifpe.edu.ui.components.TextField;
+import br.ifpe.edu.utils.Eval;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Objects;
 
 public class Course extends Page implements ISubmittable {
 
     private final LabeledEnumComboBox<CourseLevel> levelBox = new LabeledEnumComboBox<>(CourseLevel.class);
-    private final TextField axisBox = new TextField(30);
+    private final TextField axisField = new TextField(30);
     private final ComboBox<String> nameBox = new ComboBox<>();
     private final LabeledEnumComboBox<CourseModality> modalityBox = new LabeledEnumComboBox<>(CourseModality.class);
     private final TextField offersField = new TextField(30);
@@ -50,7 +49,7 @@ public class Course extends Page implements ISubmittable {
     private void setupForm() {
         addRow(new JLabel("Tipo do curso: "), levelBox);
         addRow(new JLabel("Nome do curso: "), nameBox);
-        addRow(new JLabel("Eixo tecnológico: "), axisBox);
+        addRow(new JLabel("Eixo tecnológico: "), axisField);
         addRow(new JLabel("Modalidade: "), modalityBox);
         addRow(new JLabel("Formas de oferta: "), offersField);
         addRow(new JLabel("Titulação: "), certificationField);
@@ -76,6 +75,7 @@ public class Course extends Page implements ISubmittable {
             var selectedLevel = levelBox.getSelectedItem();
 
             nameBox.removeAllItems();
+            axisField.clear();
 
             if (CourseLevel.TECHNOLOGIST.equals(selectedLevel)) {
                 nameBox.addAll(cnctReader.getAllNames());
@@ -87,8 +87,8 @@ public class Course extends Page implements ISubmittable {
             String selectedName = nameBox.getSelectedItem();
 
 
-            if (CourseLevel.TECHNOLOGIST.equals(selectedLevel) && Objects.nonNull(selectedName)) {
-                axisBox.setText(cnctReader.getAxisByName(selectedName));
+            if (CourseLevel.TECHNOLOGIST.equals(selectedLevel) && selectedName != null) {
+                axisField.setText(cnctReader.getAxisByName(selectedName));
            }
         });
     }
@@ -99,10 +99,10 @@ public class Course extends Page implements ISubmittable {
 
     private void setupComboBoxes() {
         nameBox.setEditable(true);
-        axisBox.setEditable(true);
+        axisField.setEditable(true);
 
         nameBox.setPreferredSize(new Dimension(300, 25));
-        axisBox.setPreferredSize(new Dimension(300, 25));
+        axisField.setPreferredSize(new Dimension(300, 25));
     }
 
     @Override
@@ -113,7 +113,7 @@ public class Course extends Page implements ISubmittable {
     @Override
     public void onSubmit() {
         placeholderList.addPlaceholder("nome_do_curso", nameBox.getStringValue());
-        placeholderList.addPlaceholder("eixo_tecnologico", axisBox.getText());
+        placeholderList.addPlaceholder("eixo_tecnologico", axisField.getText());
         placeholderList.addPlaceholder("nivel", levelBox.getStringValue());
         placeholderList.addPlaceholder("modalidade", modalityBox.getStringValue());
         placeholderList.addPlaceholder("formas_de_oferta", offersField.getText());

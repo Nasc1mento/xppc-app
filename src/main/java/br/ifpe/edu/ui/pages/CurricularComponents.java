@@ -250,7 +250,6 @@ public class CurricularComponents extends Page implements IValidatable, ISubmitt
         final CNCTReader cnctReader = CNCTReader.INSTANCE;
         String totalCht = placeholderList.getValue("cht_e_estagio");
         String typeCourse =  placeholderList.getValue("nivel");
-        IO.println(typeCourse);
 
         if (CourseLevel.TECHNOLOGIST.getLabel().equals(typeCourse)) {
             String courseName = placeholderList.getValue("nome_do_curso");
@@ -273,10 +272,7 @@ public class CurricularComponents extends Page implements IValidatable, ISubmitt
                         JOptionPane.WARNING_MESSAGE
                 );
             }
-
-            return JOptionPane.YES_OPTION;
         }
-
 
         return JOptionPane.YES_OPTION;
     }

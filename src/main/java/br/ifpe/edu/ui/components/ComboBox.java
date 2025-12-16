@@ -29,7 +29,7 @@ public class ComboBox<T> extends JComboBox<T> implements IComponent {
 
     public String getStringValue() {
 
-        var selectedItem = getSelectedItem();
+        T selectedItem = getSelectedItem();
 
         if (selectedItem == null) {
            return null;

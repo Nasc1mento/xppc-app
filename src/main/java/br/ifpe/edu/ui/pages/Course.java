@@ -4,7 +4,7 @@ import br.ifpe.edu.models.enums.CourseLevel;
 import br.ifpe.edu.models.enums.CourseModality;
 import br.ifpe.edu.models.enums.CourseRegime;
 import br.ifpe.edu.readers.CNCTReader;
-import br.ifpe.edu.services.PlaceholderList;
+import br.ifpe.edu.services.PlaceholderManager;
 import br.ifpe.edu.ui.components.*;
 import br.ifpe.edu.ui.components.TextField;
 import br.ifpe.edu.utils.Eval;
@@ -37,7 +37,7 @@ public class Course extends Page implements ISubmittable {
     private final TextField durationField = new TextField(10);
 
     private final CNCTReader cnctReader = CNCTReader.INSTANCE;
-    private final PlaceholderList placeholderList = PlaceholderList.INSTANCE;
+    private final PlaceholderManager placeholderManager = PlaceholderManager.INSTANCE;
 
     public Course() {
         setupListeners();
@@ -112,27 +112,27 @@ public class Course extends Page implements ISubmittable {
 
     @Override
     public void onSubmit() {
-        placeholderList.addPlaceholder("nome_do_curso", nameBox.getStringValue());
-        placeholderList.addPlaceholder("eixo_tecnologico", axisField.getText());
-        placeholderList.addPlaceholder("nivel", levelBox.getStringValue());
-        placeholderList.addPlaceholder("modalidade", modalityBox.getStringValue());
-        placeholderList.addPlaceholder("formas_de_oferta", offersField.getText());
-        placeholderList.addPlaceholder("titulacao", certificationField.getText());
-        placeholderList.addPlaceholder("carga_horaria_estagio_supervisionado_hr", internshipHoursField.getText());
-        placeholderList.addPlaceholder("semanas_letivas", weeksField.getText());
-        placeholderList.addPlaceholder("carga_horaria_atividades_complementares_hr", extraActivitiesHoursField.getText());
-        placeholderList.addPlaceholder("integralizacao_minima", minCompletionField.getText());
-        placeholderList.addPlaceholder("integralizacao_maxima", maxCompletionField.getText());
-        placeholderList.addPlaceholder("forma_de_acesso", entryMethodsField.getText());
-        placeholderList.addPlaceholder("pre-requisito_ingresso", prereqField.getText());
-        placeholderList.addPlaceholder("regime", regimeBox.getStringValue());
-        placeholderList.addPlaceholder("turnos", shiftsField.getText());
-        placeholderList.addPlaceholder("turmas_por_turno", classesPerShiftField.getText());
-        placeholderList.addPlaceholder("vagas_por_turma", seatsPerClassField.getText());
-        placeholderList.addPlaceholder("vagas_por_turno", seatsPerShiftField.getText());
-        placeholderList.addPlaceholder("vagas_por_semestre", seatsPerSemesterField.getText());
-        placeholderList.addPlaceholder("duracao",durationField.getText());
-        placeholderList.addPlaceholder("inicio_do_curso", startField.getText());
-        placeholderList.addPlaceholder("vagas_anuais", Eval.evalDecimal("%s*2", seatsPerSemesterField.getText()));
+        placeholderManager.addPlaceholder("nome_do_curso", nameBox.getStringValue());
+        placeholderManager.addPlaceholder("eixo_tecnologico", axisField.getText());
+        placeholderManager.addPlaceholder("nivel", levelBox.getStringValue());
+        placeholderManager.addPlaceholder("modalidade", modalityBox.getStringValue());
+        placeholderManager.addPlaceholder("formas_de_oferta", offersField.getText());
+        placeholderManager.addPlaceholder("titulacao", certificationField.getText());
+        placeholderManager.addPlaceholder("carga_horaria_estagio_supervisionado_hr", internshipHoursField.getText());
+        placeholderManager.addPlaceholder("semanas_letivas", weeksField.getText());
+        placeholderManager.addPlaceholder("carga_horaria_atividades_complementares_hr", extraActivitiesHoursField.getText());
+        placeholderManager.addPlaceholder("integralizacao_minima", minCompletionField.getText());
+        placeholderManager.addPlaceholder("integralizacao_maxima", maxCompletionField.getText());
+        placeholderManager.addPlaceholder("forma_de_acesso", entryMethodsField.getText());
+        placeholderManager.addPlaceholder("pre-requisito_ingresso", prereqField.getText());
+        placeholderManager.addPlaceholder("regime", regimeBox.getStringValue());
+        placeholderManager.addPlaceholder("turnos", shiftsField.getText());
+        placeholderManager.addPlaceholder("turmas_por_turno", classesPerShiftField.getText());
+        placeholderManager.addPlaceholder("vagas_por_turma", seatsPerClassField.getText());
+        placeholderManager.addPlaceholder("vagas_por_turno", seatsPerShiftField.getText());
+        placeholderManager.addPlaceholder("vagas_por_semestre", seatsPerSemesterField.getText());
+        placeholderManager.addPlaceholder("duracao",durationField.getText());
+        placeholderManager.addPlaceholder("inicio_do_curso", startField.getText());
+        placeholderManager.addPlaceholder("vagas_anuais", Eval.evalDecimal("%s*2", seatsPerSemesterField.getText()));
     }
 }

@@ -1,6 +1,6 @@
 package br.ifpe.edu.ui.pages;
 
-import br.ifpe.edu.services.PlaceholderList;
+import br.ifpe.edu.services.PlaceholderManager;
 import br.ifpe.edu.ui.components.*;
 import br.ifpe.edu.models.enums.Situation;
 import br.ifpe.edu.models.enums.Status;
@@ -17,7 +17,7 @@ public class CourseSituation extends Page implements ISubmittable {
     private final LabeledEnumComboBox<Situation> situationBox = new LabeledEnumComboBox<>(Situation.class);
     private final LabeledEnumComboBox<Status> statusBox = new LabeledEnumComboBox<>(Status.class);
 
-    private final PlaceholderList placeholderList = PlaceholderList.INSTANCE;
+    private final PlaceholderManager placeholderManager = PlaceholderManager.INSTANCE;
 
     public CourseSituation() {
         setupForm();
@@ -40,11 +40,11 @@ public class CourseSituation extends Page implements ISubmittable {
 
     @Override
     public void onSubmit() {
-        placeholderList.addPlaceholder("cc", cc.getText());
-        placeholderList.addPlaceholder("cpc", cpc.getText());
-        placeholderList.addPlaceholder("enade", enade.getText());
-        placeholderList.addPlaceholder("igc", igc.getText());
-        placeholderList.addPrefersPlaceholder(
+        placeholderManager.addPlaceholder("cc", cc.getText());
+        placeholderManager.addPlaceholder("cpc", cpc.getText());
+        placeholderManager.addPlaceholder("enade", enade.getText());
+        placeholderManager.addPlaceholder("igc", igc.getText());
+        placeholderManager.addPrefersPlaceholder(
                 List.of(
                         "apresentacao_inicial_do_ppc",
                         "reformulacao_integral_do_ppc",
@@ -52,7 +52,7 @@ public class CourseSituation extends Page implements ISubmittable {
                 ), situationBox.getSelectedIndex()
         );
 
-        placeholderList.addPrefersPlaceholder(
+        placeholderManager.addPrefersPlaceholder(
                 List.of(
                     "aguardando_autorizacao_cs",
                     "autorizado_cs",

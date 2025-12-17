@@ -1,12 +1,12 @@
 package br.ifpe.edu.services.replacers;
 
-import br.ifpe.edu.services.CCList;
-import br.ifpe.edu.helpers.TableLocationHelper;
-import br.ifpe.edu.helpers.DocumentHelper;
-import br.ifpe.edu.helpers.ParagraphHelper;
+import br.ifpe.edu.helpers.TableHelper;
+import br.ifpe.edu.helpers.TextHelper;
+import br.ifpe.edu.services.CCManager;
+import br.ifpe.edu.helpers.TableTracker;
+import br.ifpe.edu.services.DocumentManager;
+import br.ifpe.edu.services.DocumentCursor;
 import org.apache.poi.xwpf.usermodel.*;
-import org.apache.xmlbeans.XmlCursor;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTbl;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -14,8 +14,9 @@ import java.util.List;
 
 public class EmentaryReplacer implements IReplacer {
 
-    private final CCList list = CCList.INSTANCE;
-    private final TableLocationHelper tableLocationHelper = TableLocationHelper.INSTANCE;
+    private final DocumentCursor documentCursor = DocumentCursor.INSTANCE;
+    private final CCManager list = CCManager.INSTANCE;
+    private final TableTracker tableTracker = TableTracker.INSTANCE;
 
 
     @Override
@@ -25,34 +26,19 @@ public class EmentaryReplacer implements IReplacer {
 
     @Override
     public void replace() throws IOException {
-        try (XWPFDocument doc = new XWPFDocument(new FileInputStream(DocumentHelper.INSTANCE.getTempPath().toFile()))) {
+        try (XWPFDocument doc = new XWPFDocument(new FileInputStream(DocumentManager.INSTANCE.getTempPath().toFile()))) {
 
-            XWPFParagraph paragraph = ParagraphHelper.find(doc, "@@ementário@@");
+            XWPFParagraph paragraph = documentCursor.find(doc, "@@ementário@@");
 
             if (paragraph != null) {
-                try (var ementaryDoc = new XWPFDocument(DocumentHelper.loadResourceStream("tabela_ementario.docx"))) {
-
-                    CTTbl xmlTblToCopy = ementaryDoc.getTables().getFirst().getCTTbl();
-
-                    try (XmlCursor insertCursor = paragraph.getCTP().newCursor()) {
-                        for (var _ : list.getList()) {
-                            XWPFTable newTable = doc.insertNewTbl(insertCursor);
-                            newTable.getCTTbl().set(xmlTblToCopy.copy());
-                            XWPFParagraph tempP = doc.insertNewParagraph(newTable.getCTTbl().newCursor());
-                            insertCursor.toCursor(tempP.getCTP().newCursor());
-                        }
-                    }
-
-                    int pos = doc.getPosOfParagraph(paragraph);
-                    doc.removeBodyElement(pos);
-                }
+                TableHelper.copySimpleTbl(doc, paragraph, "tabela_ementario.docx", list.getList().size());
             }
 
             commit(doc);
         }
 
-        try (XWPFDocument doc = new XWPFDocument(new FileInputStream(DocumentHelper.INSTANCE.getTempPath().toFile()))) {
-            var table = doc.getTableArray(tableLocationHelper.getValue());
+        try (XWPFDocument doc = new XWPFDocument(new FileInputStream(DocumentManager.INSTANCE.getTempPath().toFile()))) {
+            var table = doc.getTableArray(tableTracker.getValue());
 
             for (var cc : list.getList()) {
                 List<XWPFTableRow> rows = table.getRows();
@@ -62,12 +48,12 @@ public class EmentaryReplacer implements IReplacer {
 
                 currentRow = rows.get(1);
                 currentRow.getCell(0).getParagraphArray(0).createRun().setText("Carga horária: " + cc.ha());
-                ParagraphHelper.setTextNBreak(
+                TextHelper.setTextNBreak(
                         currentRow.getCell(1).getParagraphArray(0).createRun(),
                         String.format("AT(%s)\nAP(%s)\nEXT(%s)", cc.at(), cc.ap(), cc.ae())
                 );
 
-                table = doc.getTableArray(tableLocationHelper.nextTable());
+                table = doc.getTableArray(tableTracker.nextTable());
             }
 
             commit(doc);

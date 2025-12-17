@@ -4,7 +4,7 @@ package br.ifpe.edu.services;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public enum PlaceholderList  {
+public enum PlaceholderManager {
     
     INSTANCE;
 
@@ -28,7 +28,7 @@ public enum PlaceholderList  {
 
     private final List<Placeholder<String, String>> placeholders;
 
-    PlaceholderList() {
+    PlaceholderManager() {
         this.placeholders = new ArrayList<>();
     }
 

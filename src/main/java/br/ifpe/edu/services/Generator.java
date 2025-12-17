@@ -1,8 +1,6 @@
-package br.ifpe.edu.services.replacers;
+package br.ifpe.edu.services;
 
-import br.ifpe.edu.helpers.DocumentHelper;
-import br.ifpe.edu.helpers.ParagraphHelper;
-import br.ifpe.edu.helpers.TableLocationHelper;
+import br.ifpe.edu.services.replacers.*;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -12,12 +10,12 @@ import java.util.stream.Stream;
 
 
 @Slf4j
-public class ReplacerList implements AutoCloseable {
+public class Generator implements AutoCloseable {
 
     private List<IReplacer> list;
-    private final DocumentHelper documentHelper = DocumentHelper.INSTANCE;
+    private final DocumentManager documentManager = DocumentManager.INSTANCE;
 
-    public ReplacerList() {
+    public Generator() {
         loadList();
     }
 
@@ -42,7 +40,7 @@ public class ReplacerList implements AutoCloseable {
 
         long start = System.currentTimeMillis();
 
-        documentHelper.createTempDoc();
+        documentManager.createTempDoc();
 
         for (IReplacer replacer : list) {
             log.debug("Executing replacer {}", replacer.getClass().getSimpleName());
@@ -50,7 +48,7 @@ public class ReplacerList implements AutoCloseable {
             replacer.replace();
         }
 
-        documentHelper.save();
+        documentManager.save();
 
         long time = System.currentTimeMillis() - start;
 
@@ -63,7 +61,6 @@ public class ReplacerList implements AutoCloseable {
         log.debug("Resetting state");
 
         loadList();
-        TableLocationHelper.INSTANCE.reset();
-        ParagraphHelper.reset();
+        DocumentCursor.INSTANCE.reset();
     }
 }

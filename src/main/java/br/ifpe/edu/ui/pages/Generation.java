@@ -1,7 +1,7 @@
 package br.ifpe.edu.ui.pages;
 
-import br.ifpe.edu.services.replacers.ReplacerList;
-import br.ifpe.edu.helpers.DocumentHelper;
+import br.ifpe.edu.services.Generator;
+import br.ifpe.edu.services.DocumentManager;
 import br.ifpe.edu.ui.components.ISubmittable;
 import br.ifpe.edu.ui.components.IValidatable;
 import br.ifpe.edu.ui.components.Page;
@@ -65,7 +65,7 @@ public class Generation extends Page implements ISubmittable {
 
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedDir = chooser.getSelectedFile();
-            DocumentHelper.INSTANCE.setOutputPath(Paths.get(Paths.get(selectedDir.toURI()).toString(), "ppc.docx"));
+            DocumentManager.INSTANCE.setOutputPath(Paths.get(Paths.get(selectedDir.toURI()).toString(), "ppc.docx"));
 
             generate();
         }
@@ -78,7 +78,7 @@ public class Generation extends Page implements ISubmittable {
         SwingWorker<Void, Void> worker = new SwingWorker<>() {
             @Override
             protected Void doInBackground() throws Exception {
-                try (var rl = new ReplacerList()) {
+                try (var rl = new Generator()) {
                     rl.cAll();
                 }
                 return null;

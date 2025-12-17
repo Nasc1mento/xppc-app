@@ -20,7 +20,7 @@ public abstract class AbstractCSVReader {
     private final CSVFormat csvFormat;
     private List<CSVRecord> list;
 
-    protected AbstractCSVReader(String fileName, Charset charset, char separator) {
+    protected AbstractCSVReader(final String fileName, final Charset charset, final char separator) {
         this.fileName = fileName;
         this.charset = charset;
 
@@ -56,7 +56,7 @@ public abstract class AbstractCSVReader {
         return list;
     }
 
-    protected String getAFromB(int c1, String b, int c2) {
+    protected String getAFromB(final int c1, final String b, final int c2) {
         return read().stream()
                 .filter(line -> line.size() > Math.max(c1, c2))
                 .filter(line -> Objects.equals(b, line.get(c1)))
@@ -65,7 +65,7 @@ public abstract class AbstractCSVReader {
                 .orElse(null);
     }
 
-    protected List<String> getAllFromA(int a) {
+    protected List<String> getAllFromA(final int a) {
         return read().stream().map(line -> line.get(a)).sorted().toList();
     }
 }

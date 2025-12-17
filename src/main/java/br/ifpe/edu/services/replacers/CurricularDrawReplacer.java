@@ -1,13 +1,12 @@
 package br.ifpe.edu.services.replacers;
 
-import br.ifpe.edu.services.CCList;
-import br.ifpe.edu.helpers.TableLocationHelper;
-import br.ifpe.edu.helpers.DocumentHelper;
-import br.ifpe.edu.helpers.ParagraphHelper;
+import br.ifpe.edu.services.DocumentManager;
+import br.ifpe.edu.services.DocumentCursor;
+import br.ifpe.edu.helpers.TableHelper;
+import br.ifpe.edu.helpers.TableTracker;
 import br.ifpe.edu.models.CC;
+import br.ifpe.edu.services.CCManager;
 import org.apache.poi.xwpf.usermodel.*;
-import org.apache.xmlbeans.XmlCursor;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTbl;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -18,7 +17,8 @@ import java.util.stream.Collectors;
 
 public class CurricularDrawReplacer implements IReplacer {
 
-    private final TableLocationHelper tableLocationHelper = TableLocationHelper.INSTANCE;
+    private final DocumentCursor documentCursor = DocumentCursor.INSTANCE;
+    private final TableTracker tableTracker = TableTracker.INSTANCE;
 
     @Override
     public int getPriority() {
@@ -28,38 +28,26 @@ public class CurricularDrawReplacer implements IReplacer {
     @Override
     public void replace() throws IOException {
 
-        Map<String, List<CC>> ccPerPeriod = CCList.INSTANCE.getList()
+        Map<String, List<CC>> ccPerPeriod = CCManager.INSTANCE.getList()
                 .stream()
                 .collect(Collectors.groupingBy(
                         CC::period,
                         TreeMap::new,
                         Collectors.toList()
                 ));
-        try (XWPFDocument doc = new XWPFDocument(new FileInputStream(DocumentHelper.INSTANCE.getTempPath().toFile()))) {
+        try (XWPFDocument doc = new XWPFDocument(new FileInputStream(DocumentManager.INSTANCE.getTempPath().toFile()))) {
 
-            XWPFParagraph paragraph = ParagraphHelper.find(doc, "@@desenho_curricular@@");
+            XWPFParagraph paragraph = documentCursor.find(doc, "@@desenho_curricular@@");
 
             if (paragraph != null) {
-                try (var dcDoc = new XWPFDocument(DocumentHelper.loadResourceStream("tabela_desenho_curricular.docx"))) {
-
-                    CTTbl xmlTblToCopy = dcDoc.getTables().getFirst().getCTTbl();
-                    try (XmlCursor insertCursor = paragraph.getCTP().newCursor()) {
-                        XWPFTable newTable = doc.insertNewTbl(insertCursor);
-                        newTable.getCTTbl().set(xmlTblToCopy.copy());
-                        XWPFParagraph tempP = doc.insertNewParagraph(newTable.getCTTbl().newCursor());
-                        insertCursor.toCursor(tempP.getCTP().newCursor());
-                    }
-
-                    int pos = doc.getPosOfParagraph(paragraph);
-                    doc.removeBodyElement(pos);
-                }
+                TableHelper.copySimpleTbl(doc, paragraph, "tabela_desenho_curricular.docx");
             }
 
             commit(doc);
         }
 
-        try (var doc = new XWPFDocument(new FileInputStream(DocumentHelper.INSTANCE.getTempPath().toFile()))) {
-            XWPFTable table = doc.getTableArray(tableLocationHelper.getValue());
+        try (var doc = new XWPFDocument(new FileInputStream(DocumentManager.INSTANCE.getTempPath().toFile()))) {
+            XWPFTable table = doc.getTableArray(tableTracker.getValue());
 
             for (var entry : ccPerPeriod.entrySet()) {
                 List<CC> ccs = entry.getValue();

@@ -8,7 +8,7 @@ import lombok.Getter;
 import java.util.ArrayList;
 import java.util.List;
 
-public enum CCList {
+public enum CCManager {
 
     INSTANCE;
 
@@ -22,7 +22,7 @@ public enum CCList {
 
     private final List<CC> list;
 
-    CCList() {
+    CCManager() {
         this.list = new ArrayList<>();
     }
 

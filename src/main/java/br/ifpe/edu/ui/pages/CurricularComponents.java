@@ -4,8 +4,8 @@ import br.ifpe.edu.models.CC;
 import br.ifpe.edu.models.enums.CCType;
 import br.ifpe.edu.models.enums.CourseLevel;
 import br.ifpe.edu.readers.CNCTReader;
-import br.ifpe.edu.services.CCList;
-import br.ifpe.edu.services.PlaceholderList;
+import br.ifpe.edu.services.CCManager;
+import br.ifpe.edu.services.PlaceholderManager;
 import br.ifpe.edu.ui.components.*;
 import br.ifpe.edu.ui.components.TextField;
 import br.ifpe.edu.utils.Eval;
@@ -18,7 +18,7 @@ import java.awt.event.KeyEvent;
 
 public class CurricularComponents extends Page implements IValidatable, ISubmittable {
 
-    private final PlaceholderList placeholderList = PlaceholderList.INSTANCE;
+    private final PlaceholderManager placeholderManager = PlaceholderManager.INSTANCE;
 
     private final TextField codeField = new TextField(15);
     private final TextField ccField = new TextField(30);
@@ -54,7 +54,7 @@ public class CurricularComponents extends Page implements IValidatable, ISubmitt
 
     private final JTable table = new JTable(tableModel);
 
-    private final CCList ccList = CCList.INSTANCE;
+    private final CCManager ccManager = CCManager.INSTANCE;
 
     public  CurricularComponents() {
         setupLayout();
@@ -158,7 +158,7 @@ public class CurricularComponents extends Page implements IValidatable, ISubmitt
         });
 
 
-        ccList.add(newCC);
+        ccManager.add(newCC);
 
         clearFields();
         updatePrereqCoreqBoxes();
@@ -202,7 +202,7 @@ public class CurricularComponents extends Page implements IValidatable, ISubmitt
         if (selectedRow >= 0) {
             String nameToDelete = (String) tableModel.getValueAt(selectedRow, 1);
             tableModel.removeRow(selectedRow);
-            ccList.remove(nameToDelete);
+            ccManager.remove(nameToDelete);
             updatePrereqCoreqBoxes();
         }
     }
@@ -215,43 +215,43 @@ public class CurricularComponents extends Page implements IValidatable, ISubmitt
     @Override
     public void onSubmit() {
 
-        var sumMandatory = ccList.getSum(ccList.getList(), CCType.MANDATORY);
+        var sumMandatory = ccManager.getSum(ccManager.getList(), CCType.MANDATORY);
         var sumMandatoryTotal = Eval.evalDecimal("%s+%s",  sumMandatory.getTotalHr(), sumMandatory.getTotalExt());
 
-        var sumOptional = ccList.getSum(ccList.getList(), CCType.OPTIONAL);
+        var sumOptional = ccManager.getSum(ccManager.getList(), CCType.OPTIONAL);
         var sumOptionalTotal = Eval.evalDecimal("%s+%s",  sumOptional.getTotalHr(), sumOptional.getTotalExt());
 
-        var ca = placeholderList.getValue("carga_horaria_atividades_complementares_hr");
-        var internship = placeholderList.getValue("carga_horaria_estagio_supervisionado_hr");
+        var ca = placeholderManager.getValue("carga_horaria_atividades_complementares_hr");
+        var internship = placeholderManager.getValue("carga_horaria_estagio_supervisionado_hr");
 
-        placeholderList.addPlaceholder("ch_obrigatorios_hr", sumMandatoryTotal);
-        placeholderList.addPlaceholder("ch_optativos_hr", sumOptionalTotal);
+        placeholderManager.addPlaceholder("ch_obrigatorios_hr", sumMandatoryTotal);
+        placeholderManager.addPlaceholder("ch_optativos_hr", sumOptionalTotal);
 
         var totalSum = Eval.evalDecimal("%s+%s+%s", ca, sumOptionalTotal, sumMandatoryTotal);
-        placeholderList.addPlaceholder("cht",totalSum);
-        placeholderList.addPlaceholder("cht_ha", Eval.evalDecimal("(%s*60)/45", totalSum));
+        placeholderManager.addPlaceholder("cht",totalSum);
+        placeholderManager.addPlaceholder("cht_ha", Eval.evalDecimal("(%s*60)/45", totalSum));
         var trueTotal =  Eval.evalDecimal("%s+%s", totalSum, internship);
-        placeholderList.addPlaceholder("cht_e_estagio", trueTotal);
+        placeholderManager.addPlaceholder("cht_e_estagio", trueTotal);
 
         var sumMandatoryPer = Eval.evalDecimal("%s*100/%s", sumMandatoryTotal, trueTotal);
         var sumOptionalPer = Eval.evalDecimal("%s*100/%s", sumOptionalTotal, trueTotal);
         var caPer = Eval.evalDecimal("%s*100/%s", ca, trueTotal);
         var internshipPer = Eval.evalDecimal("%s*100/%s", internship, trueTotal);
 
-        placeholderList.addPlaceholder("ch_obrigatorios_per", sumMandatoryPer);
-        placeholderList.addPlaceholder("ch_optativos_per", sumOptionalPer);
-        placeholderList.addPlaceholder("carga_horaria_estagio_supervisionado_per", internshipPer);
-        placeholderList.addPlaceholder("carga_horaria_atividades_complementares_per", caPer);
+        placeholderManager.addPlaceholder("ch_obrigatorios_per", sumMandatoryPer);
+        placeholderManager.addPlaceholder("ch_optativos_per", sumOptionalPer);
+        placeholderManager.addPlaceholder("carga_horaria_estagio_supervisionado_per", internshipPer);
+        placeholderManager.addPlaceholder("carga_horaria_atividades_complementares_per", caPer);
     }
     
     @Override
     public int check() {
         final CNCTReader cnctReader = CNCTReader.INSTANCE;
-        String totalCht = placeholderList.getValue("cht_e_estagio");
-        String typeCourse =  placeholderList.getValue("nivel");
+        String totalCht = placeholderManager.getValue("cht_e_estagio");
+        String typeCourse =  placeholderManager.getValue("nivel");
 
         if (CourseLevel.TECHNOLOGIST.getLabel().equals(typeCourse)) {
-            String courseName = placeholderList.getValue("nome_do_curso");
+            String courseName = placeholderManager.getValue("nome_do_curso");
             String recommendedCht = cnctReader.getHoursByName(courseName);
             if (Eval.evalBoolean("%s<%s", totalCht, recommendedCht)) {
                 return JOptionPane.showConfirmDialog(

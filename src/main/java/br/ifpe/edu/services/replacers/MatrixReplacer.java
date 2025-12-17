@@ -1,14 +1,13 @@
 package br.ifpe.edu.services.replacers;
 
-import br.ifpe.edu.services.CCList;
-import br.ifpe.edu.helpers.TableLocationHelper;
-import br.ifpe.edu.helpers.DocumentHelper;
-import br.ifpe.edu.helpers.ParagraphHelper;
+import br.ifpe.edu.helpers.TableHelper;
+import br.ifpe.edu.services.CCManager;
+import br.ifpe.edu.helpers.TableTracker;
+import br.ifpe.edu.services.DocumentManager;
+import br.ifpe.edu.services.DocumentCursor;
 import br.ifpe.edu.models.CC;
 import br.ifpe.edu.models.enums.CCType;
 import org.apache.poi.xwpf.usermodel.*;
-import org.apache.xmlbeans.XmlCursor;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTbl;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -25,8 +24,9 @@ public class MatrixReplacer implements IReplacer {
         return 20;
     }
 
-    private final CCList list = CCList.INSTANCE;
-    private final TableLocationHelper tableLocationHelper = TableLocationHelper.INSTANCE;
+    private final DocumentCursor documentCursor = DocumentCursor.INSTANCE;
+    private final CCManager list = CCManager.INSTANCE;
+    private final TableTracker tableTracker = TableTracker.INSTANCE;
 
     @Override
     public void replace() throws IOException {
@@ -39,35 +39,18 @@ public class MatrixReplacer implements IReplacer {
                         TreeMap::new,
                         Collectors.toList()
                 ));
-        try (XWPFDocument doc = new XWPFDocument(new FileInputStream(DocumentHelper.INSTANCE.getTempPath().toFile()))) {
-
-            XWPFParagraph paragraph = ParagraphHelper.find(doc, "@@matriz_curricular@@");
+        try (XWPFDocument doc = new XWPFDocument(new FileInputStream(DocumentManager.INSTANCE.getTempPath().toFile()))) {
+            XWPFParagraph paragraph = documentCursor.find(doc, "@@matriz_curricular@@");
 
             if (paragraph != null) {
-                try (var matrixDoc = new XWPFDocument(DocumentHelper.loadResourceStream("tabela_matriz_curricular.docx"))) {
-
-                    CTTbl xmlTblToCopy = matrixDoc.getTables().getFirst().getCTTbl();
-
-                    try (XmlCursor insertCursor = paragraph.getCTP().newCursor()) {
-                        for (var _ : ccPerPeriod.entrySet()) {
-                            XWPFTable newTable = doc.insertNewTbl(insertCursor);
-                            newTable.getCTTbl().set(xmlTblToCopy.copy());
-                            XWPFParagraph tempP = doc.insertNewParagraph(newTable.getCTTbl().newCursor());
-                            insertCursor.toCursor(tempP.getCTP().newCursor());
-                        }
-                    }
-
-                    int pos = doc.getPosOfParagraph(paragraph);
-                    doc.removeBodyElement(pos);
-                }
+                TableHelper.copySimpleTbl(doc, paragraph, "tabela_matriz_curricular.docx", ccPerPeriod.size());
             }
 
             commit(doc);
-
         }
 
-        try (XWPFDocument doc = new XWPFDocument(new FileInputStream(DocumentHelper.INSTANCE.getTempPath().toFile()))) {
-            var table = doc.getTableArray(tableLocationHelper.getValue());
+        try (XWPFDocument doc = new XWPFDocument(new FileInputStream(DocumentManager.INSTANCE.getTempPath().toFile()))) {
+            var table = doc.getTableArray(tableTracker.getValue());
 
             for (var entry : ccPerPeriod.entrySet()) {
                 List<CC> ccs = entry.getValue();
@@ -105,7 +88,7 @@ public class MatrixReplacer implements IReplacer {
                 lastRow.getCell(1).setText(sum.getTotalHa());
                 lastRow.getCell(2).setText(sum.getTotalHr());
                 lastRow.getCell(3).setText(sum.getTotalExt());
-                table = doc.getTableArray(tableLocationHelper.nextTable());
+                table = doc.getTableArray(tableTracker.nextTable());
             }
 
             commit(doc);

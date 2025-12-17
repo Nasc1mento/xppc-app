@@ -1,4 +1,4 @@
-package br.ifpe.edu.helpers;
+package br.ifpe.edu.services;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +13,7 @@ import java.nio.file.StandardCopyOption;
 
 @Slf4j
 @Getter
-public enum DocumentHelper {
+public enum DocumentManager {
 
     INSTANCE;
 

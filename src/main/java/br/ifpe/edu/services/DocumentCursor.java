@@ -1,23 +1,24 @@
-package br.ifpe.edu.helpers;
+package br.ifpe.edu.services;
 
+import br.ifpe.edu.helpers.TableTracker;
 import org.apache.poi.xwpf.usermodel.*;
 
 import java.util.List;
 
 
-public class ParagraphHelper {
+public enum DocumentCursor {
 
-    private static int lastBodyElIndex = 0;
-    private static int lastTableCount = 0;
+    INSTANCE;
 
-    private static final TableLocationHelper tblHelper = TableLocationHelper.INSTANCE;
+    private int lastBodyElIndex = 0;
+    private int lastTableCount = 0;
 
-    private ParagraphHelper() {}
+    private final TableTracker tblTracker = TableTracker.INSTANCE;
 
-    public static XWPFParagraph find(XWPFDocument doc, String placeholder) {
+    public XWPFParagraph find(final XWPFDocument doc, final String placeholder) {
         final List<IBodyElement> bodyElements = doc.getBodyElements();
         int currentTableCount = lastTableCount;
-        int tablesToSkip = tblHelper.getValue();
+        int tablesToSkip = tblTracker.getValue();
 
         for (int i = lastBodyElIndex; i < bodyElements.size(); i++) {
             IBodyElement el = bodyElements.get(i);
@@ -31,7 +32,7 @@ public class ParagraphHelper {
                 if (text != null && text.contains(placeholder) && currentTableCount >= tablesToSkip) {
                     lastBodyElIndex = i + 1;
                     lastTableCount = currentTableCount;
-                    tblHelper.getCounter().set(currentTableCount);
+                    tblTracker.getCounter().set(currentTableCount);
                     return p;
                 }
             }
@@ -40,20 +41,10 @@ public class ParagraphHelper {
         return null;
     }
 
-    public static void reset() {
+    public void reset() {
         lastBodyElIndex = 0;
         lastTableCount = 0;
+        tblTracker.reset();
     }
 
-    public static void setTextNBreak(XWPFRun run, String text) {
-        if (text != null) {
-            String[] lines = text.split("\n");
-            for (int i = 0; i < lines.length; i++) {
-                run.setText(lines[i]);
-                if (i < lines.length - 1) {
-                    run.addBreak();
-                }
-            }
-        }
-    }
 }

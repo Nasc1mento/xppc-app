@@ -5,7 +5,7 @@ import lombok.Getter;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Getter
-public enum TableLocationHelper {
+public enum TableTracker {
 
     INSTANCE;
 
@@ -19,7 +19,7 @@ public enum TableLocationHelper {
         return counter.get();
     }
 
-    public void setValue(int value) {
+    public void setValue(final int value) {
         counter.set(value);
     }
 

@@ -31,14 +31,14 @@ public class CNCTReader extends AbstractCSVReader {
         return getAllFromA(Columns.NAME.index);
     }
 
-    public String getHoursByName(String name) {
+    public String getHoursByName(final String name) {
         return getAFromB(
                         Columns.NAME.index, name, Columns.MINIMUM_SUM_OF_CREDIT_HOURS.index
                 ).split(" ")[0].replaceAll("\\D+", "");
 
     }
 
-    public String getAxisByName(String name) {
+    public String getAxisByName(final String name) {
         return getAFromB(Columns.NAME.index, name, Columns.AXIS.index);
     }
 }

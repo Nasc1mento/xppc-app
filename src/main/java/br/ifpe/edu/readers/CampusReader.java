@@ -34,7 +34,7 @@ public class CampusReader extends AbstractCSVReader {
         return getAllFromA(Columns.NAME.ordinal());
     }
 
-    public String getByNameAndColumn(String name, Columns column) {
+    public String getByNameAndColumn(final String name, final Columns column) {
         return getAFromB(Columns.NAME.ordinal(), name, column.ordinal());
     }
 }

@@ -1,10 +1,10 @@
 package br.ifpe.edu.services.replacers;
 
-import br.ifpe.edu.services.CCList;
+import br.ifpe.edu.services.CCManager;
 import br.ifpe.edu.utils.Eval;
-import br.ifpe.edu.helpers.TableLocationHelper;
-import br.ifpe.edu.helpers.DocumentHelper;
-import br.ifpe.edu.helpers.ParagraphHelper;
+import br.ifpe.edu.helpers.TableTracker;
+import br.ifpe.edu.services.DocumentManager;
+import br.ifpe.edu.services.DocumentCursor;
 import br.ifpe.edu.models.CC;
 import br.ifpe.edu.models.enums.CCType;
 import org.apache.poi.xwpf.usermodel.*;
@@ -16,8 +16,9 @@ import java.util.List;
 
 public class CurricularFormReplacer implements IReplacer {
 
-    private final TableLocationHelper tableLocationHelper = TableLocationHelper.INSTANCE;
-    private final List<CC> ccList = CCList.INSTANCE.getList();
+    private final DocumentCursor documentCursor = DocumentCursor.INSTANCE;
+    private final TableTracker tableTracker = TableTracker.INSTANCE;
+    private final List<CC> ccList = CCManager.INSTANCE.getList();
 
     @Override
     public int getPriority() {
@@ -27,13 +28,13 @@ public class CurricularFormReplacer implements IReplacer {
     @Override
     public void replace() throws IOException {
         try (
-                var doc = new XWPFDocument(new FileInputStream(DocumentHelper.INSTANCE.getTempPath().toFile()))
+                var doc = new XWPFDocument(new FileInputStream(DocumentManager.INSTANCE.getTempPath().toFile()))
         ) {
 
-            XWPFParagraph paragraph = ParagraphHelper.find(doc, "@@formulario_componentes_curriculares@@");
+            XWPFParagraph paragraph = documentCursor.find(doc, "@@formulario_componentes_curriculares@@");
 
             if (paragraph != null) {
-                try (var ccFormDoc = new XWPFDocument(DocumentHelper.loadResourceStream("formulario_componente_curricular.docx"))) {
+                try (var ccFormDoc = new XWPFDocument(DocumentManager.loadResourceStream("formulario_componente_curricular.docx"))) {
                     for (var _ : ccList) {
                         try (XmlCursor insertCursor = paragraph.getCTP().newCursor()) {
                             for (IBodyElement element : ccFormDoc.getBodyElements().reversed()) {
@@ -60,11 +61,11 @@ public class CurricularFormReplacer implements IReplacer {
             commit(doc);
         }
 
-        try (var doc = new XWPFDocument(new FileInputStream(DocumentHelper.INSTANCE.getTempPath().toFile()))) {
-            var table = doc.getTableArray(tableLocationHelper.getValue());
+        try (var doc = new XWPFDocument(new FileInputStream(DocumentManager.INSTANCE.getTempPath().toFile()))) {
+            var table = doc.getTableArray(tableTracker.getValue());
             for (var cc : ccList) {
                 table.getRows().getFirst().getCell(0).setText("X");
-                table = doc.getTableArray(tableLocationHelper.nextTable());
+                table = doc.getTableArray(tableTracker.nextTable());
 
                 if (CCType.MANDATORY.equals(cc.type())) {
                     table.getRows().getFirst().getCell(0).setText("X");
@@ -74,7 +75,7 @@ public class CurricularFormReplacer implements IReplacer {
                     table.getRows().getFirst().getCell(4).setText("X");
                 }
 
-                table = doc.getTableArray(tableLocationHelper.nextTable());
+                table = doc.getTableArray(tableTracker.nextTable());
 
                 XWPFTableRow row = table.getRows().getLast();
                 row.getCell(0).setText(cc.name());
@@ -87,13 +88,13 @@ public class CurricularFormReplacer implements IReplacer {
                 row.getCell(6).setText(Eval.evalDecimal("%s+%s", cc.hr(), cc.ext()));
                 row.getCell(7).setText(cc.period() + "°");
 
-                table = doc.getTableArray(tableLocationHelper.nextTable());
+                table = doc.getTableArray(tableTracker.nextTable());
 
                 row = table.getRows().getFirst();
                 row.getCell(0).getParagraphs().getFirst().createRun().setText(cc.prereq() == null ? "Não há" : cc.prereq());
                 row.getCell(1).getParagraphs().getFirst().createRun().setText(cc.coreq() == null ? "Não há" : cc.coreq());
 
-                table = doc.getTableArray(tableLocationHelper.getCounter().addAndGet(6));
+                table = doc.getTableArray(tableTracker.getCounter().addAndGet(6));
             }
             commit(doc);
         }

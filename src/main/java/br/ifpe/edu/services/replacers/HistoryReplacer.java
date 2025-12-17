@@ -1,9 +1,9 @@
 package br.ifpe.edu.services.replacers;
 
-import br.ifpe.edu.services.PlaceholderList;
+import br.ifpe.edu.services.PlaceholderManager;
 import br.ifpe.edu.readers.CampusReader;
-import br.ifpe.edu.helpers.DocumentHelper;
-import br.ifpe.edu.helpers.ParagraphHelper;
+import br.ifpe.edu.services.DocumentManager;
+import br.ifpe.edu.services.DocumentCursor;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.xmlbeans.XmlCursor;
@@ -14,9 +14,8 @@ import java.net.URL;
 
 public class HistoryReplacer implements IReplacer {
 
-
-
-    private final PlaceholderList placeholderList = PlaceholderList.INSTANCE;
+    private final DocumentCursor documentCursor = DocumentCursor.INSTANCE;
+    private final PlaceholderManager placeholderManager = PlaceholderManager.INSTANCE;
     private final CampusReader campusReader = CampusReader.INSTANCE;
 
     @Override
@@ -26,19 +25,19 @@ public class HistoryReplacer implements IReplacer {
 
     @Override
     public void replace() throws IOException {
-        try (var doc = new XWPFDocument(new FileInputStream(DocumentHelper.INSTANCE.getTempPath().toFile()))) {
+        try (var doc = new XWPFDocument(new FileInputStream(DocumentManager.INSTANCE.getTempPath().toFile()))) {
 
-            XWPFParagraph placeholderParagraph = ParagraphHelper.find(doc, "@@historico_do_campus@@");
+            XWPFParagraph placeholderParagraph = documentCursor.find(doc, "@@historico_do_campus@@");
 
             if (placeholderParagraph != null) {
                 String historyFileName = campusReader.getByNameAndColumn(
-                        placeholderList.getValue("campus"), CampusReader.Columns.HISTORY
+                        placeholderManager.getValue("campus"), CampusReader.Columns.HISTORY
                 ) + ".docx";
 
                 URL historyPath = Thread.currentThread().getContextClassLoader().getResource(historyFileName);
 
                 if (historyPath != null) {
-                    try (var historyDoc = new XWPFDocument(DocumentHelper.loadResourceStream(historyFileName))) {
+                    try (var historyDoc = new XWPFDocument(DocumentManager.loadResourceStream(historyFileName))) {
 
                         try (XmlCursor cursor = placeholderParagraph.getCTP().newCursor()) {
                             for (XWPFParagraph pHistory : historyDoc.getParagraphs()) {

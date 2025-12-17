@@ -1,7 +1,7 @@
 package br.ifpe.edu.ui.pages;
 
 
-import br.ifpe.edu.services.PlaceholderList;
+import br.ifpe.edu.services.PlaceholderManager;
 import br.ifpe.edu.readers.CampusReader;
 import br.ifpe.edu.ui.components.ComboBox;
 import br.ifpe.edu.ui.components.ISubmittable;
@@ -13,7 +13,6 @@ import java.awt.*;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Map;
-import java.util.Objects;
 
 public class Proponent extends Page implements ISubmittable {
 
@@ -30,7 +29,7 @@ public class Proponent extends Page implements ISubmittable {
     private final ComboBox<String> campusBox = new ComboBox<>();
 
     private final CampusReader campusReader = CampusReader.INSTANCE;
-    private final PlaceholderList placeholderList = PlaceholderList.INSTANCE;
+    private final PlaceholderManager placeholderManager = PlaceholderManager.INSTANCE;
 
     public Proponent() {
         setupComboBoxes();
@@ -88,15 +87,15 @@ public class Proponent extends Page implements ISubmittable {
 
     @Override
     public void onSubmit() {
-        placeholderList.addPlaceholder("campus", campusBox.getStringValue());
-        placeholderList.addPlaceholder("cnpj", cnpjField.getText());
-        placeholderList.addPlaceholder("cidade",cityField.getText());
-        placeholderList.addPlaceholder("cidade_uf_cep", String.format("%s, PE, %s, %s", cityField.getText(), neighbourhoodField.getText(), cepField.getText()));
-        placeholderList.addPlaceholder("rua_numero", String.format("%s, %s", streetField.getText(), numberField.getText()));
-        placeholderList.addPlaceholder("telefone", telephoneNumberField.getText());
-        placeholderList.addPlaceholder("email", emailField.getText());
-        placeholderList.addPlaceholder("ato_legal_de_criacao", aldcField.getText());
-        placeholderList.addPlaceholder("sitio", websiteField.getText());
-        placeholderList.addPlaceholder("ano", ZonedDateTime.now(ZoneId.of("America/Recife")).getYear());
+        placeholderManager.addPlaceholder("campus", campusBox.getStringValue());
+        placeholderManager.addPlaceholder("cnpj", cnpjField.getText());
+        placeholderManager.addPlaceholder("cidade",cityField.getText());
+        placeholderManager.addPlaceholder("cidade_uf_cep", String.format("%s, PE, %s, %s", cityField.getText(), neighbourhoodField.getText(), cepField.getText()));
+        placeholderManager.addPlaceholder("rua_numero", String.format("%s, %s", streetField.getText(), numberField.getText()));
+        placeholderManager.addPlaceholder("telefone", telephoneNumberField.getText());
+        placeholderManager.addPlaceholder("email", emailField.getText());
+        placeholderManager.addPlaceholder("ato_legal_de_criacao", aldcField.getText());
+        placeholderManager.addPlaceholder("sitio", websiteField.getText());
+        placeholderManager.addPlaceholder("ano", ZonedDateTime.now(ZoneId.of("America/Recife")).getYear());
     }
 }

@@ -1,14 +1,13 @@
 package br.ifpe.edu.services.replacers;
 
-import br.ifpe.edu.services.CCList;
-import br.ifpe.edu.helpers.TableLocationHelper;
-import br.ifpe.edu.helpers.DocumentHelper;
-import br.ifpe.edu.helpers.ParagraphHelper;
+import br.ifpe.edu.helpers.TableHelper;
+import br.ifpe.edu.services.CCManager;
+import br.ifpe.edu.helpers.TableTracker;
+import br.ifpe.edu.services.DocumentManager;
+import br.ifpe.edu.services.DocumentCursor;
 import br.ifpe.edu.models.CC;
 import br.ifpe.edu.models.enums.CCType;
 import org.apache.poi.xwpf.usermodel.*;
-import org.apache.xmlbeans.XmlCursor;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTbl;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -16,43 +15,31 @@ import java.util.List;
 
 public class OptionalComponentsReplacer implements  IReplacer {
 
+    private final DocumentCursor documentCursor = DocumentCursor.INSTANCE;
+    private final List<CC> list = CCManager.INSTANCE.getList();
+    private final TableTracker tableTracker = TableTracker.INSTANCE;
+
     @Override
     public int getPriority() {
         return 30;
     }
 
-    private final List<CC> list = CCList.INSTANCE.getList();
-    private final TableLocationHelper tableLocationHelper = TableLocationHelper.INSTANCE;
-
     @Override
     public void replace() throws IOException {
 
        var optionalComponents = list.stream().filter(c -> CCType.OPTIONAL.equals(c.type())).toList();
-        try (XWPFDocument doc = new XWPFDocument(new FileInputStream(DocumentHelper.INSTANCE.getTempPath().toFile()))) {
-
-            XWPFParagraph paragraph = ParagraphHelper.find(doc, "@@componentes_optativos@@");
+        try (XWPFDocument doc = new XWPFDocument(new FileInputStream(DocumentManager.INSTANCE.getTempPath().toFile()))) {
+            XWPFParagraph paragraph = documentCursor.find(doc, "@@componentes_optativos@@");
 
             if (paragraph != null) {
-                try (var dcDoc = new XWPFDocument(DocumentHelper.loadResourceStream("tabela_componentes_optativos_e_eletivos.docx"))) {
-                    CTTbl xmlTblToCopy = dcDoc.getTables().getFirst().getCTTbl();
-
-                    try (XmlCursor insertCursor = paragraph.getCTP().newCursor()) {
-                        XWPFTable newTable = doc.insertNewTbl(insertCursor);
-                        newTable.getCTTbl().set(xmlTblToCopy.copy());
-                        XWPFParagraph tempP = doc.insertNewParagraph(newTable.getCTTbl().newCursor());
-                        insertCursor.toCursor(tempP.getCTP().newCursor());
-                    }
-
-                    int pos = doc.getPosOfParagraph(paragraph);
-                    doc.removeBodyElement(pos);
-                }
+                TableHelper.copySimpleTbl(doc, paragraph, "tabela_componentes_optativos_e_eletivos.docx");
             }
 
             commit(doc);
         }
 
-        try (var doc = new XWPFDocument(new FileInputStream(DocumentHelper.INSTANCE.getTempPath().toFile()))) {
-            XWPFTable table = doc.getTableArray(tableLocationHelper.getValue());
+        try (var doc = new XWPFDocument(new FileInputStream(DocumentManager.INSTANCE.getTempPath().toFile()))) {
+            XWPFTable table = doc.getTableArray(tableTracker.getValue());
 
                 for (CC cc : optionalComponents) {
                     XWPFTableRow currentRow = table.getRows().getLast();
@@ -72,7 +59,7 @@ public class OptionalComponentsReplacer implements  IReplacer {
                 }
 
             table.removeRow(1);
-            tableLocationHelper.nextTable();
+            tableTracker.nextTable();
 
             commit(doc);
         }

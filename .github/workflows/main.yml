@@ -42,6 +42,19 @@ jobs:
       - name: windows zip compress
         run: Compress-Archive -Path dist/xppc -DestinationPath "xppc-windows-${{ env.APP_VERSION }}.zip"
 
+      - name: Bundle Source Code
+        shell: bash
+        run: |
+          git archive --format=zip --output="xppc-source-${{ env.APP_VERSION }}.zip" HEAD
+
+      - name: Generate Hashes
+        shell: bash
+        run: |
+          sha256sum "xppc-windows-${{ env.APP_VERSION }}.zip" > checksums.txt
+          sha256sum "xppc-source-${{ env.APP_VERSION }}.zip" >> checksums.txt
+          (cd build/libs && sha256sum "xppc-${{ env.APP_VERSION }}-all.jar") >> checksums.txt
+          cat checksums.txt
+
       - name: create release
         shell: bash
         env:
@@ -49,14 +62,8 @@ jobs:
         run: |
           gh release create "v${{ env.APP_VERSION }}" \
             "xppc-windows-${{ env.APP_VERSION }}.zip" \
+            "xppc-source-${{ env.APP_VERSION }}.zip" \
             "build/libs/xppc-${{ env.APP_VERSION }}-all.jar" \
+            "checksums.txt" \
             --title "XPPC ${{ env.APP_VERSION }}" \
             --generate-notes
-
-      - name: Generate Hashes
-        shell: bash
-        run: |
-          sha256sum "xppc-windows-${{ env.APP_VERSION }}.zip" > checksums.txt
-          sha256sum "build/libs/xppc-${{ env.APP_VERSION }}-all.jar" >> checksums.txt
-          echo "generated hashes:"
-          cat checksums.txt

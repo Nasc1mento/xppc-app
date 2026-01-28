@@ -47,5 +47,6 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release create "${{ env.APP_VERSION }}" "xppc-windows-${{ env.APP_VERSION }}.zip" \
+          gh release create "v${{ env.APP_VERSION }}" "xppc-windows-${{ env.APP_VERSION }}.zip" \
             --title "XPPC ${{ env.APP_VERSION }}" \
+            --generate-notes

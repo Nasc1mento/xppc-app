@@ -39,7 +39,7 @@ jobs:
             --type app-image \
             --dest dist
 
-      - name: zip release
+      - name: windows zip compress
         run: Compress-Archive -Path dist/xppc -DestinationPath "xppc-windows-${{ env.APP_VERSION }}.zip"
 
       - name: create release
@@ -47,6 +47,16 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release create "v${{ env.APP_VERSION }}" "xppc-windows-${{ env.APP_VERSION }}.zip" \
+          gh release create "v${{ env.APP_VERSION }}" \
+            "xppc-windows-${{ env.APP_VERSION }}.zip" \
+            "build/libs/xppc-${{ env.APP_VERSION }}-all.jar" \
             --title "XPPC ${{ env.APP_VERSION }}" \
             --generate-notes
+
+      - name: Generate Hashes
+        shell: bash
+        run: |
+          sha256sum "xppc-windows-${{ env.APP_VERSION }}.zip" > checksums.txt
+          sha256sum "build/libs/xppc-${{ env.APP_VERSION }}-all.jar" >> checksums.txt
+          echo "generated hashes:"
+          cat checksums.txt

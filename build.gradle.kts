@@ -16,6 +16,7 @@ java {
 
 application {
     mainClass.set("br.edu.ifpe.launcher.AppMain")
+
 }
 
 repositories {
@@ -59,7 +60,14 @@ tasks.withType<ProcessResources> {
                 "shortname" to "xPPC",
                 "version" to version
             ),
+        )
+    }
+}
 
-            )
+tasks.shadowJar {
+    manifest {
+        attributes(
+            "SplashScreen-Image" to "loading.gif"
+        )
     }
 }

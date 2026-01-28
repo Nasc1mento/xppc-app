@@ -7,27 +7,6 @@ plugins {
 group = "br.edu.ifpe"
 version = libs.versions.app.version.get()
 
-
-tasks.register("xPPCVersion") {
-    doLast {
-        println(version)
-    }
-}
-
-
-tasks.withType<ProcessResources> {
-    filesMatching("**/application.properties") {
-        expand(
-            mapOf(
-                "name" to "xPPC - Aplicação para Geração Automatizada de Projetos Pedagógicos de Cursos Superiores do IFPE",
-                "shortname" to "xPPC",
-                "version" to version
-            ),
-
-        )
-    }
-}
-
 java {
     toolchain {
         languageVersion.set(JavaLanguageVersion.of(libs.versions.java.get()))
@@ -63,4 +42,24 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+}
+
+tasks.register("xPPCVersion") {
+    doLast {
+        println(version)
+    }
+}
+
+
+tasks.withType<ProcessResources> {
+    filesMatching("**/application.properties") {
+        expand(
+            mapOf(
+                "name" to "xPPC - Aplicação para Geração Automatizada de Projetos Pedagógicos de Cursos Superiores do IFPE",
+                "shortname" to "xPPC",
+                "version" to version
+            ),
+
+            )
+    }
 }

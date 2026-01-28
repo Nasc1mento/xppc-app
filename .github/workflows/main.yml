@@ -1,4 +1,4 @@
-name: Publicar Release Windows
+name: release
 on:
   workflow_dispatch:
 
@@ -26,7 +26,7 @@ jobs:
         id: get_version
         shell: bash
         run: |
-          VERSION=$(./gradlew properties -q | grep "^version:" | awk '{print $2}')
+          VERSION=$(./gradlew -q xPPCVersion)
           echo "APP_VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: jpackage
@@ -35,7 +35,7 @@ jobs:
           jpackage --input build/libs \
             --name "xppc" \
             --main-jar "xppc-${{ env.APP_VERSION }}-all.jar" \
-            --main-class br.ifpe.edu.AppMain \
+            --main-class br.edu.ifpe.launcher.AppMain \
             --type app-image \
             --dest dist
 

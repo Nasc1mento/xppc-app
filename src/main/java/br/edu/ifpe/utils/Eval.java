@@ -8,6 +8,8 @@ import java.util.Map;
 
 public class Eval {
 
+    private Eval() {  }
+
     private static final JexlEngine JEXL_ENGINE = new JexlBuilder()
             .cache(512)
             .strict(true)
@@ -56,5 +58,4 @@ public class Eval {
         String expression = String.format(format, (Object[]) args);
         return eval(expression, Collections.emptyMap());
     }
-
 }

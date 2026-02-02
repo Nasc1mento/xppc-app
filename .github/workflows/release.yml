@@ -91,7 +91,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VERSION: ${{ needs.build-windows.outputs.app_version }}
         run: |
-          gh release create "v$VERSION" \
+          gh release create "v${{ env.APP_VERSION }}" \
             "artifacts/uberjar/"* \
             "artifacts/windows-installer/"* \
             "artifacts/windows-zip/"* \

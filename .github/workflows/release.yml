@@ -29,6 +29,7 @@ jobs:
         shell: bash
         run: |
           VERSION=$(./gradlew -q xPPCVersion)
+          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
           echo "APP_VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: upload uberjar
@@ -91,7 +92,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VERSION: ${{ needs.build-windows.outputs.app_version }}
         run: |
-          gh release create "v${{ env.APP_VERSION }}" \
+          gh release create "v$VERSION" \
             "artifacts/uberjar/"* \
             "artifacts/windows-installer/"* \
             "artifacts/windows-zip/"* \

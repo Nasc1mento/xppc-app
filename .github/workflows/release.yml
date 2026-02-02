@@ -48,7 +48,7 @@ jobs:
             --dest dist
 
       - name: windows zip compress
-        run: Compress-Archive -Path dist/xppc -DestinationPath "xppc-windows-${{ env.APP_VERSION }}.zip"
+        run: Compress-Archive -Path dist/xppc -DestinationPath "dist/xppc-windows-${{ env.APP_VERSION }}.zip"
 
       - name: upload windows zip
         uses: actions/upload-artifact@v4

@@ -8,6 +8,8 @@ permissions:
 jobs:
   build-windows:
     runs-on: windows-latest
+    outputs:
+      app_version: ${{ steps.get_version.outputs.VERSION }}
 
     steps:
       - uses: actions/checkout@v4

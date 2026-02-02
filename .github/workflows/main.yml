@@ -6,7 +6,7 @@ permissions:
   contents: write
 
 jobs:
-  release:
+  build-windows:
     runs-on: windows-latest
 
     steps:
@@ -29,7 +29,13 @@ jobs:
           VERSION=$(./gradlew -q xPPCVersion)
           echo "APP_VERSION=$VERSION" >> $GITHUB_ENV
 
-      - name: jpackage
+      - name: upload uberjar
+        uses: actions/upload-artifact@v4
+        with:
+          name: uberjar
+          path: build/libs/*-all.jar
+
+      - name: jpackage windows app image
         shell: bash
         run: |
           jpackage --input build/libs \
@@ -42,28 +48,50 @@ jobs:
       - name: windows zip compress
         run: Compress-Archive -Path dist/xppc -DestinationPath "xppc-windows-${{ env.APP_VERSION }}.zip"
 
-      - name: Bundle Source Code
-        shell: bash
-        run: |
-          git archive --format=zip --output="xppc-source-${{ env.APP_VERSION }}.zip" HEAD
+      - name: upload windows zip
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-zip
+          path: dist/*.zip
 
-      - name: Generate Hashes
+      - name: jpackage exe
         shell: bash
         run: |
-          sha256sum "xppc-windows-${{ env.APP_VERSION }}.zip" > checksums.txt
-          sha256sum "xppc-source-${{ env.APP_VERSION }}.zip" >> checksums.txt
-          (cd build/libs && sha256sum "xppc-${{ env.APP_VERSION }}-all.jar") >> checksums.txt
-          cat checksums.txt
+          jpackage --input build/libs \
+          --name "xppc" \
+          --main-jar "xppc-${{ env.APP_VERSION }}-all.jar" \
+          --main-class br.edu.ifpe.launcher.AppMain \
+          --type exe \
+          --win-dir-chooser \
+          --win-shortcut \
+          --dest dist
+
+      - name: upload windows exe
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-installer
+          path: dist/*.exe
+
+  release:
+    needs: [ build-windows ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: list artifacts
+        run: ls -R artifacts
 
       - name: create release
-        shell: bash
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ needs.build-windows.outputs.app_version }}
         run: |
-          gh release create "v${{ env.APP_VERSION }}" \
-            "xppc-windows-${{ env.APP_VERSION }}.zip" \
-            "xppc-source-${{ env.APP_VERSION }}.zip" \
-            "build/libs/xppc-${{ env.APP_VERSION }}-all.jar" \
-            "checksums.txt" \
-            --title "XPPC ${{ env.APP_VERSION }}" \
+          gh release create "v$VERSION" \
+            "artifacts/uberjar/"* \
+            "artifacts/windows-installer/"* \
+            "artifacts/windows-zip/"* \
+            --title "xPPC v$VERSION" \
             --generate-notes

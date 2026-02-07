@@ -9,8 +9,7 @@ import java.awt.*;
 
 
 public class Cover extends Page {
-
-    private final JLabel titleLabel = new JLabel("xPPC - Aplicação para Geração Automatizada de Projetos Pedagógicos de Cursos Superiores do IFPE");
+    private final JLabel titleLabel = new JLabel(AppConfig.getName());
     private final JButton aboutButton = new JButton();
     private final PeopleReader peopleReader = PeopleReader.INSTANCE;
 

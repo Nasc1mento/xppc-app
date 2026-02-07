@@ -8,6 +8,7 @@ public abstract class Page extends JPanel {
     protected final GridBagConstraints gbc;
 
     private final JPanel contentPanel;
+    private final JScrollPane scrollPane;
     private int row = 0;
 
     public Page() {
@@ -19,7 +20,7 @@ public abstract class Page extends JPanel {
         gbc.insets = new Insets(5, 10, 5, 10);
         gbc.anchor = GridBagConstraints.WEST;
 
-        var scrollPane = new JScrollPane(contentPanel);
+        scrollPane = new JScrollPane(contentPanel);
         scrollPane.getVerticalScrollBar().setUnitIncrement(16);
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
         add(scrollPane, BorderLayout.CENTER);
@@ -66,6 +67,12 @@ public abstract class Page extends JPanel {
         gbc.anchor = alignment;
         contentPanel.add(cs, gbc);
         row++;
+    }
+
+    protected void setOpaque() {
+        contentPanel.setOpaque(false);
+        scrollPane.setOpaque(false);
+        scrollPane.getViewport().setOpaque(false);
     }
 
     public abstract String getTitle();

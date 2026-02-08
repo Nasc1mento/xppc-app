@@ -9,6 +9,9 @@ Ferramenta feita Java para automação de Projetos Pedagógicos de Curso (PPC) n
 
 [![Figma](https://img.icons8.com/?size=100&id=zfHRZ6i1Wg0U&format=png&color=000000)](https://www.figma.com/design/Mg9WcQK2FczpZGs8tZHU7X/xPPC-Identidade-Visual?node-id=0-1&t=EWEkKjxoj9sAWkN1-1)
 
+## Publico alvo
+
+Coordenadores de curso, diretores de ensino, membros de Núcleos Docentes Estruturantes (NDE), gestores acadêmicos pertencentes aos campi do IFPE, comissões de criação e revisão de PPCs.
 
 ## Capturas de tela
 
@@ -26,3 +29,6 @@ Ferramenta feita Java para automação de Projetos Pedagógicos de Curso (PPC) n
 <img width="1920" height="1035" alt="Captura de imagem_20260207_222417" src="https://github.com/user-attachments/assets/18d0aba7-8579-49b9-84dd-2b3c295c5f8d" />
 <img width="1920" height="1035" alt="Captura de imagem_20260207_222431" src="https://github.com/user-attachments/assets/47312447-ec26-44bf-8880-96dc1d104549" />
 <img width="1920" height="1035" alt="Captura de imagem_20260207_222447" src="https://github.com/user-attachments/assets/29f59ae3-0e01-43a5-bd56-d57ebbc8d760" />
+<img width="530" height="308" alt="Captura de imagem_20260207_224223" src="https://github.com/user-attachments/assets/f5fb67fc-9558-4b69-ba56-b693e9b1a2ef" />
+<img width="530" height="308" alt="Captura de imagem_20260207_224346" src="https://github.com/user-attachments/assets/92baea56-dd83-4b8b-998e-4d140e41aa54" />
+

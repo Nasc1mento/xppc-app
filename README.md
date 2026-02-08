@@ -2,8 +2,7 @@
 
 ## Aplicação para geração automatizada de Projetos Pedagógicos de Curso do IFPE
 
-Ferramenta feita Java para automação de Projetos Pedagógicos de Curso (PPC) no IFPE. Utiliza formulários para receber dados do usuário, compilar e gerar um documento padronizado.
-
+Ferramenta feita em Java para automação de Projetos Pedagógicos de Curso (PPC) no IFPE. Utiliza formulários para receber dados do usuário, compilar e gerar um documento padronizado.
 
 ## Identidade visual
 

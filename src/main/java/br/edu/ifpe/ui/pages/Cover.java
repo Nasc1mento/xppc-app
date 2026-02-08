@@ -1,68 +1,30 @@
 package br.edu.ifpe.ui.pages;
 
 import br.edu.ifpe.config.AppConfig;
-import br.edu.ifpe.readers.PeopleReader;
 import br.edu.ifpe.ui.components.Page;
+import com.formdev.flatlaf.extras.FlatSVGIcon;
 import lombok.extern.slf4j.Slf4j;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
-import java.net.URL;
 
 
 @Slf4j
 public class Cover extends Page {
-    private final JLabel titleLabel = new JLabel(AppConfig.getName());
+    private final JLabel titleLabel = new JLabel(AppConfig.getShortname());
     private final JButton aboutButton = new JButton();
-    private final PeopleReader peopleReader = PeopleReader.INSTANCE;
 
-    private Image backgroundImage;
+    private FlatSVGIcon backgroundImage;
 
     public Cover() {
         setOpaque();
         setupBackgroundImage();
         setupLayout();
         setupLabels();
-        setupListener();
-    }
-
-    private void setupListener() {
-        aboutButton.addActionListener(_ -> {
-            var sb = new StringBuilder()
-                    .append("<html>")
-                    .append("<p><b>Versão:</b> ").append(AppConfig.getVersion()).append("</p>")
-                    .append("<hr>")
-                    .append("<p>").append(AppConfig.getName())
-                    .append("</p>")
-                    .append("<br>")
-                    .append("<p><b>Equipe</b></p>")
-                    .append("<hr>")
-                    .append("<ul>");
-
-            for (var person : peopleReader.get()) {
-                sb.append("<li><b>")
-                        .append(person[PeopleReader.Columns.NAME.getIndex()])
-                        .append("</b>: ")
-                        .append(person[PeopleReader.Columns.ROLE.getIndex()])
-                        .append("</li>");
-            }
-
-            sb.append("</ul></html>");
-
-
-            JOptionPane.showMessageDialog(
-                    this,
-                    sb.toString(),
-                    "Sobre",
-                    JOptionPane.INFORMATION_MESSAGE
-            );
-        });
     }
 
     private void setupLabels() {
-        titleLabel.setFont(titleLabel.getFont().deriveFont(Font.BOLD, 24f));
+        titleLabel.setFont(titleLabel.getFont().deriveFont(Font.BOLD, 20f));
     }
 
 
@@ -72,20 +34,23 @@ public class Cover extends Page {
 
         aboutButton.setIcon(UIManager.getIcon("OptionPane.questionIcon"));
 
-        addRow(titleLabel, aboutButton);
     }
 
-    // caso precise usar diversas imagens de fundo diferentes em lugares diferente, recomendo mover para a classe pai
+    // if you need to set background image in other pages, I recommend move this code to parent class
     private void setupBackgroundImage() {
-        String resourceName = "/if_transparente.png";
-
         try {
-            URL resource = getClass().getResource(resourceName);
-            if (resource != null) {
-                this.backgroundImage = ImageIO.read(resource);
-            }
-        } catch (IOException e) {
-            log.info("Failed to load background image: {}", resourceName);
+            FlatSVGIcon.ColorFilter filter = new FlatSVGIcon.ColorFilter( color -> {
+                if (color.equals(Color.BLACK)) {
+                    return UIManager.getColor("Label.foreground");
+                }
+                return color;
+            });
+
+            backgroundImage = new FlatSVGIcon("xppc.svg");
+            backgroundImage.setColorFilter(filter);
+
+        } catch (Exception e) {
+            log.info("Failed to load SVG: {}", e.getMessage());
         }
     }
 
@@ -96,19 +61,21 @@ public class Cover extends Page {
         if (backgroundImage != null) {
             Graphics2D g2d = (Graphics2D) g.create();
 
-            g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+            int targetWidth;
+            targetWidth = 900;
+
+            float scale = (float) targetWidth / backgroundImage.getIconWidth();
+            int targetHeight = Math.round(backgroundImage.getIconHeight() * scale);
+
+            int x = (getWidth() - targetWidth) / 2;
+            int y = (getHeight() - targetHeight) / 2;
+
             g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));
 
-            int width = 250;
-            int height = (width * backgroundImage.getHeight(null)) / backgroundImage.getWidth(null);
-
-            int x = 10;
-            int y = getHeight() - height - x;
-
-            float opacity = 0.3f;
-            g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity));
-
-            g2d.drawImage(backgroundImage, x, y, width, height, this);
+            g2d.translate(x, y);
+            g2d.scale(scale, scale);
+            backgroundImage.paintIcon(this, g2d, 0, 0);
 
             g2d.dispose();
         }

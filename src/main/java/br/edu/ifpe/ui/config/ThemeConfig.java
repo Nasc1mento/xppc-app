@@ -17,8 +17,8 @@ public class ThemeConfig {
     }
 
     private static void setupUIManager() {
-        var sansSerifBold = new Font("SansSerif", Font.BOLD, 13);
-        var sansSerifRegular = new Font("SansSerif", Font.PLAIN, 13);
+        var fontBold = new Font("OpenSans", Font.BOLD, 13);
+        var fontRegular = new Font("OpenSans", Font.PLAIN, 13);
         var accentColor = new Color(40, 90, 160);
 
         UIManager.put("Component.arc", 12);
@@ -26,7 +26,7 @@ public class ThemeConfig {
         UIManager.put("TextComponent.arc", 12);
         UIManager.put("CheckBox.arc", 6);
 
-        UIManager.put("Label.font", sansSerifBold);
+        UIManager.put("Label.font", fontBold);
 
         UIManager.put("Component.arrowType", "chevron");
         UIManager.put("Component.focusWidth", 1);
@@ -41,7 +41,7 @@ public class ThemeConfig {
 
         UIManager.put("Table.rowHeight", 30);
         UIManager.put("TableHeader.height", 35);
-        UIManager.put("TableHeader.font", sansSerifBold);
+        UIManager.put("TableHeader.font", fontBold);
 
         UIManager.put("Table.showVerticalLines", true);
         UIManager.put("Table.showHorizontalLines", true);
@@ -53,11 +53,11 @@ public class ThemeConfig {
         UIManager.put("OptionPane.border", new EmptyBorder(20, 20, 15, 20));
         UIManager.put("OptionPane.messageAreaBorder", new EmptyBorder(10, 15, 10, 15));
         UIManager.put("OptionPane.buttonPadding", 12);
-        UIManager.put("OptionPane.messageFont", sansSerifRegular);
+        UIManager.put("OptionPane.messageFont", fontRegular);
 
         UIManager.put("ProgressBar.foreground", accentColor);
         UIManager.put("ProgressBar.background", new Color(0, 0, 0, 0));
-        UIManager.put("ProgressBar.font", sansSerifBold);
+        UIManager.put("ProgressBar.font", fontBold);
         UIManager.put("ProgressBar.arc", 999);
         UIManager.put("ProgressBar.height", 14);
     }

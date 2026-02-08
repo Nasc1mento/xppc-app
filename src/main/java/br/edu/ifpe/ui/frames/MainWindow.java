@@ -1,11 +1,15 @@
 package br.edu.ifpe.ui.frames;
 
+import br.edu.ifpe.config.AppConfig;
+import br.edu.ifpe.readers.PeopleReader;
 import br.edu.ifpe.ui.components.ComboBox;
 import br.edu.ifpe.ui.components.Page;
 import br.edu.ifpe.ui.pages.PagesList;
 import com.formdev.flatlaf.FlatDarculaLaf;
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;
+import com.formdev.flatlaf.extras.FlatSVGIcon;
+import com.formdev.flatlaf.extras.FlatSVGUtils;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 
@@ -32,6 +36,9 @@ public class MainWindow extends JFrame {
 
     private final JButton backwardButton = new JButton("<< Anterior");
     private final JButton forwardButton = new JButton("Próximo >>");
+    private final JButton aboutButton = new JButton("Sobre");
+
+    private final PeopleReader peopleReader = PeopleReader.INSTANCE;
 
     private final List<String> titles = forms.stream()
             .map(Page::getTitle)
@@ -68,6 +75,13 @@ public class MainWindow extends JFrame {
         titleLabel = new JLabel("XPPC App");
         titleLabel.setBorder(new EmptyBorder(0, 10, 0, 0));
         titleBar.add(titleLabel, BorderLayout.CENTER);
+        JPanel rightActions = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
+        rightActions.add(aboutButton);
+        aboutButton.addActionListener(_ -> aboutButtonListener());
+
+        titleBar.add(rightActions, BorderLayout.EAST);
+
+        add(titleBar, BorderLayout.NORTH);
 
         themeComboBox.setPreferredSize(new Dimension(140, 30));
         titleBar.add(themeComboBox, BorderLayout.WEST);
@@ -153,11 +167,54 @@ public class MainWindow extends JFrame {
     }
 
     private void setupIcon() {
-        URL iconURL = Thread.currentThread().getContextClassLoader().getResource("ifpe.png");
-
-        if (iconURL != null) {
-            var icon = new ImageIcon(iconURL);
-            setIconImage(icon.getImage());
+        try {
+            List<Image> icons = FlatSVGUtils.createWindowIconImages("/xppc_logo.svg");
+            if (!icons.isEmpty()) {
+                setIconImages(icons);
+            }
+        } catch (Exception e) {
+            URL iconURL = getClass().getResource("/ifpe_logo.png");
+            if (iconURL != null) {
+                setIconImage(new ImageIcon(iconURL).getImage());
+            }
         }
+    }
+
+    private void aboutButtonListener() {
+        URL ifpeLogo = Thread.currentThread().getContextClassLoader().getResource("ifpe_logo.png");
+
+        var sb = new StringBuilder()
+                .append("<html>")
+                .append("<p><b>Versão:</b> ").append(AppConfig.getVersion()).append("</p>")
+                .append("<hr>")
+                .append("<p>").append(AppConfig.getName())
+                .append("</p>")
+                .append("<br>")
+                .append("<p><b>Equipe</b></p>")
+                .append("<hr>")
+                .append("<ul>");
+
+        for (var person : peopleReader.get()) {
+            sb.append("<li><b>")
+                    .append(person[PeopleReader.Columns.NAME.getIndex()])
+                    .append("</b>: ")
+                    .append(person[PeopleReader.Columns.ROLE.getIndex()])
+                    .append("</li>");
+        }
+
+        sb.append("</ul><br><br>")
+                .append("<img src='").append(ifpeLogo).append("' width='43' height='58'>")
+                .append("<span><b>Instituto Federal de Educação, Ciência e Tecnologia de Pernambuco (IFPE) © 2026</b></span>")
+                .append("</html>");
+
+        var icon = new FlatSVGIcon("xppc_logo.svg", 48, 48);
+
+        JOptionPane.showMessageDialog(
+                this,
+                sb.toString(),
+                "Sobre",
+                JOptionPane.PLAIN_MESSAGE,
+                icon
+        );
     }
 }

@@ -20,17 +20,20 @@ public class PeopleReader extends AbstractCSVReader {
         private final int index;
     }
 
+    public record Person(
+        String name,
+        String role
+    ) {  }
+
     private PeopleReader() {
         super("pessoas.csv", StandardCharsets.UTF_8, ',');
     }
 
-    public List<String[]> get() {
-        final List<String[]> people = new ArrayList<>();
+    public List<Person> get() {
+        final List<Person> people = new ArrayList<>();
         for (var line : read()) {
-            var arr =  new String[2];
-            arr[0] = line.get(Columns.NAME.index);
-            arr[1] = line.get(Columns.ROLE.index);
-            people.add(arr);
+            var p = new Person(line.get(Columns.NAME.index), line.get(Columns.ROLE.index));
+            people.add(p);
         }
 
         return people;

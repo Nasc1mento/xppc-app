@@ -204,8 +204,8 @@ public class MainWindow extends JFrame {
         mainPanel.add(Box.createVerticalStrut(8));
 
         for (var person : peopleReader.get()) {
-            String name = person[PeopleReader.Columns.NAME.getIndex()];
-            String role = person[PeopleReader.Columns.ROLE.getIndex()];
+            String name = person.name();
+            String role = person.role();
 
             JPanel personRow = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
             personRow.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -215,7 +215,6 @@ public class MainWindow extends JFrame {
 
             JLabel rLabel = new JLabel(": " + role);
             rLabel.putClientProperty("FlatLaf.style", "font: $semibold.font");
-
 
             personRow.add(nLabel);
             personRow.add(rLabel);

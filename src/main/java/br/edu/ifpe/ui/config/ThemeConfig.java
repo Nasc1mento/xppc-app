@@ -13,6 +13,7 @@ import java.awt.*;
 public class ThemeConfig {
 
     public static void setup() {
+        System.setProperty("sun.java2d.uiScale", "1.0");
         System.setProperty("flatlaf.useWindowDecorations", "true");
         System.setProperty("awt.useSystemAAFontSettings", "on");
         System.setProperty("swing.aatext", "true");

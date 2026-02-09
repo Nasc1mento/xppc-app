@@ -9,6 +9,7 @@ shadow = "9.2.2"
 apache-poi = "5.5.1"
 apache-commons-csv = "1.14.1"
 apache-commons-jexl3 = "3.6.0"
+assertj-swing = "3.17.1"
 lombok = "1.18.42"
 logback = "1.5.22"
 flatlaf = "3.6.1"
@@ -24,8 +25,11 @@ lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
 logback = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
 flatlaf = { module = "com.formdev:flatlaf", version.ref = "flatlaf" }
 flatlaf-extras = { module = "com.formdev:flatlaf-extras", version.ref = "flatlaf" }
+
+assert-swing = { module = "org.assertj:assertj-swing", version.ref = "assertj-swing" }
 junit-bom = { module = "org.junit:junit-bom", version = "5.10.0" }
 junit-jupiter = { module = "org.junit.jupiter:junit-jupiter" }
+
 junit-launcher = { module = "org.junit.platform:junit-platform-launcher" }
 
 [plugins]

@@ -36,10 +36,10 @@ public class Cover extends Page {
 
                     switch (clickCounter) {
                         case 3:
-                            setIcon(new FlatSVGIcon("images/xppc_logo.svg"), 100);
+                            setIcon(new FlatSVGIcon("images/xppc_icon.svg"), 100);
                             break;
                         case 6:
-                            setIcon(new FlatSVGIcon("images/ifpe.svg"), 100);
+                            setIcon(new FlatSVGIcon("images/ifpe_icon.svg"), 100);
                             break;
                         case 9:
                             initialIcon();
@@ -57,7 +57,7 @@ public class Cover extends Page {
         }
 
         public void initialIcon() {
-            setIcon(new FlatSVGIcon("images/xppc.svg"), 900);
+            setIcon(new FlatSVGIcon("images/xppc_full.svg"), 900);
         }
 
         @Override

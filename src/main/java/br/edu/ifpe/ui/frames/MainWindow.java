@@ -20,7 +20,6 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 import java.awt.*;
-import java.net.URL;
 import java.util.List;
 
 @Slf4j
@@ -171,7 +170,7 @@ public class MainWindow extends JFrame {
 
     private void setupIcon() {
         try {
-            List<Image> icons = FlatSVGUtils.createWindowIconImages("/images/xppc_logo.svg");
+            List<Image> icons = FlatSVGUtils.createWindowIconImages("/images/xppc_icon.svg");
             if (!icons.isEmpty()) {
                 setIconImages(icons);
             }
@@ -230,13 +229,13 @@ public class MainWindow extends JFrame {
         footer.setAlignmentX(Component.LEFT_ALIGNMENT);
         footer.setOpaque(false);
 
-        var ifpeIcon = new FlatSVGIcon("images/ifpe_logo.svg", 586, 78);
+        var ifpeIcon = new FlatSVGIcon("images/ifpe_full.svg", 586, 78);
         JLabel logoLabel = new JLabel(ifpeIcon);
         footer.add(logoLabel, BorderLayout.WEST);
 
         mainPanel.add(footer);
 
-        var xPPCIcon = new FlatSVGIcon("images/xppc_logo.svg", 64, 64);
+        var xPPCIcon = new FlatSVGIcon("images/xppc_icon.svg", 64, 64);
 
         JOptionPane.showMessageDialog(
                 this,

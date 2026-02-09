@@ -13,12 +13,10 @@ import java.awt.*;
 public class Cover extends Page {
     private final JLabel titleLabel = new JLabel(AppConfig.getShortname());
     private final JButton aboutButton = new JButton();
-
-    private FlatSVGIcon backgroundImage;
+    private final FlatSVGIcon backgroundImage = new FlatSVGIcon("xppc.svg");
 
     public Cover() {
         setOpaque();
-        setupBackgroundImage();
         setupLayout();
         setupLabels();
     }
@@ -34,24 +32,6 @@ public class Cover extends Page {
 
         aboutButton.setIcon(UIManager.getIcon("OptionPane.questionIcon"));
 
-    }
-
-    // if you need to set background image in other pages, I recommend move this code to parent class
-    private void setupBackgroundImage() {
-        try {
-            FlatSVGIcon.ColorFilter filter = new FlatSVGIcon.ColorFilter( color -> {
-                if (color.equals(Color.BLACK)) {
-                    return UIManager.getColor("Label.foreground");
-                }
-                return color;
-            });
-
-            backgroundImage = new FlatSVGIcon("xppc.svg");
-            backgroundImage.setColorFilter(filter);
-
-        } catch (Exception e) {
-            log.info("Failed to load SVG: {}", e.getMessage());
-        }
     }
 
     @Override

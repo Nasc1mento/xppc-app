@@ -1,6 +1,8 @@
 package br.edu.ifpe.ui.config;
 
 import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.extras.FlatSVGIcon;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -60,5 +62,12 @@ public class ThemeConfig {
         UIManager.put("ProgressBar.font", fontBold);
         UIManager.put("ProgressBar.arc", 999);
         UIManager.put("ProgressBar.height", 14);
+
+        FlatSVGIcon.ColorFilter.getInstance().setMapper(color -> {
+            if (color.equals(Color.BLACK)) {
+                return UIManager.getColor("Label.foreground");
+            }
+            return color;
+        });
     }
 }

@@ -12,6 +12,7 @@ import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.extras.FlatSVGUtils;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;
@@ -21,6 +22,7 @@ import java.awt.*;
 import java.net.URL;
 import java.util.List;
 
+@Slf4j
 public class MainWindow extends JFrame {
     private int currentPage = 0;
 
@@ -173,10 +175,7 @@ public class MainWindow extends JFrame {
                 setIconImages(icons);
             }
         } catch (Exception e) {
-            URL iconURL = getClass().getResource("/images/ifpe_logo.png");
-            if (iconURL != null) {
-                setIconImage(new ImageIcon(iconURL).getImage());
-            }
+            log.info("Failed to set icon");
         }
     }
 

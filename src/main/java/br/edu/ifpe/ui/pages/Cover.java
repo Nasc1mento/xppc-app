@@ -61,8 +61,7 @@ public class Cover extends Page {
         if (backgroundImage != null) {
             Graphics2D g2d = (Graphics2D) g.create();
 
-            int targetWidth;
-            targetWidth = 900;
+            int targetWidth = 900;
 
             float scale = (float) targetWidth / backgroundImage.getIconWidth();
             int targetHeight = Math.round(backgroundImage.getIconHeight() * scale);

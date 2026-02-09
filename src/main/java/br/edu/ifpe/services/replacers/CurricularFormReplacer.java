@@ -6,7 +6,7 @@ import br.edu.ifpe.helpers.TableTracker;
 import br.edu.ifpe.services.DocumentManager;
 import br.edu.ifpe.services.DocumentCursor;
 import br.edu.ifpe.models.CC;
-import br.edu.ifpe.models.enums.CCType;
+import br.edu.ifpe.enums.CCType;
 import org.apache.poi.xwpf.usermodel.*;
 import org.apache.xmlbeans.XmlCursor;
 
@@ -34,7 +34,7 @@ public class CurricularFormReplacer implements IReplacer {
             XWPFParagraph paragraph = documentCursor.find(doc, "@@formulario_componentes_curriculares@@");
 
             if (paragraph != null) {
-                try (var ccFormDoc = new XWPFDocument(DocumentManager.loadResourceStream("templates/formulario_componente_curricular.docx"))) {
+                try (var ccFormDoc = new XWPFDocument(DocumentManager.loadResourceStream("docx/templates/formulario_componente_curricular.docx"))) {
                     for (var _ : ccList) {
                         try (XmlCursor insertCursor = paragraph.getCTP().newCursor()) {
                             for (IBodyElement element : ccFormDoc.getBodyElements().reversed()) {

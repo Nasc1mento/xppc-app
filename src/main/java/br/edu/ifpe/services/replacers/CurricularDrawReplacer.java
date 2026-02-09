@@ -40,7 +40,7 @@ public class CurricularDrawReplacer implements IReplacer {
             XWPFParagraph paragraph = documentCursor.find(doc, "@@desenho_curricular@@");
 
             if (paragraph != null) {
-                TableHelper.copySimpleTbl(doc, paragraph, "templates/tabela_desenho_curricular.docx");
+                TableHelper.copySimpleTbl(doc, paragraph, "docx/templates/tabela_desenho_curricular.docx");
             }
 
             commit(doc);

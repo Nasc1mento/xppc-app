@@ -5,9 +5,8 @@ import br.edu.ifpe.ui.components.ISubmittable;
 import br.edu.ifpe.ui.components.LabeledEnumComboBox;
 import br.edu.ifpe.ui.components.Page;
 import br.edu.ifpe.ui.components.TextField;
-import br.edu.ifpe.ui.components.*;
-import br.edu.ifpe.models.enums.Situation;
-import br.edu.ifpe.models.enums.Status;
+import br.edu.ifpe.enums.Situation;
+import br.edu.ifpe.enums.Status;
 
 import javax.swing.*;
 import java.util.List;

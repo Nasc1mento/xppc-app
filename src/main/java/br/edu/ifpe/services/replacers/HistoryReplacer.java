@@ -30,18 +30,23 @@ public class HistoryReplacer implements IReplacer {
             XWPFParagraph placeholderParagraph = documentCursor.find(doc, "@@historico_do_campus@@");
 
             if (placeholderParagraph != null) {
-                String historyFileName = campusReader.getByName(placeholderManager.getValue("campus")).history() + ".docx";
 
-                URL historyPath = Thread.currentThread().getContextClassLoader().getResource(historyFileName);
+                var campus = campusReader.getByName(placeholderManager.getValue("campus"));
 
-                if (historyPath != null) {
-                    try (var historyDoc = new XWPFDocument(DocumentManager.loadResourceStream(historyFileName))) {
+                if (campus != null) {
+                    String historyFileName = "docx/histories/" + campus.history() + ".docx";
 
-                        try (XmlCursor cursor = placeholderParagraph.getCTP().newCursor()) {
-                            for (XWPFParagraph pHistory : historyDoc.getParagraphs()) {
-                                XWPFParagraph newP = doc.insertNewParagraph(cursor);
-                                newP.getCTP().set(pHistory.getCTP());
-                                cursor.toCursor(newP.getCTP().newCursor());
+                    URL historyPath = Thread.currentThread().getContextClassLoader().getResource(historyFileName);
+
+                    if (historyPath != null) {
+                        try (var historyDoc = new XWPFDocument(DocumentManager.loadResourceStream(historyFileName))) {
+
+                            try (XmlCursor cursor = placeholderParagraph.getCTP().newCursor()) {
+                                for (XWPFParagraph pHistory : historyDoc.getParagraphs()) {
+                                    XWPFParagraph newP = doc.insertNewParagraph(cursor);
+                                    newP.getCTP().set(pHistory.getCTP());
+                                    cursor.toCursor(newP.getCTP().newCursor());
+                                }
                             }
                         }
                     }

@@ -1,14 +1,13 @@
 package br.edu.ifpe.ui.pages;
 
 import br.edu.ifpe.models.CC;
-import br.edu.ifpe.models.enums.CCType;
-import br.edu.ifpe.models.enums.CourseLevel;
+import br.edu.ifpe.enums.CCType;
+import br.edu.ifpe.enums.CourseLevel;
 import br.edu.ifpe.readers.CNCTReader;
 import br.edu.ifpe.services.CCManager;
 import br.edu.ifpe.services.PlaceholderManager;
 import br.edu.ifpe.ui.components.*;
 import br.edu.ifpe.ui.components.TextField;
-import br.edu.ifpe.ui.components.*;
 import br.edu.ifpe.utils.Eval;
 
 import javax.swing.*;

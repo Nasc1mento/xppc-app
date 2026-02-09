@@ -6,7 +6,7 @@ import br.edu.ifpe.helpers.TableTracker;
 import br.edu.ifpe.services.DocumentManager;
 import br.edu.ifpe.services.DocumentCursor;
 import br.edu.ifpe.models.CC;
-import br.edu.ifpe.models.enums.CCType;
+import br.edu.ifpe.enums.CCType;
 import org.apache.poi.xwpf.usermodel.*;
 
 import java.io.FileInputStream;
@@ -43,7 +43,7 @@ public class MatrixReplacer implements IReplacer {
             XWPFParagraph paragraph = documentCursor.find(doc, "@@matriz_curricular@@");
 
             if (paragraph != null) {
-                TableHelper.copySimpleTbl(doc, paragraph, "templates/tabela_matriz_curricular.docx", ccPerPeriod.size());
+                TableHelper.copySimpleTbl(doc, paragraph, "docx/templates/tabela_matriz_curricular.docx", ccPerPeriod.size());
             }
 
             commit(doc);

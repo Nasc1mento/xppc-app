@@ -2,7 +2,7 @@ package br.edu.ifpe.services;
 
 import br.edu.ifpe.utils.Eval;
 import br.edu.ifpe.models.CC;
-import br.edu.ifpe.models.enums.CCType;
+import br.edu.ifpe.enums.CCType;
 import lombok.Getter;
 
 import java.util.ArrayList;

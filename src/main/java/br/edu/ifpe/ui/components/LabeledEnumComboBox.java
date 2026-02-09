@@ -1,6 +1,6 @@
 package br.edu.ifpe.ui.components;
 
-import br.edu.ifpe.models.enums.ILabeledEnum;
+import br.edu.ifpe.enums.ILabeledEnum;
 import br.edu.ifpe.ui.renderers.LabeledEnumRenderer;
 
 public class LabeledEnumComboBox<T extends Enum<T> & ILabeledEnum> extends ComboBox<T> {

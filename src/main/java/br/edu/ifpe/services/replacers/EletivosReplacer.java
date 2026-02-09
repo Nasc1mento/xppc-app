@@ -6,7 +6,7 @@ import br.edu.ifpe.helpers.TableTracker;
 import br.edu.ifpe.services.DocumentManager;
 import br.edu.ifpe.services.DocumentCursor;
 import br.edu.ifpe.models.CC;
-import br.edu.ifpe.models.enums.CCType;
+import br.edu.ifpe.enums.CCType;
 import org.apache.poi.xwpf.usermodel.*;
 
 import java.io.FileInputStream;
@@ -32,7 +32,7 @@ public class EletivosReplacer implements  IReplacer{
             XWPFParagraph paragraph = documentCursor.find(doc, "@@componentes_eletivos@@");
 
             if (paragraph != null) {
-                TableHelper.copySimpleTbl(doc, paragraph, "templates/tabela_componentes_optativos_e_eletivos.docx");
+                TableHelper.copySimpleTbl(doc, paragraph, "docx/templates/tabela_componentes_optativos_e_eletivos.docx");
             }
 
             commit(doc);

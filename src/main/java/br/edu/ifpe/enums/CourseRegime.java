@@ -1,4 +1,4 @@
-package br.edu.ifpe.models.enums;
+package br.edu.ifpe.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

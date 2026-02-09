@@ -1,7 +1,7 @@
 package br.edu.ifpe.models;
 
 import br.edu.ifpe.utils.Eval;
-import br.edu.ifpe.models.enums.CCType;
+import br.edu.ifpe.enums.CCType;
 
 public record CC(
     String code,

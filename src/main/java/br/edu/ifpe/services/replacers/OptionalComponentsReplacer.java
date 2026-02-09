@@ -32,7 +32,7 @@ public class OptionalComponentsReplacer implements  IReplacer {
             XWPFParagraph paragraph = documentCursor.find(doc, "@@componentes_optativos@@");
 
             if (paragraph != null) {
-                TableHelper.copySimpleTbl(doc, paragraph, "tabela_componentes_optativos_e_eletivos.docx");
+                TableHelper.copySimpleTbl(doc, paragraph, "templates/tabela_componentes_optativos_e_eletivos.docx");
             }
 
             commit(doc);

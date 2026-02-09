@@ -43,7 +43,7 @@ public class MatrixReplacer implements IReplacer {
             XWPFParagraph paragraph = documentCursor.find(doc, "@@matriz_curricular@@");
 
             if (paragraph != null) {
-                TableHelper.copySimpleTbl(doc, paragraph, "tabela_matriz_curricular.docx", ccPerPeriod.size());
+                TableHelper.copySimpleTbl(doc, paragraph, "templates/tabela_matriz_curricular.docx", ccPerPeriod.size());
             }
 
             commit(doc);

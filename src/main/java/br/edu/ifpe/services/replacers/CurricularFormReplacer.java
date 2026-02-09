@@ -34,7 +34,7 @@ public class CurricularFormReplacer implements IReplacer {
             XWPFParagraph paragraph = documentCursor.find(doc, "@@formulario_componentes_curriculares@@");
 
             if (paragraph != null) {
-                try (var ccFormDoc = new XWPFDocument(DocumentManager.loadResourceStream("formulario_componente_curricular.docx"))) {
+                try (var ccFormDoc = new XWPFDocument(DocumentManager.loadResourceStream("templates/formulario_componente_curricular.docx"))) {
                     for (var _ : ccList) {
                         try (XmlCursor insertCursor = paragraph.getCTP().newCursor()) {
                             for (IBodyElement element : ccFormDoc.getBodyElements().reversed()) {

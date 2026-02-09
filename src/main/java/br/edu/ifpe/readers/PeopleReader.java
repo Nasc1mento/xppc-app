@@ -33,7 +33,7 @@ public class PeopleReader extends AbstractCSVReader {
     }
 
     private PeopleReader() {
-        super("pessoas.csv", StandardCharsets.UTF_8, ',');
+        super("csv/pessoas.csv", StandardCharsets.UTF_8, ',');
     }
 
     public List<Person> getAll() {

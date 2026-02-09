@@ -21,7 +21,7 @@ public class CNCTReader extends AbstractCSVReader {
 
     private CNCTReader() {
         super(
-                "catalogo_cncst_2024.csv",
+                "csv/catalogo_cncst_2024.csv",
                 StandardCharsets.ISO_8859_1,
                 ';'
         );

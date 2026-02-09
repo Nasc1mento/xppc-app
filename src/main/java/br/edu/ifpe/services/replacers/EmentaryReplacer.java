@@ -31,7 +31,7 @@ public class EmentaryReplacer implements IReplacer {
             XWPFParagraph paragraph = documentCursor.find(doc, "@@ementário@@");
 
             if (paragraph != null) {
-                TableHelper.copySimpleTbl(doc, paragraph, "tabela_ementario.docx", list.getList().size());
+                TableHelper.copySimpleTbl(doc, paragraph, "templates/tabela_ementario.docx", list.getList().size());
             }
 
             commit(doc);

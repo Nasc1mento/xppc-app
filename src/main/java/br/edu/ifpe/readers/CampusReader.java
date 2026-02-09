@@ -59,7 +59,7 @@ public class CampusReader extends AbstractCSVReader {
 
     private CampusReader() {
         super(
-                "campi.csv",
+                "csv/campi.csv",
                 StandardCharsets.UTF_8,
                 ','
         );

@@ -168,12 +168,12 @@ public class MainWindow extends JFrame {
 
     private void setupIcon() {
         try {
-            List<Image> icons = FlatSVGUtils.createWindowIconImages("/xppc_logo.svg");
+            List<Image> icons = FlatSVGUtils.createWindowIconImages("/images/xppc_logo.svg");
             if (!icons.isEmpty()) {
                 setIconImages(icons);
             }
         } catch (Exception e) {
-            URL iconURL = getClass().getResource("/ifpe_logo.png");
+            URL iconURL = getClass().getResource("/images/ifpe_logo.png");
             if (iconURL != null) {
                 setIconImage(new ImageIcon(iconURL).getImage());
             }
@@ -181,40 +181,70 @@ public class MainWindow extends JFrame {
     }
 
     private void aboutButtonListener() {
-        URL ifpeLogo = Thread.currentThread().getContextClassLoader().getResource("ifpe_logo.png");
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
-        var sb = new StringBuilder()
-                .append("<html>")
-                .append("<p><b>Versão:</b> ").append(AppConfig.getVersion()).append("</p>")
-                .append("<hr>")
-                .append("<p>").append(AppConfig.getName())
-                .append("</p>")
-                .append("<br>")
-                .append("<p><b>Equipe</b></p>")
-                .append("<hr>")
-                .append("<ul>");
+        JLabel titleLabel = new JLabel(AppConfig.getName());
+
+        JLabel versionLabel = new JLabel("Versão " + AppConfig.getVersion());
+
+        titleLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        versionLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        mainPanel.add(titleLabel);
+        mainPanel.add(versionLabel);
+        mainPanel.add(Box.createVerticalStrut(15));
+        mainPanel.add(new JSeparator());
+        mainPanel.add(Box.createVerticalStrut(15));
+
+        JLabel teamHeader = new JLabel("Equipe");
+        teamHeader.setAlignmentX(Component.LEFT_ALIGNMENT);
+        mainPanel.add(teamHeader);
+        mainPanel.add(Box.createVerticalStrut(8));
 
         for (var person : peopleReader.get()) {
-            sb.append("<li><b>")
-                    .append(person[PeopleReader.Columns.NAME.getIndex()])
-                    .append("</b>: ")
-                    .append(person[PeopleReader.Columns.ROLE.getIndex()])
-                    .append("</li>");
+            String name = person[PeopleReader.Columns.NAME.getIndex()];
+            String role = person[PeopleReader.Columns.ROLE.getIndex()];
+
+            JPanel personRow = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+            personRow.setAlignmentX(Component.LEFT_ALIGNMENT);
+            personRow.setOpaque(false);
+
+            JLabel nLabel = new JLabel("• " + name);
+
+            JLabel rLabel = new JLabel(": " + role);
+            rLabel.putClientProperty("FlatLaf.style", "font: $semibold.font");
+
+
+            personRow.add(nLabel);
+            personRow.add(rLabel);
+            mainPanel.add(personRow);
+            mainPanel.add(Box.createVerticalStrut(2));
         }
 
-        sb.append("</ul><br><br>")
-                .append("<img src='").append(ifpeLogo).append("' width='43' height='58'>")
-                .append("<span><b>Instituto Federal de Educação, Ciência e Tecnologia de Pernambuco (IFPE) © 2026</b></span>")
-                .append("</html>");
+        mainPanel.add(Box.createVerticalStrut(20));
+        mainPanel.add(new JSeparator());
+        mainPanel.add(Box.createVerticalStrut(15));
 
-        var icon = new FlatSVGIcon("xppc_logo.svg", 48, 48);
+        JPanel footer = new JPanel(new BorderLayout(12, 0));
+        footer.setAlignmentX(Component.LEFT_ALIGNMENT);
+        footer.setOpaque(false);
+
+        var ifpeIcon = new FlatSVGIcon("images/ifpe_logo.svg", 586, 78);
+        JLabel logoLabel = new JLabel(ifpeIcon);
+        footer.add(logoLabel, BorderLayout.WEST);
+
+        mainPanel.add(footer);
+
+        var xPPCIcon = new FlatSVGIcon("images/xppc_logo.svg", 64, 64);
 
         JOptionPane.showMessageDialog(
                 this,
-                sb.toString(),
+                mainPanel,
                 "Sobre",
                 JOptionPane.PLAIN_MESSAGE,
-                icon
+                xPPCIcon
         );
     }
 }

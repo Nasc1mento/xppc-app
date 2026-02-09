@@ -13,7 +13,7 @@ import java.awt.*;
 public class Cover extends Page {
     private final JLabel titleLabel = new JLabel(AppConfig.getShortname());
     private final JButton aboutButton = new JButton();
-    private final FlatSVGIcon backgroundImage = new FlatSVGIcon("xppc.svg");
+    private final FlatSVGIcon backgroundImage = new FlatSVGIcon("images/xppc.svg");
 
     public Cover() {
         setOpaque();

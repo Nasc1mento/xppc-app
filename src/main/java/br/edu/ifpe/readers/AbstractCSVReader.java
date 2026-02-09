@@ -68,4 +68,12 @@ public abstract class AbstractCSVReader {
     protected List<String> getAllFromA(final int a) {
         return read().stream().map(line -> line.get(a)).sorted().toList();
     }
+
+    protected CSVRecord getFirstFromA(final int c, final String b) {
+        return read().stream()
+                .filter(line -> line.size() > c)
+                .filter(line -> Objects.equals(b, line.get(c)))
+                .findFirst()
+                .orElse(null);
+    }
 }

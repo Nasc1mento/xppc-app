@@ -203,7 +203,7 @@ public class MainWindow extends JFrame {
         mainPanel.add(teamHeader);
         mainPanel.add(Box.createVerticalStrut(8));
 
-        for (var person : peopleReader.get()) {
+        for (var person : peopleReader.getAll()) {
             String name = person.name();
             String role = person.role();
 

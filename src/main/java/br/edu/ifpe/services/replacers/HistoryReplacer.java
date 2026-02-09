@@ -30,9 +30,7 @@ public class HistoryReplacer implements IReplacer {
             XWPFParagraph placeholderParagraph = documentCursor.find(doc, "@@historico_do_campus@@");
 
             if (placeholderParagraph != null) {
-                String historyFileName = campusReader.getByNameAndColumn(
-                        placeholderManager.getValue("campus"), CampusReader.Columns.HISTORY
-                ) + ".docx";
+                String historyFileName = campusReader.getByName(placeholderManager.getValue("campus")).history();
 
                 URL historyPath = Thread.currentThread().getContextClassLoader().getResource(historyFileName);
 

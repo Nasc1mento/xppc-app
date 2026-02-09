@@ -32,9 +32,9 @@ public class CNCTReader extends AbstractCSVReader {
     }
 
     public String getHoursByName(final String name) {
-        return getAFromB(
-                        Columns.NAME.index, name, Columns.MINIMUM_SUM_OF_CREDIT_HOURS.index
-                ).split(" ")[0].replaceAll("\\D+", "");
+        return getAFromB(Columns.NAME.index, name, Columns.MINIMUM_SUM_OF_CREDIT_HOURS.index)
+                .split(" ")[0]
+                .replaceAll("\\D+", "");
 
     }
 

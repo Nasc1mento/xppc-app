@@ -1,5 +1,7 @@
 package br.edu.ifpe.readers;
 
+import org.apache.commons.csv.CSVRecord;
+
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
@@ -22,6 +24,39 @@ public class CampusReader extends AbstractCSVReader {
         HISTORY,
     }
 
+
+    public record Campus(
+            String name,
+            String cnpj,
+            String city,
+            String neighbourhood,
+            String cep,
+            String street,
+            String number,
+            String phone,
+            String email,
+            String aldc,
+            String website,
+            String history
+    ) {
+        public static Campus fromRecord(CSVRecord row) {
+            return new Campus(
+                    row.get(Columns.NAME.ordinal()),
+                    row.get(Columns.CNPJ.ordinal()),
+                    row.get(Columns.CITY.ordinal()),
+                    row.get(Columns.NEIGHBOURHOOD.ordinal()),
+                    row.get(Columns.CEP.ordinal()),
+                    row.get(Columns.STREET.ordinal()),
+                    row.get(Columns.NUMBER.ordinal()),
+                    row.get(Columns.PHONE.ordinal()),
+                    row.get(Columns.EMAIL.ordinal()),
+                    row.get(Columns.ALDC.ordinal()),
+                    row.get(Columns.WEBSITE.ordinal()),
+                    row.get(Columns.HISTORY.ordinal())
+            );
+        }
+    }
+
     private CampusReader() {
         super(
                 "campi.csv",
@@ -34,7 +69,8 @@ public class CampusReader extends AbstractCSVReader {
         return getAllFromA(Columns.NAME.ordinal());
     }
 
-    public String getByNameAndColumn(final String name, final Columns column) {
-        return getAFromB(Columns.NAME.ordinal(), name, column.ordinal());
+    public Campus getByName(final String name) {
+        var record = getFirstFromA(Columns.NAME.ordinal(), name);
+        return (record != null) ? Campus.fromRecord(record) : null;
     }
 }

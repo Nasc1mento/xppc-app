@@ -46,22 +46,22 @@ public class Proponent extends Page implements ISubmittable {
     }
 
     private void setupListeners() {
-        var fieldMapping = Map.of(
-                cnpjField, CampusReader.Columns.CNPJ,
-                cityField, CampusReader.Columns.CITY,
-                cepField, CampusReader.Columns.CEP,
-                neighbourhoodField, CampusReader.Columns.NEIGHBOURHOOD,
-                streetField, CampusReader.Columns.STREET,
-                numberField, CampusReader.Columns.NUMBER,
-                telephoneNumberField, CampusReader.Columns.PHONE,
-                emailField, CampusReader.Columns.EMAIL,
-                aldcField, CampusReader.Columns.ALDC,
-                websiteField, CampusReader.Columns.WEBSITE
-        );
         campusBox.addActionListener(_ -> {
             String selectedCampus = campusBox.getSelectedItem();
             if (selectedCampus != null) {
-                fieldMapping.forEach((field, column) -> field.setText(campusReader.getByNameAndColumn(selectedCampus, column)));
+                var campus = campusReader.getByName(selectedCampus);
+                if (campus != null) {
+                    cnpjField.setText(campus.cnpj());
+                    cityField.setText(campus.city());
+                    cepField.setText(campus.cep());
+                    neighbourhoodField.setText(campus.neighbourhood());
+                    streetField.setText(campus.street());
+                    numberField.setText(campus.number());
+                    telephoneNumberField.setText(campus.phone());
+                    emailField.setText(campus.email());
+                    aldcField.setText(campus.aldc());
+                    websiteField.setText(campus.website());
+                }
             }
         });
     }

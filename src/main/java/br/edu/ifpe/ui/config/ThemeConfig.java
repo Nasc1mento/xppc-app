@@ -83,7 +83,7 @@ public class ThemeConfig {
         try {
             FlatDarkLaf.setup();
         } catch (Exception e) {
-            log.info("Failed to setup FlatLaF. Using default Swing interface instead");
+            log.info("Failed to setup FlatLaF. Using default ugly interface instead");
         }
 
         FlatSVGIcon.ColorFilter.getInstance().setMapper(color -> {

@@ -13,7 +13,7 @@ public class PeopleReader extends AbstractCSVReader {
 
     @AllArgsConstructor
     @Getter
-    public enum Columns {
+    private enum Columns {
         NAME(0),
         ROLE(1);
 

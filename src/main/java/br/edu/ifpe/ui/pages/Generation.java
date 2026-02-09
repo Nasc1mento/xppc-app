@@ -2,9 +2,7 @@ package br.edu.ifpe.ui.pages;
 
 import br.edu.ifpe.services.DocumentManager;
 import br.edu.ifpe.services.Generator;
-import br.edu.ifpe.ui.components.ISubmittable;
-import br.edu.ifpe.ui.components.IValidatable;
-import br.edu.ifpe.ui.components.Page;
+import br.edu.ifpe.ui.components.*;
 
 import javax.swing.*;
 import java.io.File;
@@ -14,7 +12,7 @@ import java.util.concurrent.ExecutionException;
 
 public class Generation extends Page implements ISubmittable {
 
-    private final JButton generateButton = new JButton("Gerar Documento");
+    private final Button generateButton = new Button("Gerar Documento").withName("genBtn");
     private final JProgressBar progressBar = new JProgressBar();
 
     public Generation() {

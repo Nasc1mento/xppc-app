@@ -2,6 +2,7 @@ package br.edu.ifpe.ui.frames;
 
 import br.edu.ifpe.config.AppConfig;
 import br.edu.ifpe.readers.PeopleReader;
+import br.edu.ifpe.ui.components.Button;
 import br.edu.ifpe.ui.components.ComboBox;
 import br.edu.ifpe.ui.components.Page;
 import br.edu.ifpe.ui.pages.PagesList;
@@ -36,9 +37,9 @@ public class MainWindow extends JFrame {
 
     private final List<Page> forms = PagesList.getList();
 
-    private final JButton backwardButton = new JButton("<< Anterior");
-    private final JButton forwardButton = new JButton("Próximo >>");
-    private final JButton aboutButton = new JButton("Sobre");
+    private final Button backwardButton = new Button("<< Anterior").withName("backwardBtn");
+    private final Button forwardButton = new Button("Próximo >>").withName("forwardBtn");
+    private final Button aboutButton = new Button("Sobre").withName("aboutBtn");
 
     private final PeopleReader peopleReader = PeopleReader.INSTANCE;
 

@@ -1,4 +1,4 @@
-<h1 style="text-align='center'"> xPPC </h1>
+<h1 style="text-align: center;"> xPPC </h1>
 
 ## Aplicação para geração automatizada de Projetos Pedagógicos de Curso do IFPE
 

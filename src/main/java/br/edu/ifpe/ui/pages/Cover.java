@@ -2,18 +2,18 @@ package br.edu.ifpe.ui.pages;
 
 import br.edu.ifpe.ui.components.Page;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
+import lombok.AllArgsConstructor;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-
 public class Cover extends Page {
 
     public Cover() {
         setOpaque();
-        this.add(new xPPCLogo());
+        this.add(new XPPCLogo());
     }
 
     @Override
@@ -21,71 +21,51 @@ public class Cover extends Page {
         return "Bem-vindo(a)";
     }
 
-    public static class xPPCLogo extends JPanel {
-        private FlatSVGIcon icon;
-        private int iconWidth;
+    public static class XPPCLogo extends JLabel {
+
         private int clickCounter = 0;
 
-        public xPPCLogo() {
+        public XPPCLogo() {
+            setHorizontalAlignment(SwingConstants.CENTER);
+            setVerticalAlignment(SwingConstants.CENTER);
+
             setCursor(new Cursor(Cursor.HAND_CURSOR));
-            initialIcon();
+
+            updateIconState();
 
             this.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     clickCounter++;
+                    if (clickCounter > 12) clickCounter = 0;
 
-                    switch (clickCounter) {
-                        case 3:
-                            setIcon(new FlatSVGIcon("images/xppc_icon.svg"), 100);
-                            break;
-                        case 6:
-                            setIcon(new FlatSVGIcon("images/ifpe_icon.svg"), 100);
-                            break;
-                        case 9:
-                            initialIcon();
-                            clickCounter = 0;
-                            break;
-                    }
+                    updateIconState();
                 }
             });
         }
 
-        public void setIcon(FlatSVGIcon novoIcon, int width) {
-            this.iconWidth = width;
-            this.icon = novoIcon;
-            repaint();
+        @AllArgsConstructor
+        private enum LogoState {
+            INITIAL("images/xppc_full.svg", 0.5f),
+            XPPC_SMALL("images/xppc_icon.svg", 1f),
+            IFPE_SMALL("images/ifpe_icon.svg", 1f),
+            IFPE_FULL("images/ifpe_full.svg", 0.5f);
+
+            final String path;
+            final float scale;
         }
 
-        public void initialIcon() {
-            setIcon(new FlatSVGIcon("images/xppc_full.svg"), 900);
-        }
+        private void updateIconState() {
+            if (clickCounter >= 12) clickCounter = 0;
 
-        @Override
-        protected void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            if (icon != null) {
-                renderIcon(g);
-            }
-        }
+            LogoState state = switch (clickCounter) {
+                case 3, 4, 5 -> LogoState.XPPC_SMALL;
+                case 6, 7, 8 -> LogoState.IFPE_SMALL;
+                case 9, 10, 11 -> LogoState.IFPE_FULL;
+                default -> LogoState.INITIAL;
+            };
 
-        private void renderIcon(Graphics g) {
-            Graphics2D g2d = (Graphics2D) g.create();
-
-            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));
-
-            float scale = (float) iconWidth / icon.getIconWidth();
-            int targetHeight = Math.round(icon.getIconHeight() * scale);
-
-            int x = (getWidth() - iconWidth) / 2;
-            int y = (getHeight() - targetHeight) / 2;
-
-            g2d.translate(x, y);
-            g2d.scale(scale, scale);
-            icon.paintIcon(this, g2d, 0, 0);
-
-            g2d.dispose();
+            this.setIcon(new FlatSVGIcon(state.path, state.scale));
         }
     }
 }

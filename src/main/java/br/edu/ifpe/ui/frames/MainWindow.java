@@ -229,13 +229,13 @@ public class MainWindow extends JFrame {
         footer.setAlignmentX(Component.LEFT_ALIGNMENT);
         footer.setOpaque(false);
 
-        var ifpeIcon = new FlatSVGIcon("images/ifpe_full.svg", 586, 78);
+        var ifpeIcon = new FlatSVGIcon("images/ifpe_full.svg", 0.4f);
         JLabel logoLabel = new JLabel(ifpeIcon);
         footer.add(logoLabel, BorderLayout.WEST);
 
         mainPanel.add(footer);
 
-        var xPPCIcon = new FlatSVGIcon("images/xppc_icon.svg", 64, 64);
+        var xPPCIcon = new FlatSVGIcon("images/xppc_icon.svg", 0.5f);
 
         JOptionPane.showMessageDialog(
                 this,

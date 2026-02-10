@@ -11,7 +11,7 @@ import java.awt.*;
 @Slf4j
 public class AppMain {
 
-    static void main() {
+    void main() {
 
         Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
 

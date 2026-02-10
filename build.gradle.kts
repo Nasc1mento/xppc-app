@@ -58,7 +58,6 @@ tasks.withType<ProcessResources> {
         expand(
             mapOf(
                 "name" to "xPPC - Aplicação para Geração Automatizada de Projetos Pedagógicos de Cursos Superiores do IFPE",
-                "shortname" to "xPPC",
                 "version" to version
             ),
         )

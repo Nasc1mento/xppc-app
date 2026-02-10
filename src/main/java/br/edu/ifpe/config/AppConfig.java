@@ -28,10 +28,6 @@ public class AppConfig {
         return properties.getProperty(getKey("name"), "Nome Desconhecido");
     }
 
-    public static String getShortname() {
-        return properties.getProperty(getKey("shortname"), "Nome Desconhecido");
-    }
-
     private static String getKey(String name) {
         return "app." + name;
     }

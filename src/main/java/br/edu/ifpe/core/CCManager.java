@@ -1,4 +1,4 @@
-package br.edu.ifpe.services;
+package br.edu.ifpe.core;
 
 import br.edu.ifpe.utils.Eval;
 import br.edu.ifpe.models.CC;

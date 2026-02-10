@@ -1,4 +1,4 @@
-package br.edu.ifpe.services;
+package br.edu.ifpe.core;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;

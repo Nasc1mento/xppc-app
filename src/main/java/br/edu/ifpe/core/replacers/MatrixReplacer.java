@@ -1,10 +1,10 @@
-package br.edu.ifpe.services.replacers;
+package br.edu.ifpe.core.replacers;
 
 import br.edu.ifpe.helpers.TableHelper;
-import br.edu.ifpe.services.CCManager;
+import br.edu.ifpe.core.CCManager;
 import br.edu.ifpe.helpers.TableTracker;
-import br.edu.ifpe.services.DocumentManager;
-import br.edu.ifpe.services.DocumentCursor;
+import br.edu.ifpe.core.DocumentManager;
+import br.edu.ifpe.core.DocumentCursor;
 import br.edu.ifpe.models.CC;
 import br.edu.ifpe.enums.CCType;
 import org.apache.poi.xwpf.usermodel.*;

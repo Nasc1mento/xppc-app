@@ -1,6 +1,6 @@
 package br.edu.ifpe.ui.config;
 
-import br.edu.ifpe.services.DocumentManager;
+import br.edu.ifpe.core.DocumentManager;
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import lombok.extern.slf4j.Slf4j;

@@ -1,6 +1,6 @@
 package br.edu.ifpe.ui.pages;
 
-import br.edu.ifpe.services.PlaceholderManager;
+import br.edu.ifpe.core.PlaceholderManager;
 import br.edu.ifpe.ui.components.ISubmittable;
 import br.edu.ifpe.ui.components.LabeledEnumComboBox;
 import br.edu.ifpe.ui.components.Page;

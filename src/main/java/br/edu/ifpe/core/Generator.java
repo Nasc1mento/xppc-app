@@ -1,6 +1,6 @@
-package br.edu.ifpe.services;
+package br.edu.ifpe.core;
 
-import br.edu.ifpe.services.replacers.*;
+import br.edu.ifpe.core.replacers.*;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;

@@ -1,7 +1,7 @@
 package br.edu.ifpe.ui.pages;
 
-import br.edu.ifpe.services.DocumentManager;
-import br.edu.ifpe.services.Generator;
+import br.edu.ifpe.core.DocumentManager;
+import br.edu.ifpe.core.Generator;
 import br.edu.ifpe.ui.components.*;
 
 import javax.swing.*;

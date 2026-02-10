@@ -1,6 +1,6 @@
-package br.edu.ifpe.services.replacers;
+package br.edu.ifpe.core.replacers;
 
-import br.edu.ifpe.services.DocumentManager;
+import br.edu.ifpe.core.DocumentManager;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 
 import java.io.FileOutputStream;

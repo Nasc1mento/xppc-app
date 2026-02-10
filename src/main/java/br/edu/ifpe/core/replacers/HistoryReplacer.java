@@ -1,9 +1,9 @@
-package br.edu.ifpe.services.replacers;
+package br.edu.ifpe.core.replacers;
 
-import br.edu.ifpe.services.PlaceholderManager;
+import br.edu.ifpe.core.PlaceholderManager;
 import br.edu.ifpe.readers.CampusReader;
-import br.edu.ifpe.services.DocumentManager;
-import br.edu.ifpe.services.DocumentCursor;
+import br.edu.ifpe.core.DocumentManager;
+import br.edu.ifpe.core.DocumentCursor;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.xmlbeans.XmlCursor;

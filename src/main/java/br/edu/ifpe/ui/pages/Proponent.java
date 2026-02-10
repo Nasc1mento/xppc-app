@@ -1,7 +1,7 @@
 package br.edu.ifpe.ui.pages;
 
 
-import br.edu.ifpe.services.PlaceholderManager;
+import br.edu.ifpe.core.PlaceholderManager;
 import br.edu.ifpe.readers.CampusReader;
 import br.edu.ifpe.ui.components.ComboBox;
 import br.edu.ifpe.ui.components.ISubmittable;
@@ -12,7 +12,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.Map;
 
 public class Proponent extends Page implements ISubmittable {
 

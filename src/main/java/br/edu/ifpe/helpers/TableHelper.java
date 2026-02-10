@@ -1,6 +1,6 @@
 package br.edu.ifpe.helpers;
 
-import br.edu.ifpe.services.DocumentManager;
+import br.edu.ifpe.core.DocumentManager;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFTable;

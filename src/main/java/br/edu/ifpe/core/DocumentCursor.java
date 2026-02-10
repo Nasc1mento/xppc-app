@@ -1,4 +1,4 @@
-package br.edu.ifpe.services;
+package br.edu.ifpe.core;
 
 import br.edu.ifpe.helpers.TableTracker;
 import org.apache.poi.xwpf.usermodel.*;

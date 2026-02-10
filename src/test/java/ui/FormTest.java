@@ -16,7 +16,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class EmptyFormTest extends AssertJSwingTestCaseTemplate {
+public class FormTest extends AssertJSwingTestCaseTemplate {
 
     private FrameFixture window;
 
@@ -36,7 +36,7 @@ public class EmptyFormTest extends AssertJSwingTestCaseTemplate {
     }
 
     @Test
-    public void test() {
+    public void emptyForm() {
         JButtonFixture forwardBtn = window.button("forwardBtn");
 
         while (forwardBtn.isEnabled()) {

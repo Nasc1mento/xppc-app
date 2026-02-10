@@ -13,7 +13,8 @@ import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.extras.FlatSVGUtils;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;
@@ -22,8 +23,11 @@ import javax.swing.border.MatteBorder;
 import java.awt.*;
 import java.util.List;
 
-@Slf4j
 public class MainWindow extends JFrame {
+
+    private static final Logger log = LoggerFactory.getLogger(MainWindow.class);
+
+
     private int currentPage = 0;
 
     private final CardLayout cardLayout = new CardLayout();

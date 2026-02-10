@@ -1,7 +1,8 @@
 package br.edu.ifpe.core;
 
 import br.edu.ifpe.core.replacers.*;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.List;
@@ -9,8 +10,10 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 
-@Slf4j
 public class Generator implements AutoCloseable {
+
+    private static final Logger log = LoggerFactory.getLogger(Generator.class);
+
 
     private List<IReplacer> list;
     private final DocumentManager documentManager = DocumentManager.INSTANCE;

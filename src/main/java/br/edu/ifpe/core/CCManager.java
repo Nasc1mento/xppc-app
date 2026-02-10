@@ -1,9 +1,8 @@
 package br.edu.ifpe.core;
 
-import br.edu.ifpe.utils.Eval;
-import br.edu.ifpe.models.CC;
 import br.edu.ifpe.enums.CCType;
-import lombok.Getter;
+import br.edu.ifpe.models.CC;
+import br.edu.ifpe.utils.Eval;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,11 +11,22 @@ public enum CCManager {
 
     INSTANCE;
 
-    @Getter
     public static class Sum {
         private String totalHa = "0.00";
         private String totalHr =  "0.00";
         private String totalExt =  "0.00";
+
+        public String getTotalExt() {
+            return totalExt;
+        }
+
+        public String getTotalHa() {
+            return totalHa;
+        }
+
+        public String getTotalHr() {
+            return totalHr;
+        }
     }
 
 

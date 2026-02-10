@@ -1,11 +1,5 @@
 package br.edu.ifpe.enums;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
-
-@AllArgsConstructor
-@Getter
 public enum Status implements ILabeledEnum {
     OPTION1("Aguardando autorização do conselho superior"),
     OPTION2("Autorizado pelo conselho superior"),
@@ -14,4 +8,13 @@ public enum Status implements ILabeledEnum {
     OPTION5("Cadastrado no SISTEC");
 
     private final String label;
+
+    Status(String label) {
+        this.label = label;
+    }
+
+    @Override
+    public String getLabel() {
+        return label;
+    }
 }

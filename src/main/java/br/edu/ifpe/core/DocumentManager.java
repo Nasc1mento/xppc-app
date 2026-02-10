@@ -1,8 +1,8 @@
 package br.edu.ifpe.core;
 
-import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -11,11 +11,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 
-@Slf4j
-@Getter
+
 public enum DocumentManager {
 
     INSTANCE;
+
+    private static final Logger log = LoggerFactory.getLogger(DocumentManager.class);
 
     private Path outputPath;
     private final Path tempPath = Path.of("ppc_temp.docx");
@@ -24,6 +25,14 @@ public enum DocumentManager {
         this.outputPath = outputPath;
 
         log.debug("Output path defined: {}", this.outputPath);
+    }
+
+    public Path getOutputPath() {
+        return outputPath;
+    }
+
+    public Path getTempPath() {
+        return tempPath;
     }
 
     public static InputStream loadResourceStream(final String name) {

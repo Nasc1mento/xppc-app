@@ -2,7 +2,6 @@ package br.edu.ifpe.ui.pages;
 
 import br.edu.ifpe.ui.components.Page;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
-import lombok.AllArgsConstructor;
 
 import javax.swing.*;
 import java.awt.*;
@@ -44,7 +43,6 @@ public class Cover extends Page {
             });
         }
 
-        @AllArgsConstructor
         private enum LogoState {
             INITIAL("images/xppc_full.svg", 0.5f),
             XPPC_SMALL("images/xppc_icon.svg", 1f),
@@ -53,6 +51,11 @@ public class Cover extends Page {
 
             final String path;
             final float scale;
+
+            LogoState(String path, float scale) {
+                this.path = path;
+                this.scale = scale;
+            }
         }
 
         private void updateIconState() {

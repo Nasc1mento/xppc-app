@@ -1,7 +1,5 @@
 package br.edu.ifpe.readers;
 
-import lombok.AllArgsConstructor;
-
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
@@ -10,13 +8,16 @@ public class CNCTReader extends AbstractCSVReader {
 
     public static final CNCTReader INSTANCE = new CNCTReader();
 
-    @AllArgsConstructor
     private enum Columns {
         AXIS(0),
         NAME(2),
         MINIMUM_SUM_OF_CREDIT_HOURS(5);
 
         private final int index;
+
+        Columns(int index) {
+            this.index = index;
+        }
     }
 
     private CNCTReader() {

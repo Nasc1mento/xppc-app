@@ -3,14 +3,17 @@ package br.edu.ifpe.ui.config;
 import br.edu.ifpe.core.DocumentManager;
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
-@Slf4j
 public class ThemeConfig {
+
+    private static final Logger log = LoggerFactory.getLogger(ThemeConfig.class);
+
 
     public static void setup() {
         System.setProperty("sun.java2d.uiScale", "1.0");

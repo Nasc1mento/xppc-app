@@ -1,7 +1,5 @@
 package br.edu.ifpe.readers;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 import org.apache.commons.csv.CSVRecord;
 
 import java.nio.charset.StandardCharsets;
@@ -11,13 +9,15 @@ public class PeopleReader extends AbstractCSVReader {
 
     public static final PeopleReader INSTANCE = new PeopleReader();
 
-    @AllArgsConstructor
-    @Getter
     private enum Columns {
         NAME(0),
         ROLE(1);
 
         private final int index;
+
+        Columns(int index) {
+            this.index = index;
+        }
     }
 
     public record Person(

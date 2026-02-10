@@ -1,9 +1,10 @@
 package br.edu.ifpe.readers;
 
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVFormat.Builder;
 import org.apache.commons.csv.CSVRecord;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -12,8 +13,9 @@ import java.util.List;
 import java.util.Objects;
 
 
-@Slf4j
 public abstract class AbstractCSVReader {
+
+    private static final Logger log = LoggerFactory.getLogger(AbstractCSVReader.class);
 
     private final String fileName;
     private final Charset charset;

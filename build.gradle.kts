@@ -28,13 +28,9 @@ dependencies {
     implementation(libs.apache.commons.jexl3)
     implementation(libs.apache.poi)
     implementation(libs.apache.poi.ooxml)
-    implementation(libs.lombok)
     implementation(libs.logback)
     implementation(libs.flatlaf)
     implementation(libs.flatlaf.extras)
-
-    compileOnly(libs.lombok)
-    annotationProcessor(libs.lombok)
 
     testImplementation(libs.assert.swing)
     testImplementation(platform(libs.junit.bom))

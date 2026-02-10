@@ -3,13 +3,15 @@ package br.edu.ifpe.launcher;
 import br.edu.ifpe.config.AppConfig;
 import br.edu.ifpe.ui.config.ThemeConfig;
 import br.edu.ifpe.ui.frames.MainWindow;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import java.awt.*;
 
-@Slf4j
 public class AppMain {
+
+    private static final Logger log = LoggerFactory.getLogger(AppMain.class);
 
     void main() {
 

@@ -27,6 +27,7 @@ public class Cover extends Page {
         private int clickCounter = 0;
 
         public xPPCLogo() {
+            setCursor(new Cursor(Cursor.HAND_CURSOR));
             initialIcon();
 
             this.addMouseListener(new MouseAdapter() {

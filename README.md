@@ -16,6 +16,17 @@ Coordenadores de curso, diretores de ensino, membros de Núcleos Docentes Estrut
 
 O aplicativo padroniza a criação de PPCs no IFPE, torna o processo mais rápido, evita erros de cálculos e fragmentação de informações comuns na escrita manual.
 
+
+## Equipe
+
+| Nome                             | Função                        | Vínculo       |
+|:---------------------------------|:------------------------------|:--------------|
+| **Adryan Nascimento Reis**       | Desenvolvedor / Estudante     | IFPE Igarassu |
+| **Allan Diego Silva Lima**       | Professor Orientador          | IFPE Igarassu |
+| **Magadã Marinho Rocha de Lira** | Pró-reitora de Ensino do IFPE | Proden        |
+| **TODO**                         | TODO                          | TODO          |
+
+
 ## Capturas de tela
 
 <img width="1920" height="1035" alt="Página de capa do sistema - Modo Escuro" src="screenshots/cover_dark.png" />

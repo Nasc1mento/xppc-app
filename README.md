@@ -16,21 +16,20 @@ Coordenadores de curso, diretores de ensino, membros de Núcleos Docentes Estrut
 
 O aplicativo padroniza a criação de PPCs no IFPE, torna o processo mais rápido, evita erros de cálculos e fragmentação de informações comuns na escrita manual.
 
-
 ## Equipe
 
-| Nome                                     | Função                                                                              | Vínculo                |
-|:-----------------------------------------|:------------------------------------------------------------------------------------|:-----------------------|
-| **Adryan Nascimento Reis**               | Desenvolvedor / Estudante                                                           | IFPE - Campus Igarassu |
-| **Allan Diego Silva Lima**               | Professor Orientador                                                                | IFPE - Campus Igarassu |
-| **Magadã Marinho Rocha de Lira**         | Pró-reitora de Ensino do IFPE                                                       | Proden                 |
+| Nome                                     | Função                                                                | Vínculo                |
+|:-----------------------------------------|:----------------------------------------------------------------------|:-----------------------|
+| **Adryan Nascimento Reis**               | Desenvolvedor / Estudante                                             | IFPE - Campus Igarassu |
+| **Allan Diego Silva Lima**               | Professor Orientador                                                  | IFPE - Campus Igarassu |
+| **Magadã Marinho Rocha de Lira**         | Pró-reitora de Ensino do IFPE                                         | Proden                 |
 | **Alexandre Manoel de Farias**           | Assessor do Setor de Avaliação e Acompanhamento dos Cursos Superiores | SAAC/Proden            |
-| **Ana Kelly Figueiredo dos Santos**      | Pedagoga da Assessoria Pedagógica | ASPE/Proden            |
-| **Fátima Cristina Rodrigues de Freitas** | Pedagoga da Assessoria Pedagógica | ASPE/Proden            |
-| **Kamylla Alexandre Leite dos Santos**   | Chefe do Setor de Avaliação e Acompanhamento dos Cursos Superiores| SAAC/Proden            |
-| **Lenilton Souza Ferreira de Lima**      | Diretor da Gestão e Coordenação Acadêmica | DGCA/Proden            |
-| **Raul Bueno Lins Campos**               | Diretor de Desenvolvimento do Ensino | DDEN/Proden            |
-| **Rebeca Mirelli da Silva**              | Estagiária da Assessoria Pedagógica | ASPE/Proden            |
+| **Ana Kelly Figueiredo dos Santos**      | Pedagoga da Assessoria Pedagógica                                     | ASPE/Proden            |
+| **Fátima Cristina Rodrigues de Freitas** | Pedagoga da Assessoria Pedagógica                                     | ASPE/Proden            |
+| **Kamylla Alexandre Leite dos Santos**   | Chefe do Setor de Avaliação e Acompanhamento dos Cursos Superiores    | SAAC/Proden            |
+| **Lenilton Souza Ferreira de Lima**      | Diretor da Gestão e Coordenação Acadêmica                             | DGCA/Proden            |
+| **Raul Bueno Lins Campos**               | Diretor de Desenvolvimento do Ensino                                  | DDEN/Proden            |
+| **Rebeca Mirelli da Silva**              | Estagiária da Assessoria Pedagógica                                   | ASPE/Proden            |
 
 ## Capturas de tela
 

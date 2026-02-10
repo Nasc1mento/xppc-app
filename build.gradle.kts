@@ -67,7 +67,7 @@ tasks.withType<ProcessResources> {
 tasks.shadowJar {
     manifest {
         attributes(
-            "SplashScreen-Image" to "loading.gif"
+            "SplashScreen-Image" to "images/xppc_loading.gif"
         )
     }
 }

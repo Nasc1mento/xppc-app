@@ -1,3 +1,5 @@
-# Modelo de Monografia - IFPE Igarassu
+# Monografia - Adryan Nascimento Reis
 
-Este projeto é uma adaptação das customizações do abntex2 desenvolvidas originalmente para o IFPI (Campus Corrente) pelo Prof. Tulio Vidal - Campus Corrente, e adaptado por mim para atender aos padrões de identidade visual e normas do Instituto Federal de Pernambuco - Campus Igarassu.
+## XPPC: Aplicação para geração automatizada de Projetos Pedagógico de Curso do IFPE
+
+Trabalho de Conclusão de Curso (monografia) apresentado como exigência parcial para obtenção do diploma do Curso de Sistemas para Internet do Instituto Federal de Educação, Ciência e Tecnologia de Pernambuco, Campus Igarassu.

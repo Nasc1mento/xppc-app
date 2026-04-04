@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=xPPC
+Comment=Aplicação para geração automatizada Projeto Pedagógico de Curso do IFPE
+Keywords=xppc;ifpe;
+Exec=xppc
+Icon=br.ifpe.edu.xppc
+Categories=Utilities;

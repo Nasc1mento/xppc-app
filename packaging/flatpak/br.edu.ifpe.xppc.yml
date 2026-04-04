@@ -1,4 +1,4 @@
-id: br.ifpe.edu.xppc
+id: br.edu.ifpe.xppc
 runtime: org.freedesktop.Platform
 runtime-version: "25.08"
 sdk: org.freedesktop.Sdk

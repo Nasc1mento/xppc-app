@@ -5,5 +5,5 @@ Name=xPPC
 Comment=Aplicação para geração automatizada Projeto Pedagógico de Curso do IFPE
 Keywords=xppc;ifpe;
 Exec=xppc
-Icon=br.ifpe.edu.xppc
+Icon=br.edu.ifpe.xppc
 Categories=Utilities;

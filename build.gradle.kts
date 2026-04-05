@@ -8,12 +8,6 @@ plugins {
 group = "br.edu.ifpe"
 version = libs.versions.app.version.get()
 
-java {
-    toolchain {
-        languageVersion.set(JavaLanguageVersion.of(libs.versions.java.get()))
-    }
-}
-
 
 application {
     mainClass.set("br.edu.ifpe.launcher.AppMain")

@@ -31,8 +31,8 @@ modules:
         url: https://github.com/Nasc1mento/xppc-app.git
         commit: 4849cc9c0670612f7690f2619e9fccd3be41c676
       - type: file
-        url: https://raw.githubusercontent.com/Nasc1mento/xppc-app/ad9439c19a54f294546a7e655ee8ee9c49ccc6ad/packaging/flatpak/xppc.sh
-        sha256: 446d96e756f596e5324c8f8fa572600b71bdcd74e1b85729450c04993de0f27e
+        url: https://raw.githubusercontent.com/Nasc1mento/xppc-app/33d786dcabf18aa738b4510f1a3abd5d00a0e4da/packaging/flatpak/xppc.sh
+        sha256: 5892e25ea701cfdc64b528570283c4de1edc94df95c438465e614c79f0b6f025
       - type: file
         url: https://raw.githubusercontent.com/Nasc1mento/xppc-app/ad9439c19a54f294546a7e655ee8ee9c49ccc6ad/packaging/flatpak/br.edu.ifpe.xppc.desktop
         sha256: 358884675ec09aa677a3ed5cae3cfde19fb29b63fe314170b6ab14c4e578de4d

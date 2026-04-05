@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+    <id>io.github.nasc1mento.xppc</id>
+
+    <name>xppc</name>
+    <summary>Automated Tool for IFPE Pedagogical Course Projects (PPC)</summary>
+
+    <metadata_license>MIT</metadata_license>
+    <project_license>GPL-3.0-only</project_license>
+
+    <developer id="io.github.nasc1mento">
+        <name>Adryan Nascimento Reis</name>
+    </developer>
+
+    <categories>
+        <category>Office</category>
+        <category>Education</category>
+    </categories>
+
+    <keywords>
+        <keyword>IDE</keyword>
+        <keyword>development</keyword>
+    </keywords>
+
+    <icon type="stock">br.edu.ifpe</icon>
+
+    <recommends>
+        <display_length compare="ge">768</display_length>
+    </recommends>
+
+    <description>
+        <p>
+            Java-based tool for the automation of Pedagogical Course Projects (PPC) at IFPE. It uses forms to receive user data, compile it, and generate a standarized document.
+        </p>
+    </description>
+
+    <content_rating type="oars-1.1" />
+
+    <branding>
+        <color type="primary" scheme_preference="light">#FFFFFF</color>
+        <color type="primary" scheme_preference="dark">#C7C7CC</color>
+    </branding>
+
+    <launchable type="desktop-id">br.edu.ifpe.xppc.desktop</launchable>
+    <screenshots>
+        <screenshot type="default">
+            <image>https://raw.githubusercontent.com/Nasc1mento/xppc-app/master/screenshots/cover_dark.png</image>
+        </screenshot>
+        <screenshot>
+            <image>https://raw.githubusercontent.com/Nasc1mento/xppc-app/master/screenshots/proponent_dark.png</image>
+        </screenshot>
+        <screenshot>
+            <image>https://raw.githubusercontent.com/Nasc1mento/xppc-app/master/screenshots/success_dark.png</image>
+        </screenshot>
+    </screenshots>
+
+    <url type="homepage">https://github.com/Nasc1mento/xppc-app</url>
+
+</component>

@@ -1,8 +1,8 @@
 plugins {
     alias(libs.plugins.java)
     alias(libs.plugins.application)
-    alias(libs.plugins.shadow)
-    alias(libs.plugins.flatpak.gradle.generator)
+//    alias(libs.plugins.shadow)
+//    alias(libs.plugins.flatpak.gradle.generator)
 }
 
 group = "br.edu.ifpe"
@@ -62,16 +62,16 @@ tasks.withType<ProcessResources> {
     }
 }
 
-tasks.shadowJar {
-    manifest {
-        attributes(
-            "SplashScreen-Image" to "images/xppc_loading.gif"
-        )
-    }
-}
+//tasks.shadowJar {
+//    manifest {
+//        attributes(
+//            "SplashScreen-Image" to "images/xppc_loading.gif"
+//        )
+//    }
+//}
 
-tasks.withType<io.github.jwharm.flatpakgradlegenerator.FlatpakGradleGeneratorTask> {
-    outputFile.set(file("flatpak-sources.json"))
-    downloadDirectory.set("./offline-repository")
-    excludeConfigurations.set(listOf("testCompileClasspath", "testRuntimeClasspath"))
-}
+//tasks.withType<io.github.jwharm.flatpakgradlegenerator.FlatpakGradleGeneratorTask> {
+//    outputFile.set(file("flatpak-sources.json"))
+//    downloadDirectory.set("./offline-repository")
+//    excludeConfigurations.set(listOf("testCompileClasspath", "testRuntimeClasspath"))
+//}

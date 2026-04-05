@@ -18,10 +18,9 @@ modules:
       - "/usr/lib/sdk/openjdk25/install.sh"
   - name: xppc
     buildsystem: simple
-    build-options:
-      append-path: /usr/lib/sdk/gradle/bin
     build-commands:
-      - PATH=/app/jre/bin:/usr/bin ./gradlew clean build --offline -Pmaven.repo.local=./offline-repository
+      - export GRADLE_USER_HOME=$PWD/.gradle
+      - PATH=/app/jre/bin:/usr/bin ./gradle-bin/bin/gradle clean build --offline
       - install -Dm755 build/libs/xppc-1.0.0-all.jar /app/bin/xppc-1.0.0-all.jar
       - install -Dm755 xppc.sh /app/bin/xppc
       - install -D br.edu.ifpe.xppc.desktop /app/share/applications/br.edu.ifpe.xppc.desktop
@@ -30,7 +29,7 @@ modules:
     sources:
       - type: git
         url: https://github.com/Nasc1mento/xppc-app.git
-        commit: ad9439c19a54f294546a7e655ee8ee9c49ccc6ad
+        commit: 320afd94f3df93e75a12e148c48b857e447e089c
       - type: file
         url: https://raw.githubusercontent.com/Nasc1mento/xppc-app/ad9439c19a54f294546a7e655ee8ee9c49ccc6ad/packaging/flatpak/xppc.sh
         sha256: 446d96e756f596e5324c8f8fa572600b71bdcd74e1b85729450c04993de0f27e
@@ -43,4 +42,8 @@ modules:
       - type: file
         url: https://raw.githubusercontent.com/Nasc1mento/xppc-app/ad9439c19a54f294546a7e655ee8ee9c49ccc6ad/packaging/flatpak/br.edu.ifpe.xppc.metainfo.xml
         sha256: b7ef558ca43610659f55e6f22fbcd086afce1129537c309e02ba2de8feeb6afd
+      - type: archive
+        url: https://services.gradle.org/distributions/gradle-9.4.1-bin.zip
+        sha256: 2ab2958f2a1e51120c326cad6f385153bb11ee93b3c216c5fccebfdfbb7ec6cb
+        dest: gradle-bin
       - flatpak-sources.json

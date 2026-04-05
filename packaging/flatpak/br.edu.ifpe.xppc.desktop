@@ -2,7 +2,7 @@
 Version=1.0
 Type=Application
 Name=xPPC
-Comment=Aplicação para geração automatizada Projeto Pedagógico de Curso do IFPE
+Comment= Java-based tool for the automation of Pedagogical Course Projects (PPC) at IFPE.
 Keywords=xppc;ifpe;
 Exec=xppc
 Icon=br.edu.ifpe.xppc

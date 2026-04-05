@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.java)
     alias(libs.plugins.application)
     alias(libs.plugins.shadow)
+    alias(libs.plugins.flatpak.gradle.generator)
 }
 
 group = "br.edu.ifpe"
@@ -21,6 +22,7 @@ application {
 
 repositories {
     mavenCentral()
+    maven { url = uri("./offline-repository") }
 }
 
 dependencies {
@@ -66,4 +68,10 @@ tasks.shadowJar {
             "SplashScreen-Image" to "images/xppc_loading.gif"
         )
     }
+}
+
+tasks.withType<io.github.jwharm.flatpakgradlegenerator.FlatpakGradleGeneratorTask> {
+    outputFile.set(file("flatpak-sources.json"))
+    downloadDirectory.set("./offline-repository")
+    excludeConfigurations.set(listOf("testCompileClasspath", "testRuntimeClasspath"))
 }

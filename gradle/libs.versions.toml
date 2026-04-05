@@ -12,6 +12,7 @@ apache-commons-jexl3 = "3.6.0"
 assertj-swing = "3.17.1"
 logback = "1.5.22"
 flatlaf = "3.6.1"
+flatpak-gradle-generator = "1.7.0"
 
 
 [libraries]
@@ -35,4 +36,5 @@ junit-launcher = { module = "org.junit.platform:junit-platform-launcher" }
 java = { id = "java" }
 application = { id = "application" }
 shadow = { id = "com.gradleup.shadow", version.ref = "shadow"}
+flatpak-gradle-generator = { id = "io.github.jwharm.flatpak-gradle-generator", version.ref = "flatpak-gradle-generator" }
 

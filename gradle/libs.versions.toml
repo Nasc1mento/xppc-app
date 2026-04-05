@@ -4,7 +4,7 @@ java = "25"
 
 app-version = "1.0.0"
 
-shadow = "9.2.2"
+shadow = "9.4.1"
 
 apache-poi = "5.5.1"
 apache-commons-csv = "1.14.1"
@@ -12,7 +12,7 @@ apache-commons-jexl3 = "3.6.0"
 assertj-swing = "3.17.1"
 logback = "1.5.22"
 flatlaf = "3.6.1"
-flatpak-gradle-generator = "1.7.0"
+flatpak-gradle-generator = "1.5.0"
 
 
 [libraries]

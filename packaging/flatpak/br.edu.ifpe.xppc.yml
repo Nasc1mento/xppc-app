@@ -2,9 +2,9 @@ id: br.edu.ifpe.xppc
 runtime: org.freedesktop.Platform
 runtime-version: "25.08"
 sdk: org.freedesktop.Sdk
+command: xppc
 sdk-extensions:
   - org.freedesktop.Sdk.Extension.openjdk25
-command: xppc
 finish-args:
   - --share=ipc
   - --socket=x11
@@ -18,25 +18,29 @@ modules:
       - "/usr/lib/sdk/openjdk25/install.sh"
   - name: xppc
     buildsystem: simple
+    build-options:
+      append-path: /usr/lib/sdk/gradle/bin
     build-commands:
+      - PATH=/app/jre/bin:/usr/bin ./gradlew clean build --offline -Pmaven.repo.local=./offline-repository
+      - install -Dm755 build/libs/xppc-1.0.0-all.jar /app/bin/xppc-1.0.0-all.jar
       - install -Dm755 xppc.sh /app/bin/xppc
-      - install -Dm644 xppc-1.0.0-all.jar /app/bin/xppc-1.0.0-all.jar
       - install -D br.edu.ifpe.xppc.desktop /app/share/applications/br.edu.ifpe.xppc.desktop
       - install -D br.edu.ifpe.xppc.svg /app/share/icons/hicolor/scalable/apps/br.edu.ifpe.xppc.svg
       - install -Dm644 br.edu.ifpe.xppc.metainfo.xml /app/share/metainfo/br.edu.ifpe.xppc.metainfo.xml
     sources:
+      - type: git
+        url: https://github.com/Nasc1mento/xppc-app.git
+        commit: ad9439c19a54f294546a7e655ee8ee9c49ccc6ad
       - type: file
-        url: https://github.com/Nasc1mento/xppc-app/releases/download/v1.0.0/xppc-1.0.0-all.jar
-        sha256: b1523c7570b8cc71b43974d70df3179dc5d3313fa90919bf8c557233bcbf9043
-      - type: file
-        url: https://raw.githubusercontent.com/Nasc1mento/xppc-app/master/packaging/flatpak/xppc.sh
+        url: https://raw.githubusercontent.com/Nasc1mento/xppc-app/ad9439c19a54f294546a7e655ee8ee9c49ccc6ad/packaging/flatpak/xppc.sh
         sha256: 446d96e756f596e5324c8f8fa572600b71bdcd74e1b85729450c04993de0f27e
       - type: file
-        url: https://raw.githubusercontent.com/Nasc1mento/xppc-app/master/packaging/flatpak/br.edu.ifpe.xppc.desktop
+        url: https://raw.githubusercontent.com/Nasc1mento/xppc-app/ad9439c19a54f294546a7e655ee8ee9c49ccc6ad/packaging/flatpak/br.edu.ifpe.xppc.desktop
         sha256: 358884675ec09aa677a3ed5cae3cfde19fb29b63fe314170b6ab14c4e578de4d
       - type: file
-        url: https://raw.githubusercontent.com/Nasc1mento/xppc-app/master/packaging/flatpak/br.edu.ifpe.xppc.svg
+        url: https://raw.githubusercontent.com/Nasc1mento/xppc-app/ad9439c19a54f294546a7e655ee8ee9c49ccc6ad/packaging/flatpak/br.edu.ifpe.xppc.svg
         sha256: 7af55c755e70742e34b73e404a335dc965d86c9709f76d66d0909917fc56821e
       - type: file
-        url: https://raw.githubusercontent.com/Nasc1mento/xppc-app/master/packaging/flatpak/br.edu.ifpe.xppc.metainfo.xml
+        url: https://raw.githubusercontent.com/Nasc1mento/xppc-app/ad9439c19a54f294546a7e655ee8ee9c49ccc6ad/packaging/flatpak/br.edu.ifpe.xppc.metainfo.xml
         sha256: b7ef558ca43610659f55e6f22fbcd086afce1129537c309e02ba2de8feeb6afd
+      - flatpak-sources.json

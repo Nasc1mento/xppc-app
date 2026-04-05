@@ -23,6 +23,7 @@ modules:
       - install -Dm644 xppc-1.0.0-all.jar /app/bin/xppc-1.0.0-all.jar
       - install -D br.edu.ifpe.xppc.desktop /app/share/applications/br.edu.ifpe.xppc.desktop
       - install -D br.edu.ifpe.xppc.svg /app/share/icons/hicolor/scalable/apps/br.edu.ifpe.xppc.svg
+      - install -D br.edu.ifpe.xppc.appdata.xml /app/share/metainfo
     sources:
       - type: file
         url: https://github.com/Nasc1mento/xppc-app/releases/download/v1.0.0/xppc-1.0.0-all.jar
@@ -37,5 +38,5 @@ modules:
         url: https://raw.githubusercontent.com/Nasc1mento/xppc-app/master/packaging/flatpak/br.edu.ifpe.xppc.svg
         sha256: 7af55c755e70742e34b73e404a335dc965d86c9709f76d66d0909917fc56821e
       - type: file
-        url: https://raw.githubusercontent.com/Nasc1mento/xppc-app/master/packaging/flatpak/br.edu.ifpe.appdata.xml
+        url: https://raw.githubusercontent.com/Nasc1mento/xppc-app/master/packaging/flatpak/br.edu.ifpe.xppc.metainfo.xml
         sha256: 8c54ec0b6e6b9f949002f6726a0adecb70ad870755c1e90516499d16536c5b86

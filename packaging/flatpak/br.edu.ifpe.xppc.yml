@@ -36,7 +36,7 @@ modules:
         sha256: 358884675ec09aa677a3ed5cae3cfde19fb29b63fe314170b6ab14c4e578de4d
       - type: file
         url: https://raw.githubusercontent.com/Nasc1mento/xppc-app/master/packaging/flatpak/br.edu.ifpe.xppc.svg
-        sha256: 7af55c755e70742e34b73e404a335dc965d86c9709f76d66d0909917fc56821e
+        sha256: b7ef558ca43610659f55e6f22fbcd086afce1129537c309e02ba2de8feeb6afd
       - type: file
         url: https://raw.githubusercontent.com/Nasc1mento/xppc-app/master/packaging/flatpak/br.edu.ifpe.xppc.metainfo.xml
         sha256: 490f0943ba91c9f231aabaf899f58a8bac5136f79f04a06e6f8a8b96c254d2d5

@@ -22,7 +22,7 @@
         <keyword>development</keyword>
     </keywords>
 
-    <icon type="stock">br.edu.ifpe</icon>
+    <icon type="stock">br.edu.ifpe.xppc</icon>
 
     <recommends>
         <display_length compare="ge">768</display_length>

@@ -19,9 +19,9 @@ modules:
   - name: xppc
     buildsystem: simple
     build-commands:
-      - export GRADLE_USER_HOME=$PWD/.gradle
-      - PATH=/app/jre/bin:/usr/bin ./gradle-bin/bin/gradle clean build --offline
-      - install -Dm755 build/libs/xppc-1.0.0-all.jar /app/bin/xppc-1.0.0-all.jar
+      - JAVA_HOME=/usr/lib/sdk/openjdk25/jvm/openjdk-25 PATH=/usr/lib/sdk/openjdk25/jvm/openjdk-25/bin:/usr/bin ./gradle-bin/bin/gradle --offline distTar
+      - mkdir -p /app/xppc
+      - tar -xf build/distributions/xppc-*.tar -C /app/xppc --strip-components=1
       - install -Dm755 xppc.sh /app/bin/xppc
       - install -D br.edu.ifpe.xppc.desktop /app/share/applications/br.edu.ifpe.xppc.desktop
       - install -D br.edu.ifpe.xppc.svg /app/share/icons/hicolor/scalable/apps/br.edu.ifpe.xppc.svg
@@ -29,7 +29,7 @@ modules:
     sources:
       - type: git
         url: https://github.com/Nasc1mento/xppc-app.git
-        commit: 2e747c995b6b5ab0d74385c92ab01c597e4ca9fb
+        commit: 4849cc9c0670612f7690f2619e9fccd3be41c676
       - type: file
         url: https://raw.githubusercontent.com/Nasc1mento/xppc-app/ad9439c19a54f294546a7e655ee8ee9c49ccc6ad/packaging/flatpak/xppc.sh
         sha256: 446d96e756f596e5324c8f8fa572600b71bdcd74e1b85729450c04993de0f27e

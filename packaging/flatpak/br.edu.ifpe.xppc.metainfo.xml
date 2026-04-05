@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop-application">
-    <id>io.github.nasc1mento.xppc</id>
+    <id>br.edu.ifpe.xppc</id>
 
     <name>xppc</name>
     <summary>Automated Tool for IFPE Pedagogical Course Projects (PPC)</summary>

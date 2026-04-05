@@ -1,8 +1,8 @@
-//pluginManagement {
-//    repositories {
-//        maven { url = uri("./offline-repository") }
-//    }
-//}
+pluginManagement {
+    repositories {
+        maven { url = uri("./offline-repository") }
+    }
+}
 
 
 rootProject.name = "xppc"

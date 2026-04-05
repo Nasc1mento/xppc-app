@@ -29,7 +29,7 @@ modules:
     sources:
       - type: git
         url: https://github.com/Nasc1mento/xppc-app.git
-        commit: 159faf678e44edc795bc82a7432b6bfb6905c99e
+        commit: 2e747c995b6b5ab0d74385c92ab01c597e4ca9fb
       - type: file
         url: https://raw.githubusercontent.com/Nasc1mento/xppc-app/ad9439c19a54f294546a7e655ee8ee9c49ccc6ad/packaging/flatpak/xppc.sh
         sha256: 446d96e756f596e5324c8f8fa572600b71bdcd74e1b85729450c04993de0f27e

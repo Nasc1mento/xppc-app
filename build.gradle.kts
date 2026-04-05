@@ -1,8 +1,6 @@
 plugins {
     alias(libs.plugins.java)
     alias(libs.plugins.application)
-//    alias(libs.plugins.shadow)
-//    alias(libs.plugins.flatpak.gradle.generator)
 }
 
 group = "br.edu.ifpe"

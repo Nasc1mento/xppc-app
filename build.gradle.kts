@@ -53,17 +53,3 @@ tasks.withType<ProcessResources> {
         )
     }
 }
-
-//tasks.shadowJar {
-//    manifest {
-//        attributes(
-//            "SplashScreen-Image" to "images/xppc_loading.gif"
-//        )
-//    }
-//}
-
-//tasks.withType<io.github.jwharm.flatpakgradlegenerator.FlatpakGradleGeneratorTask> {
-//    outputFile.set(file("flatpak-sources.json"))
-//    downloadDirectory.set("./offline-repository")
-//    excludeConfigurations.set(listOf("testCompileClasspath", "testRuntimeClasspath"))
-//}

@@ -44,16 +44,28 @@
     <launchable type="desktop-id">br.edu.ifpe.xppc.desktop</launchable>
     <screenshots>
         <screenshot type="default">
+            <caption>Main interface</caption>
             <image>https://raw.githubusercontent.com/Nasc1mento/xppc-app/master/screenshots/cover_dark.png</image>
         </screenshot>
         <screenshot>
+            <caption>Proponent information form</caption>
             <image>https://raw.githubusercontent.com/Nasc1mento/xppc-app/master/screenshots/proponent_dark.png</image>
         </screenshot>
         <screenshot>
+            <caption>Success screen after document generation</caption>
             <image>https://raw.githubusercontent.com/Nasc1mento/xppc-app/master/screenshots/success_dark.png</image>
         </screenshot>
     </screenshots>
 
     <url type="homepage">https://github.com/Nasc1mento/xppc-app</url>
+    <url type="vcs-browser">https://github.com/Nasc1mento/xppc-app</url>
+
+    <releases>
+        <release version="1.0.0" date="2026-05-05">
+            <description>
+                <p>Initial release of xPPC for IFPE</p>
+            </description>
+        </release>
+    </releases>
 
 </component>

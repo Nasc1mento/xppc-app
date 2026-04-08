@@ -4,6 +4,9 @@
 
 Ferramenta feita em Java para automação de Projetos Pedagógicos de Curso (PPC) no IFPE. Utiliza formulários para receber dados do usuário, compilar e gerar um documento padronizado.
 
+## Manual de utilização do software
+Para saber como instalar e utilizar o software, clique [aqui](MANUAL).
+
 ## Identidade visual
 
 [![Figma](https://img.icons8.com/?size=100&id=zfHRZ6i1Wg0U&format=png&color=000000)](https://www.figma.com/design/Mg9WcQK2FczpZGs8tZHU7X/xPPC-Identidade-Visual?node-id=0-1&t=EWEkKjxoj9sAWkN1-1)
@@ -57,5 +60,16 @@ O aplicativo padroniza a criação de PPCs no IFPE, torna o processo mais rápid
 <img width="530" height="308" alt="Mensagem de confirmação de sucesso na operação - Modo Escuro" src="screenshots/success_dark.png" />
 <img width="530" height="308" alt="Mensagem de confirmação de sucesso na operação - Modo Claro" src="screenshots/success_light.png" />
 
+## Licensa e registro
+
+Este software é licenciado sob a [GNU GPLv3](LICENSE).
+
+### Propriedade intelectual
+
+Registrado junto ao **Instituto Nacional da Propriedade Intelectual (INPI).**.
+
+- **Titular:** Instituto Federal de Educação, Ciência e Tecnologia de Pernambuco (IFPE).
+
+- **Processo n°:** BR512026002080-8
 
 

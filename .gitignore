@@ -42,4 +42,10 @@ bin/
 ### Mac OS ###
 .DS_Store
 
+
+## Flatpak ###
+.flatpak-builder/
+builddir/
+repo/
+
 *.log

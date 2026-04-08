@@ -138,7 +138,6 @@ public class MainWindow extends JFrame {
         for (int i = 0; i < forms.size(); i++) {
             int pageIndex = i;
             var btn = new JButton(String.valueOf(i + 1));
-            btn.putClientProperty("JButton.buttonType", "roundRect");
             btn.setMargin(new Insets(2, 8, 2, 8));
 
             if (i == currentPage) {

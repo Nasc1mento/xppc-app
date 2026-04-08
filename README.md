@@ -66,7 +66,7 @@ Este software é licenciado sob a [GNU GPLv3](LICENSE).
 
 ### Propriedade intelectual
 
-Registrado junto ao **Instituto Nacional da Propriedade Intelectual (INPI).**.
+Registrado junto ao **Instituto Nacional da Propriedade Industrial (INPI).**
 
 - **Titular:** Instituto Federal de Educação, Ciência e Tecnologia de Pernambuco (IFPE).
 

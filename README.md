@@ -5,7 +5,7 @@
 Ferramenta feita em Java para automação de Projetos Pedagógicos de Curso (PPC) no IFPE. Utiliza formulários para receber dados do usuário, compilar e gerar um documento padronizado.
 
 ## Manual de utilização do software
-Para saber como instalar e utilizar o software, clique [aqui](MANUAL).
+Para saber como instalar e utilizar o software, clique [aqui](MANUAL.md).
 
 ## Identidade visual
 

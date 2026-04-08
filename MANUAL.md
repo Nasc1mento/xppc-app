@@ -12,7 +12,7 @@
 
     2.3 [Compilar do código fonte](#compilar-do-código-fonte)
 
-3. [xPPC](#xppc)
+3. [Como utilizar?](#como-utilizar)
 
 # Introdução
 
@@ -28,8 +28,8 @@ Baixe o .dmg na versão desejada [aqui](https://github.com/Nasc1mento/xppc-app/r
 
 
 ## Linux
-<a href=''><img width='240' alt='Download on Flathub' src='https://flathub.org/assets/badges/flathub-badge-en.png'/></a>
+[![Flathub](https://flathub.org/assets/badges/flathub-badge-en.png)]()
 
-Caso não tenha o repositório do flathub adicionado, confira [este](https://flathub.org/en/setup) tutorial.
+Caso não tenha o repositório do flathub adicionado ou/e não tenha o flatpak instalado, confira [este](https://flathub.org/en/setup) tutorial.
 
-# xPPC
+# Como utilizar?

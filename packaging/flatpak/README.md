@@ -1,0 +1,1 @@
+[Manifesto](https://github.com/Nasc1mento/flathub/tree/my-app-submission)

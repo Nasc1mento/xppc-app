@@ -9,7 +9,6 @@ version = libs.versions.app.version.get()
 
 application {
     mainClass.set("br.edu.ifpe.launcher.AppMain")
-
 }
 
 repositories {

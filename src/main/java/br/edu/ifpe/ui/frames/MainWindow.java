@@ -83,7 +83,7 @@ public class MainWindow extends JFrame {
         titleBar.add(titleLabel, BorderLayout.CENTER);
         JPanel rightActions = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
         rightActions.add(aboutButton);
-        aboutButton.addActionListener(_ -> aboutButtonListener());
+        aboutButton.addActionListener(_ -> aboutMenu());
 
         titleBar.add(rightActions, BorderLayout.EAST);
 
@@ -182,7 +182,7 @@ public class MainWindow extends JFrame {
         }
     }
 
-    private void aboutButtonListener() {
+    private void aboutMenu() {
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
         mainPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
@@ -214,9 +214,8 @@ public class MainWindow extends JFrame {
             personRow.setOpaque(false);
 
             JLabel nLabel = new JLabel("• " + name);
-
             JLabel rLabel = new JLabel(": " + role);
-            rLabel.putClientProperty("FlatLaf.style", "font: $semibold.font");
+            rLabel.setFont(getFont().deriveFont(Font.PLAIN));
 
             personRow.add(nLabel);
             personRow.add(rLabel);

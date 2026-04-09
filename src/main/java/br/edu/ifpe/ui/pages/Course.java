@@ -35,6 +35,7 @@ public class Course extends Page implements ISubmittable {
     private final TextField seatsPerSemesterField = new TextField(10).setInteger();
     private final TextField startField = new TextField(15);
     private final TextField durationField = new TextField(10);
+    private final CheckBox notInternshipCheckbox = new CheckBox("Não possui estágio supervisionado");
 
     private final CNCTReader cnctReader = CNCTReader.INSTANCE;
     private final PlaceholderManager placeholderManager = PlaceholderManager.INSTANCE;
@@ -53,11 +54,11 @@ public class Course extends Page implements ISubmittable {
         addRow(new JLabel("Modalidade: "), modalityBox);
         addRow(new JLabel("Formas de oferta: "), offersField);
         addRow(new JLabel("Titulação: "), certificationField);
-        addRow(new JLabel("CH estágio supervisionado (H/R): "), internshipHoursField);
+        addRow(new JLabel("CH estágio supervisionado (H/R): "), internshipHoursField, notInternshipCheckbox);
         addRow(new JLabel("Número de semanas letivas: "), weeksField);
         addRow(new JLabel("Atividades Complementares (H/R): "),  extraActivitiesHoursField);
-        addRow(new JLabel("Período de integralização mínima(semestres e anos): "), minCompletionField);
-        addRow(new JLabel("Período de integralização máxima (semestre e anos): "), maxCompletionField);
+        addRow(new JLabel("Período de integralização mínima(em anos): "), minCompletionField);
+        addRow(new JLabel("Período de integralização máxima (em anos): "), maxCompletionField);
         addRow(new JLabel("Formas de acesso: "), entryMethodsField);
         addRow(new JLabel("Pré-requisito para ingresso: "), prereqField);
         addRow(new JLabel("Regime: "), regimeBox);
@@ -90,6 +91,11 @@ public class Course extends Page implements ISubmittable {
             if (CourseLevel.TECHNOLOGIST.equals(selectedLevel) && selectedName != null) {
                 axisField.setText(cnctReader.getAxisByName(selectedName));
            }
+        });
+
+        notInternshipCheckbox.addActionListener(_ -> {
+            internshipHoursField.clear();
+            internshipHoursField.setEnabled(!notInternshipCheckbox.isSelected());
         });
     }
 

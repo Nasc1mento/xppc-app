@@ -45,21 +45,22 @@ public abstract class Page extends JPanel {
     }
 
     protected void addRow(final Component ...cs) {
-        for (int i = 0; i < cs.length; i++) {
-            if (i == 0) {
-                gbc.gridx = 0;
-                gbc.gridy = this.row;
-                gbc.anchor = GridBagConstraints.EAST;
-                contentPanel.add(cs[0], gbc);
-            } else {
-                gbc.gridx = 1;
-                gbc.anchor = GridBagConstraints.WEST;
-                contentPanel.add(cs[i], gbc);
-                row++;
-            }
+    for (int i = 0; i < cs.length; i++) {
+        gbc.gridy = this.row;
+
+        if (i == 0) {
+            gbc.gridx = 0;
+            gbc.anchor = GridBagConstraints.EAST;
+            contentPanel.add(cs[i], gbc);
+            if (cs.length == 1) row++; 
+        } else {
+            gbc.gridx = 1;
+            gbc.anchor = GridBagConstraints.WEST;
+            contentPanel.add(cs[i], gbc);
+            row++;
         }
-        row++;
     }
+}
 
     protected void addRow(final Component cs, final int alignment) {
         gbc.gridx = 1;

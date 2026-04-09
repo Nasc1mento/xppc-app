@@ -10,7 +10,6 @@ jobs:
     runs-on: windows-latest
     outputs:
       app_version: ${{ steps.get_version.outputs.VERSION }}
-
     steps:
       - uses: actions/checkout@v4
 
@@ -21,8 +20,8 @@ jobs:
 
       - uses: gradle/actions/setup-gradle@v3
 
-      - name: gradle build
-        run: ./gradlew clean build
+      - name: gradle build distribution
+        run: ./gradlew clean distTar
 
       - name: version
         id: get_version
@@ -32,37 +31,18 @@ jobs:
           echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
           echo "APP_VERSION=$VERSION" >> $GITHUB_ENV
 
-      - name: upload uberjar
-        uses: actions/upload-artifact@v4
-        with:
-          name: uberjar
-          path: build/libs/*-all.jar
-
-      - name: jpackage windows app image
+      - name: extract distribution tar
         shell: bash
         run: |
-          jpackage --input build/libs \
-            --name "xppc" \
-            --main-jar "xppc-${{ env.APP_VERSION }}-all.jar" \
-            --main-class br.edu.ifpe.launcher.AppMain \
-            --type app-image \
-            --dest dist
-
-      - name: windows zip compress
-        run: Compress-Archive -Path dist/xppc -DestinationPath "dist/xppc-windows-${{ env.APP_VERSION }}.zip"
-
-      - name: upload windows zip
-        uses: actions/upload-artifact@v4
-        with:
-          name: windows-zip
-          path: dist/*.zip
+          mkdir -p build/jpackage-input
+          tar -xf build/distributions/xppc-${{ env.APP_VERSION }}.tar -C build/jpackage-input --strip-components=1
 
       - name: jpackage exe
         shell: bash
         run: |
-          jpackage --input build/libs \
+          jpackage --input build/jpackage-input/lib \
           --name "xppc" \
-          --main-jar "xppc-${{ env.APP_VERSION }}-all.jar" \
+          --main-jar "xppc-${{ env.APP_VERSION }}.jar" \
           --main-class br.edu.ifpe.launcher.AppMain \
           --type exe \
           --win-dir-chooser \
@@ -75,8 +55,62 @@ jobs:
           name: windows-installer
           path: dist/*.exe
 
+  build-macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '25'
+
+      - uses: gradle/actions/setup-gradle@v3
+
+      - name: gradle build distribution
+        run: ./gradlew clean distTar
+
+      - name: version
+        id: get_version
+        shell: bash
+        run: |
+          VERSION=$(./gradlew -q xPPCVersion)
+          echo "APP_VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: extract distribution tar
+        shell: bash
+        run: |
+          mkdir -p build/jpackage-input
+          tar -xf build/distributions/xppc-${{ env.APP_VERSION }}.tar -C build/jpackage-input --strip-components=1
+
+      - name: jpackage macos app image
+        shell: bash
+        run: |
+          jpackage --input build/jpackage-input/lib \
+            --name "xppc" \
+            --main-jar "xppc-${{ env.APP_VERSION }}.jar" \
+            --main-class br.edu.ifpe.launcher.AppMain \
+            --type app-image \
+            --dest dist
+
+      - name: jpackage dmg
+        shell: bash
+        run: |
+          jpackage --input build/jpackage-input/lib \
+          --name "xppc" \
+          --main-jar "xppc-${{ env.APP_VERSION }}.jar" \
+          --main-class br.edu.ifpe.launcher.AppMain \
+          --type dmg \
+          --dest dist
+
+      - name: upload macos dmg
+        uses: actions/upload-artifact@v4
+        with:
+          name: macos-installer
+          path: dist/*.dmg
+
   release:
-    needs: [ build-windows ]
+    needs: [ build-windows, build-macos ]
     runs-on: ubuntu-latest
     steps:
       - name: checkout code
@@ -95,8 +129,7 @@ jobs:
           VERSION: ${{ needs.build-windows.outputs.app_version }}
         run: |
           gh release create "v$VERSION" \
-            "artifacts/uberjar/"* \
             "artifacts/windows-installer/"* \
-            "artifacts/windows-zip/"* \
+            "artifacts/macos-installer/"* \
             --title "xPPC v$VERSION" \
             --generate-notes

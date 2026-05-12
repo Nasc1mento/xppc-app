@@ -1,7 +1,7 @@
 package br.edu.ifpe.core.replacers;
 
 import br.edu.ifpe.core.PlaceholderManager;
-import br.edu.ifpe.core.DocumentManager;
+import br.edu.ifpe.infra.doc.DocumentManager;
 import org.apache.poi.xwpf.usermodel.*;
 
 import java.io.FileInputStream;

@@ -1,7 +1,7 @@
 package ui;
 
-import br.edu.ifpe.ui.config.ThemeConfig;
-import br.edu.ifpe.ui.frames.MainWindow;
+import br.edu.ifpe.ui.swing.config.UIConfig;
+import br.edu.ifpe.ui.swing.frames.MainWindow;
 import org.assertj.swing.edt.FailOnThreadViolationRepaintManager;
 import org.assertj.swing.edt.GuiActionRunner;
 import org.assertj.swing.finder.JFileChooserFinder;
@@ -28,7 +28,7 @@ public class FormTest extends AssertJSwingTestCaseTemplate {
     @BeforeEach
     public void setup() {
         this.setUpRobot();
-        ThemeConfig.setup();
+        UIConfig.setup();
         MainWindow frame = GuiActionRunner.execute(MainWindow::new);
         window = new FrameFixture(robot(), frame);
 

@@ -1,11 +1,11 @@
 package br.edu.ifpe.core.replacers;
 
-import br.edu.ifpe.helpers.TableHelper;
-import br.edu.ifpe.helpers.TextHelper;
+import br.edu.ifpe.infra.doc.helpers.TableHelper;
+import br.edu.ifpe.infra.doc.helpers.TextHelper;
 import br.edu.ifpe.core.CCManager;
-import br.edu.ifpe.helpers.TableTracker;
-import br.edu.ifpe.core.DocumentManager;
-import br.edu.ifpe.core.DocumentCursor;
+import br.edu.ifpe.infra.doc.helpers.TableTracker;
+import br.edu.ifpe.infra.doc.DocumentManager;
+import br.edu.ifpe.infra.doc.DocumentCursor;
 import org.apache.poi.xwpf.usermodel.*;
 
 import java.io.FileInputStream;

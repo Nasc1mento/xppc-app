@@ -1,6 +1,6 @@
 package br.edu.ifpe.config;
 
-import br.edu.ifpe.core.DocumentManager;
+import br.edu.ifpe.infra.doc.DocumentManager;
 
 import java.io.IOException;
 import java.io.InputStream;

@@ -1,6 +1,8 @@
 package br.edu.ifpe.core;
 
 import br.edu.ifpe.core.replacers.*;
+import br.edu.ifpe.infra.doc.DocumentCursor;
+import br.edu.ifpe.infra.doc.DocumentManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

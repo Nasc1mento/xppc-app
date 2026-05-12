@@ -1,8 +1,8 @@
 package br.edu.ifpe.core;
 
-import br.edu.ifpe.enums.CCType;
-import br.edu.ifpe.models.CC;
-import br.edu.ifpe.utils.Eval;
+import br.edu.ifpe.core.domain.enums.CCType;
+import br.edu.ifpe.core.domain.models.CC;
+import br.edu.ifpe.core.utils.Eval;
 
 import java.util.ArrayList;
 import java.util.List;
